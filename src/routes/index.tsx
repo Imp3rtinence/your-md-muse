@@ -6,7 +6,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "JoinUs – Mitmachen statt zuschauen" },
-      { name: "description", content: "Starte Challenges, mach mit, reich die Kette weiter. Die Mitmach-App für deine Crew." },
+      { name: "description", content: "Starte Challenges, mach mit, reich die Kette weiter." },
     ],
   }),
   component: Landing,
@@ -25,36 +25,37 @@ function Landing() {
           <span className="font-display text-2xl font-bold tracking-tight">
             Join<span className="text-primary">Us</span>
           </span>
-          <Link to="/auth" className="text-sm text-muted-foreground hover:text-foreground">
+          <Link to="/auth" className="tap text-sm text-muted-foreground hover:text-foreground">
             Anmelden
           </Link>
         </header>
 
-        <main className="mt-14 flex-1">
+        <main className="mt-12 flex-1">
           <h1 className="font-display text-5xl font-bold leading-[1.05] tracking-tight">
             Mitmachen statt zuschauen.
             <span className="block text-primary">Machen statt scrollen.</span>
           </h1>
-          <p className="mt-5 text-base text-muted-foreground">
-            JoinUs ist kein Feed. Jemand startet eine Challenge, du machst mit, lädst deinen Beweis hoch – und reichst die Kette weiter. <span className="text-foreground">Du bist dran.</span>
+          <p className="mt-4 text-base text-muted-foreground">
+            Challenges starten, mitmachen, Beweis hochladen – Kette weiterreichen. <span className="text-foreground">Du bist dran.</span>
           </p>
 
           <div className="mt-10 space-y-3">
-            <Feature icon={<Zap className="size-5" />} title="Daily Challenge" body="Eine handverlesene Challenge pro Tag. Routine ohne Stress." />
-            <Feature icon={<Users className="size-5" />} title="Mit Freunden" body="Sieh sofort, wer aus deiner Crew gerade mitmacht." />
-            <Feature icon={<Link2 className="size-5" />} title="Die Kette" body="Wer abschließt, startet die nächste. Staffelstab statt Like." />
+            <Feature icon={<Zap className="size-5" />} title="Daily Challenge" />
+            <Feature icon={<Users className="size-5" />} title="Mit Freunden" />
+            <Feature icon={<Link2 className="size-5" />} title="Die Kette" />
           </div>
         </main>
 
         <div className="mt-10 space-y-3">
           <Link
             to="/auth"
-            className="tap flex items-center justify-center rounded-2xl bg-primary px-5 py-4 font-display text-base font-semibold text-primary-foreground glow-primary"
+            className="tap group relative flex items-center justify-center overflow-hidden rounded-2xl bg-primary px-6 py-5 font-display text-lg font-bold tracking-tight text-primary-foreground transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_0_40px_-8px_var(--primary)] active:scale-[0.98]"
           >
-            Loslegen
+            <span className="absolute inset-0 opacity-0 transition-opacity duration-2000 group-hover:opacity-100" style={{ background: "linear-gradient(90deg, transparent, oklch(1 0 0 / 20%), transparent)" }} />
+            Loslegen →
           </Link>
-          <p className="text-center text-xs text-muted-foreground">
-            Privat als Standard · keine offenen DMs mit Fremden · kein Personenstandort
+          <p className="text-center text-[11px] text-muted-foreground/70">
+            Privat · keine Fremd-DMs · kein Standorttracking
           </p>
         </div>
       </div>
@@ -62,14 +63,11 @@ function Landing() {
   );
 }
 
-function Feature({ icon, title, body }: { icon: ReactNode; title: string; body: string }) {
+function Feature({ icon, title }: { icon: ReactNode; title: string }) {
   return (
-    <div className="flex gap-3 rounded-2xl border border-border bg-surface p-4">
+    <div className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-4 transition-colors hover:bg-surface-2">
       <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">{icon}</div>
-      <div>
-        <div className="font-display text-sm font-semibold">{title}</div>
-        <div className="text-sm text-muted-foreground">{body}</div>
-      </div>
+      <div className="font-display text-sm font-semibold">{title}</div>
     </div>
   );
 }
