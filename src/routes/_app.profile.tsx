@@ -165,3 +165,30 @@ function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; va
     </div>
   );
 }
+
+function LeagueCard({ tier, weeklyAura }: { tier: number; weeklyAura: number }) {
+  const league = getLeague(tier);
+  const remaining = formatCountdown(msUntilWeekEnd());
+  return (
+    <Link
+      to="/league"
+      className="tap mt-3 flex items-center gap-4 overflow-hidden rounded-2xl border border-border bg-surface p-4"
+    >
+      <div className="relative shrink-0">
+        <div
+          className="pointer-events-none absolute -inset-2 rounded-full opacity-40 blur-xl"
+          style={{ background: `radial-gradient(circle, ${league.glow}, transparent 70%)` }}
+        />
+        <LeagueBadge tier={tier} size={56} className="relative" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Aktuelle Liga</div>
+        <div className={`font-display text-lg font-bold ${league.color}`}>{league.name}</div>
+        <div className="text-xs text-muted-foreground">
+          {weeklyAura} Aura diese Woche · endet in {remaining}
+        </div>
+      </div>
+      <ChevronRight className="size-4 text-muted-foreground" />
+    </Link>
+  );
+}
