@@ -28,13 +28,13 @@ function AppShell() {
 
 function BottomNav() {
   const path = useRouterState({ select: (s) => s.location.pathname });
-  const items = [
+  const items: Array<{ to: "/home" | "/groups" | "/create" | "/chats" | "/profile"; icon: typeof Home; label: string; primary?: boolean }> = [
     { to: "/home", icon: Home, label: "Home" },
     { to: "/groups", icon: Users, label: "Gruppen" },
     { to: "/create", icon: Plus, label: "Neu", primary: true },
     { to: "/chats", icon: MessageCircle, label: "Chats" },
     { to: "/profile", icon: User, label: "Profil" },
-  ] as const;
+  ];
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 mx-auto w-full max-w-md px-4 pb-4 pt-2"
