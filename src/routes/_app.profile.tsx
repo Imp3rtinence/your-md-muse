@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/auth";
 import { useAvatarUrl } from "@/lib/avatar-url";
 import { AvatarEditor } from "@/components/AvatarEditor";
 import { BadgeArt } from "@/components/BadgeArt";
+import { toast } from "sonner";
 import { Sparkles, Flame, LogOut, Camera, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/_app/profile")({
