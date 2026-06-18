@@ -1,8 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { Sparkles, Flame, LogOut } from "lucide-react";
+import { useAvatarUrl } from "@/lib/avatar-url";
+import { AvatarEditor } from "@/components/AvatarEditor";
+import { Sparkles, Flame, LogOut, Camera } from "lucide-react";
 
 export const Route = createFileRoute("/_app/profile")({
   head: () => ({ meta: [{ title: "Profil – JoinUs" }] }),
@@ -11,6 +14,9 @@ export const Route = createFileRoute("/_app/profile")({
 
 function Profile() {
   const { profile, user, signOut } = useAuth();
+  const qc = useQueryClient();
+  const [editorOpen, setEditorOpen] = useState(false);
+  const avatarUrl = useAvatarUrl(profile?.avatar_url);
 
   const { data: badges } = useQuery({
     queryKey: ["badges", user?.id],
@@ -39,9 +45,22 @@ function Profile() {
     <div className="px-5 pb-6 pt-6">
       <div className="flex items-start justify-between">
         <div>
-          <div className="flex size-20 items-center justify-center rounded-3xl bg-primary text-2xl font-display font-bold text-primary-foreground glow-primary">
-            {(profile?.username ?? "??").slice(0,2).toUpperCase()}
-          </div>
+          <button
+            onClick={() => setEditorOpen(true)}
+            className="tap relative size-20 overflow-hidden rounded-3xl bg-primary text-2xl font-display font-bold text-primary-foreground glow-primary"
+            aria-label="Profilbild bearbeiten"
+          >
+            {avatarUrl ? (
+              <img src={avatarUrl} alt="" className="size-full object-cover" />
+            ) : (
+              <span className="flex size-full items-center justify-center">
+                {(profile?.username ?? "??").slice(0,2).toUpperCase()}
+              </span>
+            )}
+            <span className="absolute bottom-0 right-0 m-1 grid size-6 place-items-center rounded-full bg-background/80 text-foreground backdrop-blur">
+              <Camera className="size-3.5" />
+            </span>
+          </button>
           <h1 className="mt-4 font-display text-2xl font-bold">{profile?.display_name ?? profile?.username}</h1>
           <div className="text-sm text-muted-foreground">@{profile?.username} · privat</div>
         </div>
