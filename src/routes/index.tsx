@@ -34,7 +34,7 @@ function Landing() {
           </Link>
         </header>
 
-        <main className="flex flex-1 flex-col gap-6">
+        <main className="flex flex-1 flex-col items-center gap-6 text-center">
           {/* Hero claim */}
           <section className="space-y-4">
             <h1 className="font-display text-[52px] font-bold leading-[0.92] tracking-tight">
@@ -42,13 +42,13 @@ function Landing() {
               <span className="text-primary">statt</span> <br />
               scrollen.
             </h1>
-            <p className="max-w-[300px] text-[15px] leading-relaxed text-foreground/75">
+            <p className="mx-auto max-w-[300px] text-[15px] leading-relaxed text-foreground/75">
               Herausforderungen annehmen, Beweise liefern und die Kette am Leben halten.
             </p>
           </section>
 
           {/* So läuft's – 3 Schritte */}
-          <ol className="flex items-center gap-2 text-[11px] font-medium text-foreground/70">
+          <ol className="flex items-center justify-center gap-2 text-[11px] font-medium text-foreground/70">
             <Step icon={<Flag className="size-3.5" />} label="Starten" n={1} />
             <Dash />
             <Step icon={<Camera className="size-3.5" />} label="Beweisen" n={2} />
@@ -110,8 +110,8 @@ function Landing() {
 
           {/* Sekundäre Infos – flacher, ohne Button-Optik */}
           <div className="grid grid-cols-2 gap-3">
-            <InfoTile icon={<Users className="size-4 text-primary" strokeWidth={2.2} />} title="Freunde" sub="Privat & klein" />
-            <InfoTile icon={<Link2 className="size-4 text-accent" strokeWidth={2.2} />} title="Die Kette" sub="Reich sie weiter" />
+            <InfoTile icon={<Users className="size-4 text-primary" strokeWidth={2.2} />} title="Freunde" />
+            <InfoTile icon={<Link2 className="size-4 text-accent" strokeWidth={2.2} />} title="Die Kette" />
           </div>
 
           {/* CTA */}
@@ -161,7 +161,7 @@ function Avatar({ color, letter }: { color: string; letter: string }) {
   );
 }
 
-function InfoTile({ icon, title, sub }: { icon: React.ReactNode; title: string; sub: string }) {
+function InfoTile({ icon, title, sub }: { icon: React.ReactNode; title: string; sub?: string }) {
   return (
     <div className="flex items-center gap-3 rounded-2xl bg-surface/40 px-4 py-3">
       <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-surface-2">
@@ -169,7 +169,7 @@ function InfoTile({ icon, title, sub }: { icon: React.ReactNode; title: string; 
       </span>
       <div className="min-w-0">
         <div className="font-display text-sm font-semibold leading-tight text-foreground">{title}</div>
-        <div className="text-[11px] leading-tight text-foreground/60">{sub}</div>
+        {sub && <div className="text-[11px] leading-tight text-foreground/60">{sub}</div>}
       </div>
     </div>
   );
