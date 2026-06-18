@@ -1,0 +1,276 @@
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth";
+import { categoryMeta, STICKERS } from "@/lib/categories";
+import { ArrowLeft, Camera, Flag, Loader2, Link2 } from "lucide-react";
+import { toast } from "sonner";
+
+export const Route = createFileRoute("/_app/challenge/$id")({
+  head: () => ({ meta: [{ title: "Challenge – JoinUs" }] }),
+  component: ChallengeDetail,
+});
+
+function ChallengeDetail() {
+  const { id } = Route.useParams();
+  const { user } = useAuth();
+  const nav = useNavigate();
+  const qc = useQueryClient();
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const [justFinished, setJustFinished] = useState(false);
+
+  const { data: c } = useQuery({
+    queryKey: ["challenge", id],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("challenges")
+        .select("*, creator:profiles!challenges_creator_id_fkey(username,display_name,avatar_url)")
+        .eq("id", id).single();
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: submissions } = useQuery({
+    queryKey: ["submissions", id],
+    queryFn: async () => {
+      const { data } = await (supabase as any)
+        .from("submissions")
+        .select("*, user:profiles!submissions_user_id_fkey(username,display_name,avatar_url)")
+        .eq("challenge_id", id)
+        .order("created_at", { ascending: false });
+      return data ?? [];
+    },
+  });
+
+  const { data: comments } = useQuery({
+    queryKey: ["comments", id],
+    queryFn: async () => {
+      const { data } = await (supabase as any)
+        .from("comments")
+        .select("*, user:profiles!comments_user_id_fkey(username,display_name,avatar_url)")
+        .eq("challenge_id", id)
+        .order("created_at", { ascending: true });
+      return data ?? [];
+    },
+  });
+
+  const { data: chain } = useQuery({
+    queryKey: ["chain", id, c?.parent_challenge_id],
+    enabled: !!c,
+    queryFn: async () => {
+      // walk backwards
+      const back: any[] = [];
+      let cur: any = c;
+      while (cur?.parent_challenge_id) {
+        const { data } = await (supabase as any).from("challenges")
+          .select("id,title,creator:profiles!challenges_creator_id_fkey(username,avatar_url)")
+          .eq("id", cur.parent_challenge_id).single();
+        if (!data) break;
+        back.unshift(data); cur = data;
+      }
+      const { data: forward } = await (supabase as any).from("challenges")
+        .select("id,title,creator:profiles!challenges_creator_id_fkey(username,avatar_url)")
+        .eq("parent_challenge_id", id).limit(5);
+      return { back, forward: forward ?? [] };
+    },
+  });
+
+  const mySubmission = submissions?.find((s: any) => s.user_id === user?.id);
+
+  const upload = async (file: File) => {
+    if (!user) return;
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop() ?? "jpg";
+      const path = `${user.id}/${id}/${crypto.randomUUID()}.${ext}`;
+      const { error: upErr } = await supabase.storage.from("proofs").upload(path, file);
+      if (upErr) throw upErr;
+      const { data: pub } = supabase.storage.from("proofs").getPublicUrl(path);
+      const { error: insErr } = await (supabase as any).from("submissions").insert({
+        challenge_id: id, user_id: user.id,
+        media_url: pub.publicUrl,
+        media_type: file.type.startsWith("video") ? "video" : "image",
+      });
+      if (insErr) throw insErr;
+      setJustFinished(true);
+      toast.success("Beweis hochgeladen – du bist dran! +20 Aura");
+      qc.invalidateQueries({ queryKey: ["submissions", id] });
+      qc.invalidateQueries({ queryKey: ["challenge", id] });
+    } catch (e: any) { toast.error(e.message ?? "Upload fehlgeschlagen"); }
+    finally { setUploading(false); }
+  };
+
+  const react = async (sticker: string) => {
+    if (!user) return;
+    await (supabase as any).from("reactions").insert({
+      user_id: user.id, challenge_id: id, sticker,
+    });
+    toast(sticker);
+  };
+
+  const report = async () => {
+    if (!user) return;
+    const reason = prompt("Warum meldest du diese Challenge?");
+    if (!reason) return;
+    await (supabase as any).from("reports").insert({
+      reporter_id: user.id, target_type: "challenge", target_id: id, reason,
+    });
+    toast.success("Danke – wir schauen es uns an.");
+  };
+
+  if (!c) return <div className="p-6 text-muted-foreground">…</div>;
+  const cat = categoryMeta(c.category);
+
+  return (
+    <div className="pb-6">
+      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border bg-background/85 px-4 py-3 backdrop-blur">
+        <button onClick={() => nav({ to: "/home" })} className="tap -ml-2 flex items-center text-muted-foreground">
+          <ArrowLeft className="size-5" />
+        </button>
+        <button onClick={report} className="tap text-xs text-muted-foreground hover:text-destructive">
+          <Flag className="size-4" />
+        </button>
+      </header>
+
+      <div className="px-5 pt-5">
+        <div className="flex items-center gap-2 text-xs">
+          <span className="rounded-full bg-surface-2 px-2.5 py-1 font-medium">{cat.icon} {cat.label}</span>
+          <span className="text-muted-foreground">@{c.creator?.username}</span>
+        </div>
+        <h1 className="mt-3 font-display text-3xl font-bold leading-tight">{c.title}</h1>
+        {c.description && <p className="mt-2 text-sm text-muted-foreground">{c.description}</p>}
+
+        {/* Chain */}
+        {(chain && (chain.back.length || chain.forward.length)) ? (
+          <div className="mt-5 rounded-2xl border border-border bg-surface p-3">
+            <div className="mb-2 flex items-center gap-1.5 text-xs uppercase tracking-wider text-muted-foreground">
+              <Link2 className="size-3.5" /> Die Kette
+            </div>
+            <div className="flex items-center gap-1 overflow-x-auto pb-1">
+              {chain.back.map((p: any) => (
+                <ChainDot key={p.id} username={p.creator?.username} to={p.id} />
+              ))}
+              <span className="mx-1 h-px w-4 bg-border" />
+              <ChainDot username={c.creator?.username} current />
+              {chain.forward.map((f: any) => (
+                <span key={f.id} className="flex items-center"><span className="mx-1 h-px w-4 bg-border" /><ChainDot username={f.creator?.username} to={f.id} /></span>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        {/* Stickers */}
+        <div className="mt-5 flex gap-2">
+          {STICKERS.map((s) => (
+            <button key={s} onClick={() => react(s)} className="tap rounded-full border border-border bg-surface px-3 py-2 text-lg active:scale-95 transition">
+              {s}
+            </button>
+          ))}
+        </div>
+
+        {/* CTA */}
+        {!mySubmission ? (
+          <>
+            <input ref={fileRef} type="file" accept="image/*,video/*" capture="environment" className="hidden"
+                   onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
+            <button
+              onClick={() => fileRef.current?.click()} disabled={uploading}
+              className="tap mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-accent px-5 py-4 font-display font-semibold text-accent-foreground glow-accent disabled:opacity-60"
+            >
+              {uploading ? <Loader2 className="size-5 animate-spin" /> : <><Camera className="size-5" /> Mitmachen</>}
+            </button>
+          </>
+        ) : (
+          <div className={"mt-5 rounded-2xl border border-accent/40 bg-accent/10 p-4 " + (justFinished ? "animate-pop" : "")}>
+            <div className="font-display text-lg font-bold text-accent">Du hast abgeschlossen! 🎉</div>
+            <p className="mt-1 text-sm text-muted-foreground">Reich die Kette weiter – starte die nächste Challenge.</p>
+            <Link
+              to="/create" search={{ parent: id }}
+              className="tap mt-3 inline-flex items-center justify-center rounded-xl bg-primary px-4 py-3 font-display text-sm font-semibold text-primary-foreground"
+            >
+              Du bist dran – nächste Challenge starten
+            </Link>
+          </div>
+        )}
+
+        {/* Proofs */}
+        <section className="mt-8">
+          <h2 className="mb-3 font-display text-lg font-semibold">Beweise · {submissions?.length ?? 0}</h2>
+          {submissions?.length ? (
+            <div className="grid grid-cols-2 gap-2">
+              {submissions.map((s: any) => (
+                <figure key={s.id} className="overflow-hidden rounded-2xl border border-border bg-surface">
+                  {s.media_type === "video" ? (
+                    <video src={s.media_url} controls className="aspect-square w-full object-cover" />
+                  ) : (
+                    <img src={s.media_url} alt={`Beweis von @${s.user?.username}`} className="aspect-square w-full object-cover" />
+                  )}
+                  <figcaption className="px-2 py-1.5 text-[11px] text-muted-foreground">@{s.user?.username}</figcaption>
+                </figure>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">Noch niemand dabei. Sei der/die Erste.</p>
+          )}
+        </section>
+
+        {/* Comments */}
+        <Comments id={id} comments={comments ?? []} />
+      </div>
+    </div>
+  );
+}
+
+function ChainDot({ username, current, to }: { username?: string; current?: boolean; to?: string }) {
+  const dot = (
+    <div className={"flex size-9 items-center justify-center rounded-full text-[10px] font-semibold " +
+      (current ? "bg-primary text-primary-foreground glow-primary" : "bg-surface-2 text-muted-foreground")}>
+      {(username ?? "?").slice(0,2).toUpperCase()}
+    </div>
+  );
+  if (to) return <Link to="/challenge/$id" params={{ id: to }}>{dot}</Link>;
+  return dot;
+}
+
+function Comments({ id, comments }: { id: string; comments: any[] }) {
+  const { user } = useAuth();
+  const qc = useQueryClient();
+  const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  const send = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user || !text.trim()) return;
+    setBusy(true);
+    await (supabase as any).from("comments").insert({
+      challenge_id: id, user_id: user.id, body: text.trim(),
+    });
+    setText(""); setBusy(false);
+    qc.invalidateQueries({ queryKey: ["comments", id] });
+  };
+
+  return (
+    <section className="mt-8">
+      <h2 className="mb-3 font-display text-lg font-semibold">Kommentare · {comments.length}</h2>
+      <div className="space-y-3">
+        {comments.map((c) => (
+          <div key={c.id} className="rounded-2xl border border-border bg-surface px-3 py-2.5">
+            <div className="text-xs font-semibold text-muted-foreground">@{c.user?.username}</div>
+            <div className="mt-0.5 text-sm">{c.body}</div>
+          </div>
+        ))}
+        {!comments.length && <p className="text-sm text-muted-foreground">Sag was Nettes oder feuer an.</p>}
+      </div>
+      <form onSubmit={send} className="mt-3 flex gap-2">
+        <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Kommentar…"
+               className="flex-1 rounded-full border border-border bg-surface px-4 py-3 text-sm outline-none focus:border-primary" />
+        <button disabled={busy || !text.trim()} className="tap rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground disabled:opacity-50">
+          Senden
+        </button>
+      </form>
+    </section>
+  );
+}

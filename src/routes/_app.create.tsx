@@ -1,0 +1,137 @@
+import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
+import { useState } from "react";
+import { z } from "zod";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth";
+import { CATEGORIES, type CategoryValue } from "@/lib/categories";
+import { toast } from "sonner";
+import { ShieldAlert, Loader2 } from "lucide-react";
+
+const searchSchema = z.object({ parent: z.string().optional() });
+
+export const Route = createFileRoute("/_app/create")({
+  validateSearch: searchSchema,
+  head: () => ({ meta: [{ title: "Challenge erstellen – JoinUs" }] }),
+  component: Create,
+});
+
+function Create() {
+  const nav = useNavigate();
+  const { user } = useAuth();
+  const { parent } = useSearch({ from: "/_app/create" });
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState<CategoryValue>("creative");
+  const [visibility, setVisibility] = useState<"friends" | "public">("friends");
+  const [busy, setBusy] = useState(false);
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+    if (title.trim().length < 3) { toast.error("Gib einen Titel ein."); return; }
+    setBusy(true);
+    const { data, error } = await (supabase as any).from("challenges").insert({
+      creator_id: user.id,
+      title: title.trim(),
+      description: description.trim() || null,
+      category, visibility,
+      parent_challenge_id: parent ?? null,
+    }).select("id").single();
+    setBusy(false);
+    if (error) { toast.error(error.message); return; }
+    toast.success("Challenge ist live ⚡");
+    nav({ to: "/challenge/$id", params: { id: data.id } });
+  };
+
+  return (
+    <div className="px-5 pb-6 pt-6">
+      <h1 className="font-display text-2xl font-bold">
+        {parent ? "Du bist dran – starte die nächste" : "Neue Challenge"}
+      </h1>
+      <p className="mt-1 text-sm text-muted-foreground">
+        Mach mit, mach es echt. Lieber klein und konkret als groß und schwammig.
+      </p>
+
+      <form onSubmit={submit} className="mt-6 space-y-5">
+        <div>
+          <label className="lbl">Titel</label>
+          <input
+            value={title} onChange={(e) => setTitle(e.target.value)}
+            maxLength={80} required placeholder="z.B. Zeichne dein Frühstück"
+            className="input"
+          />
+        </div>
+        <div>
+          <label className="lbl">Beschreibung (optional)</label>
+          <textarea
+            value={description} onChange={(e) => setDescription(e.target.value)}
+            rows={3} maxLength={500} placeholder="Was genau ist die Aufgabe?"
+            className="input"
+          />
+        </div>
+
+        <div>
+          <label className="lbl">Kategorie</label>
+          <div className="grid grid-cols-3 gap-2">
+            {CATEGORIES.map((c) => {
+              const active = category === c.value;
+              return (
+                <button
+                  key={c.value} type="button"
+                  onClick={() => setCategory(c.value)}
+                  className={"tap rounded-2xl border p-3 text-left transition " +
+                    (active ? "border-primary bg-primary/15" : "border-border bg-surface")}
+                >
+                  <div className="text-xl">{c.icon}</div>
+                  <div className="mt-1 text-xs font-medium">{c.label}</div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div>
+          <label className="lbl">Sichtbarkeit</label>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { v: "friends", t: "Nur Freunde", s: "Sicher & klein" },
+              { v: "public",  t: "Öffentlich",  s: "Alle können mitmachen" },
+            ].map((o) => {
+              const active = visibility === o.v;
+              return (
+                <button
+                  key={o.v} type="button"
+                  onClick={() => setVisibility(o.v as "friends" | "public")}
+                  className={"tap rounded-2xl border p-3 text-left " +
+                    (active ? "border-primary bg-primary/15" : "border-border bg-surface")}
+                >
+                  <div className="text-sm font-semibold">{o.t}</div>
+                  <div className="text-xs text-muted-foreground">{o.s}</div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="flex gap-2 rounded-2xl border border-border bg-surface p-3 text-xs text-muted-foreground">
+          <ShieldAlert className="size-4 shrink-0 text-accent" />
+          <span>Keine gefährlichen Challenges – sei kein NPC, pass auf dich und andere auf.</span>
+        </div>
+
+        <button
+          type="submit" disabled={busy}
+          className="tap flex w-full items-center justify-center rounded-2xl bg-primary px-5 py-4 font-display font-semibold text-primary-foreground glow-primary disabled:opacity-60"
+        >
+          {busy ? <Loader2 className="size-5 animate-spin" /> : "Challenge starten"}
+        </button>
+      </form>
+
+      <style>{`
+        .lbl { display:block; margin-bottom:8px; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted-foreground); font-weight:500; }
+        .input { width:100%; padding:14px 16px; border-radius:14px; background:var(--surface); color:var(--foreground); border:1px solid var(--border); font-size:16px; outline:none; }
+        .input:focus { border-color:var(--primary); box-shadow:0 0 0 3px oklch(0.7 0.27 320 / 0.25); }
+      `}</style>
+    </div>
+  );
+}
