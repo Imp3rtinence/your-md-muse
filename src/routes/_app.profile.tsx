@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/auth";
 import { useAvatarUrl } from "@/lib/avatar-url";
 import { AvatarEditor } from "@/components/AvatarEditor";
 import { BadgeArt } from "@/components/BadgeArt";
+import { toast } from "sonner";
 import { Sparkles, Flame, LogOut, Camera, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/_app/profile")({
@@ -15,6 +16,11 @@ export const Route = createFileRoute("/_app/profile")({
 
 function Profile() {
   const { profile, user, signOut, refreshProfile } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast.success("Bis bald!");
+  };
   const [editorOpen, setEditorOpen] = useState(false);
   const avatarUrl = useAvatarUrl(profile?.avatar_url);
 
@@ -64,7 +70,7 @@ function Profile() {
           <h1 className="mt-4 font-display text-2xl font-bold">{profile?.display_name ?? profile?.username}</h1>
           <div className="text-sm text-muted-foreground">@{profile?.username} · privat</div>
         </div>
-        <button onClick={signOut} className="tap rounded-full border border-border p-2 text-muted-foreground">
+        <button onClick={handleSignOut} className="tap rounded-full border border-border p-2 text-muted-foreground">
           <LogOut className="size-4" />
         </button>
       </div>
@@ -114,6 +120,16 @@ function Profile() {
         ) : (
           <p className="text-sm text-muted-foreground">Du hast noch keine Challenge gestartet.</p>
         )}
+      </section>
+
+      <section className="mt-10">
+        <button
+          onClick={handleSignOut}
+          className="tap flex w-full items-center justify-center gap-2 rounded-2xl border border-red-500/30 bg-red-500/10 px-5 py-3.5 font-medium text-red-400 transition hover:bg-red-500/20"
+        >
+          <LogOut className="size-4" />
+          Ausloggen
+        </button>
       </section>
 
       {user && (
