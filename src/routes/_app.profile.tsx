@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
@@ -13,8 +13,7 @@ export const Route = createFileRoute("/_app/profile")({
 });
 
 function Profile() {
-  const { profile, user, signOut } = useAuth();
-  const qc = useQueryClient();
+  const { profile, user, signOut, refreshProfile } = useAuth();
   const [editorOpen, setEditorOpen] = useState(false);
   const avatarUrl = useAvatarUrl(profile?.avatar_url);
 
@@ -111,7 +110,7 @@ function Profile() {
           userId={user.id}
           open={editorOpen}
           onClose={() => setEditorOpen(false)}
-          onSaved={() => qc.invalidateQueries({ queryKey: ["profile"] })}
+          onSaved={() => refreshProfile()}
         />
       )}
     </div>
