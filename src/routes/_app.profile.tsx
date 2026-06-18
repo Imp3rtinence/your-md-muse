@@ -7,6 +7,7 @@ import { useAvatarUrl } from "@/lib/avatar-url";
 import { AvatarEditor } from "@/components/AvatarEditor";
 import { BadgeArt } from "@/components/BadgeArt";
 import { LeagueBadge } from "@/components/LeagueBadge";
+import { PillButton } from "@/components/ActionTile";
 import { getLeague, msUntilWeekEnd, formatCountdown } from "@/lib/leagues";
 import { toast } from "sonner";
 import { Sparkles, Flame, LogOut, Camera, ChevronRight } from "lucide-react";
@@ -136,13 +137,12 @@ function Profile() {
       </section>
 
       <section className="mt-10">
-        <button
+        <PillButton
           onClick={handleSignOut}
-          className="tap flex w-full items-center justify-center gap-2 rounded-2xl border border-red-500/30 bg-red-500/10 px-5 py-3.5 font-medium text-red-400 transition hover:bg-red-500/20"
-        >
-          <LogOut className="size-4" />
-          Ausloggen
-        </button>
+          tone="rose"
+          icon={<LogOut className="size-4" />}
+          label="Ausloggen"
+        />
       </section>
 
       {user && (

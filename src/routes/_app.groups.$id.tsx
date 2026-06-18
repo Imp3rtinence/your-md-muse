@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { useAvatarUrl } from "@/lib/avatar-url";
 import { toast } from "sonner";
+import { ActionTile, ActionRow } from "@/components/ActionTile";
 import {
   ChevronLeft, UserPlus, Share2, Link as LinkIcon, BookUser, Crown, Loader2, X, Check,
   LogOut, MessageCircle, Plus, Sparkles, Flame, Trophy, Activity, ArrowUp,
@@ -127,20 +128,15 @@ function GroupDetail() {
 
       {/* Quick actions */}
       <div className="mt-4 grid grid-cols-3 gap-2">
-        <ActionTile to="/chats" icon={<MessageCircle className="size-5" />} label="Chat" />
-        <ActionTile to="/create" icon={<Plus className="size-5" />} label="Challenge" highlight />
-        {canInvite ? (
-          <button
-            onClick={() => setInviteOpen(true)}
-            className="tap flex flex-col items-center justify-center gap-1 rounded-2xl border border-border bg-surface p-3 text-xs font-display font-semibold"
-          >
-            <UserPlus className="size-5 text-primary" /> Einladen
-          </button>
-        ) : (
-          <div className="flex flex-col items-center justify-center gap-1 rounded-2xl border border-dashed border-border bg-surface/40 p-3 text-xs text-muted-foreground">
-            <UserPlus className="size-5" /> Einladen
-          </div>
-        )}
+        <ActionTile to="/chats" tone="sky" icon={<MessageCircle className="size-5" />} label="Chat" />
+        <ActionTile to="/create" tone="primary" icon={<Plus className="size-5" />} label="Challenge" />
+        <ActionTile
+          onClick={() => canInvite && setInviteOpen(true)}
+          tone="amber"
+          icon={<UserPlus className="size-5" />}
+          label="Einladen"
+          disabled={!canInvite}
+        />
       </div>
 
       {/* Weekly Leaderboard */}
@@ -233,19 +229,6 @@ function StatTile({ icon, value, label }: { icon: React.ReactNode; value: number
   );
 }
 
-function ActionTile({ to, icon, label, highlight }: { to: "/chats" | "/create"; icon: React.ReactNode; label: string; highlight?: boolean }) {
-  return (
-    <Link
-      to={to}
-      className={`tap flex flex-col items-center justify-center gap-1 rounded-2xl p-3 text-xs font-display font-semibold ${
-        highlight ? "bg-primary text-primary-foreground glow-primary" : "border border-border bg-surface"
-      }`}
-    >
-      <span className={highlight ? "" : "text-primary"}>{icon}</span>
-      {label}
-    </Link>
-  );
-}
 
 function MemberRow({ m }: { m: any }) {
   const avatar = useAvatarUrl(m.profile?.avatar_url);
@@ -468,9 +451,10 @@ function LinkAndContacts({ ensureLink, link, groupName, genBusy }: { ensureLink:
         </div>
       </div>
 
-      <ActionRow onClick={shareLink} icon={<Share2 className="size-5" />} label="Über App teilen" sub="WhatsApp, iMessage, Mail …" />
-      <ActionRow onClick={copyLink} icon={<LinkIcon className="size-5" />} label="Link kopieren" />
+      <ActionRow tone="emerald" onClick={shareLink} icon={<Share2 className="size-5" />} label="Über App teilen" sub="WhatsApp, iMessage, Mail …" />
+      <ActionRow tone="sky" onClick={copyLink} icon={<LinkIcon className="size-5" />} label="Link kopieren" />
       <ActionRow
+        tone="violet"
         onClick={pickFromPhonebook}
         icon={<BookUser className="size-5" />}
         label="Aus Telefonbuch wählen"
@@ -481,15 +465,3 @@ function LinkAndContacts({ ensureLink, link, groupName, genBusy }: { ensureLink:
   );
 }
 
-function ActionRow({ icon, label, sub, onClick, disabled }: { icon: React.ReactNode; label: string; sub?: string; onClick: () => void; disabled?: boolean }) {
-  return (
-    <button onClick={onClick} disabled={disabled}
-      className="tap flex w-full items-center gap-3 rounded-2xl border border-border bg-surface p-3 text-left disabled:opacity-50">
-      <div className="grid size-10 place-items-center rounded-xl bg-primary/15 text-primary">{icon}</div>
-      <div className="min-w-0 flex-1">
-        <div className="font-display text-sm font-semibold">{label}</div>
-        {sub && <div className="truncate text-xs text-muted-foreground">{sub}</div>}
-      </div>
-    </button>
-  );
-}
