@@ -22,7 +22,6 @@ import { Route as AppBadgesRouteImport } from './routes/_app.badges'
 import { Route as AppGroupsIndexRouteImport } from './routes/_app.groups.index'
 import { Route as AppJoinTokenRouteImport } from './routes/_app.join.$token'
 import { Route as AppGroupsIdRouteImport } from './routes/_app.groups.$id'
-import { Route as AppGroupsIndexRouteImport } from './routes/_app.groups.index'
 import { Route as AppChallengeIdRouteImport } from './routes/_app.challenge.$id'
 
 const AuthRoute = AuthRouteImport.update({
@@ -87,11 +86,6 @@ const AppJoinTokenRoute = AppJoinTokenRouteImport.update({
 const AppGroupsIdRoute = AppGroupsIdRouteImport.update({
   id: '/$id',
   path: '/$id',
-  getParentRoute: () => AppGroupsRoute,
-} as any)
-const AppGroupsIndexRoute = AppGroupsIndexRouteImport.update({
-  id: '/',
-  path: '/',
   getParentRoute: () => AppGroupsRoute,
 } as any)
 const AppChallengeIdRoute = AppChallengeIdRouteImport.update({
