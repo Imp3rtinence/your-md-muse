@@ -1,10 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { categoryMeta, STICKERS } from "@/lib/categories";
-import { ArrowLeft, Camera, Flag, Loader2, Link2 } from "lucide-react";
+import { ArrowLeft, Camera, Flag, Loader2, Link2, Users } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_app/challenge/$id")({
@@ -170,6 +170,53 @@ function ChallengeDetail() {
             </button>
           ))}
         </div>
+
+        {/* Teilnehmer */}
+        <section className="mt-6">
+          <div className="mb-3 flex items-center gap-2 font-display text-lg font-semibold">
+            <Users className="size-5 text-muted-foreground" />
+            Teilnehmer · {(submissions?.length ? new Set(submissions.map((s: any) => s.user_id)).size : 0) + (c.creator_id && !submissions?.some((s: any) => s.user_id === c.creator_id) ? 1 : 0)}
+          </div>
+          <div className="flex gap-3 overflow-x-auto pb-2">
+            {/* Creator */}
+            <div className="flex shrink-0 flex-col items-center gap-1.5">
+              <div className="relative">
+                {c.creator?.avatar_url ? (
+                  <img src={c.creator.avatar_url} alt={c.creator.username} className="size-12 rounded-full object-cover ring-2 ring-primary" />
+                ) : (
+                  <div className="flex size-12 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground ring-2 ring-primary">
+                    {(c.creator?.username ?? "?").slice(0, 2).toUpperCase()}
+                  </div>
+                )}
+                <span className="absolute -bottom-1 -right-1 rounded-full bg-primary px-1.5 py-0.5 text-[9px] font-bold text-primary-foreground">Host</span>
+              </div>
+              <span className="max-w-[72px] truncate text-[11px] font-medium">@{c.creator?.username}</span>
+            </div>
+            {/* Submissions */}
+            {(() => {
+              const seen = new Set<string>();
+              const list: any[] = [];
+              for (const s of submissions ?? []) {
+                if (!seen.has(s.user_id) && s.user_id !== c.creator_id) {
+                  seen.add(s.user_id);
+                  list.push(s);
+                }
+              }
+              return list.map((s: any) => (
+                <div key={s.user_id} className="flex shrink-0 flex-col items-center gap-1.5">
+                  {s.user?.avatar_url ? (
+                    <img src={s.user.avatar_url} alt={s.user.username} className="size-12 rounded-full object-cover ring-2 ring-border" />
+                  ) : (
+                    <div className="flex size-12 items-center justify-center rounded-full bg-surface-2 font-semibold text-muted-foreground ring-2 ring-border">
+                      {(s.user?.username ?? "?").slice(0, 2).toUpperCase()}
+                    </div>
+                  )}
+                  <span className="max-w-[72px] truncate text-[11px] font-medium">@{s.user?.username}</span>
+                </div>
+              ));
+            })()}
+          </div>
+        </section>
 
         {/* CTA */}
         {!mySubmission ? (
