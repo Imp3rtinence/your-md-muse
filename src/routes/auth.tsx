@@ -104,6 +104,31 @@ function AuthPage() {
           </button>
         </form>
 
+        <div className="my-6 flex items-center gap-3 text-xs uppercase tracking-wider text-muted-foreground">
+          <div className="h-px flex-1 bg-border" />
+          <span>oder</span>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+
+        <div className="space-y-2">
+          <OAuthButton
+            label="Mit Google fortfahren"
+            onClick={async () => {
+              const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: `${window.location.origin}/home` });
+              if (r.error) toast.error(r.error.message ?? "Google-Login fehlgeschlagen");
+            }}
+            icon={<GoogleIcon />}
+          />
+          <OAuthButton
+            label="Mit Apple fortfahren"
+            onClick={async () => {
+              const r = await lovable.auth.signInWithOAuth("apple", { redirect_uri: `${window.location.origin}/home` });
+              if (r.error) toast.error(r.error.message ?? "Apple-Login fehlgeschlagen");
+            }}
+            icon={<AppleIcon />}
+          />
+        </div>
+
         <button
           onClick={() => setMode(mode === "signup" ? "signin" : "signup")}
           className="mt-6 w-full text-center text-sm text-muted-foreground hover:text-foreground"
