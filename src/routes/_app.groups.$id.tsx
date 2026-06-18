@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { useAvatarUrl } from "@/lib/avatar-url";
 import { toast } from "sonner";
+import { ActionTile, ActionRow } from "@/components/ActionTile";
 import {
   ChevronLeft, UserPlus, Share2, Link as LinkIcon, BookUser, Crown, Loader2, X, Check,
   LogOut, MessageCircle, Plus, Sparkles, Flame, Trophy, Activity, ArrowUp,
@@ -228,19 +229,6 @@ function StatTile({ icon, value, label }: { icon: React.ReactNode; value: number
   );
 }
 
-function ActionTile({ to, icon, label, highlight }: { to: "/chats" | "/create"; icon: React.ReactNode; label: string; highlight?: boolean }) {
-  return (
-    <Link
-      to={to}
-      className={`tap flex flex-col items-center justify-center gap-1 rounded-2xl p-3 text-xs font-display font-semibold ${
-        highlight ? "bg-primary text-primary-foreground glow-primary" : "border border-border bg-surface"
-      }`}
-    >
-      <span className={highlight ? "" : "text-primary"}>{icon}</span>
-      {label}
-    </Link>
-  );
-}
 
 function MemberRow({ m }: { m: any }) {
   const avatar = useAvatarUrl(m.profile?.avatar_url);
@@ -476,15 +464,3 @@ function LinkAndContacts({ ensureLink, link, groupName, genBusy }: { ensureLink:
   );
 }
 
-function ActionRow({ icon, label, sub, onClick, disabled }: { icon: React.ReactNode; label: string; sub?: string; onClick: () => void; disabled?: boolean }) {
-  return (
-    <button onClick={onClick} disabled={disabled}
-      className="tap flex w-full items-center gap-3 rounded-2xl border border-border bg-surface p-3 text-left disabled:opacity-50">
-      <div className="grid size-10 place-items-center rounded-xl bg-primary/15 text-primary">{icon}</div>
-      <div className="min-w-0 flex-1">
-        <div className="font-display text-sm font-semibold">{label}</div>
-        {sub && <div className="truncate text-xs text-muted-foreground">{sub}</div>}
-      </div>
-    </button>
-  );
-}
