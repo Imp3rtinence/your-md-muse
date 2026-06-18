@@ -335,9 +335,12 @@ export type Database = {
           id: string
           is_private: boolean
           last_active_date: string | null
+          league_tier: number
           streak_days: number
           updated_at: string
           username: string
+          week_start: string
+          weekly_aura: number
         }
         Insert: {
           aura?: number
@@ -349,9 +352,12 @@ export type Database = {
           id: string
           is_private?: boolean
           last_active_date?: string | null
+          league_tier?: number
           streak_days?: number
           updated_at?: string
           username: string
+          week_start?: string
+          weekly_aura?: number
         }
         Update: {
           aura?: number
@@ -363,9 +369,12 @@ export type Database = {
           id?: string
           is_private?: boolean
           last_active_date?: string | null
+          league_tier?: number
           streak_days?: number
           updated_at?: string
           username?: string
+          week_start?: string
+          weekly_aura?: number
         }
         Relationships: []
       }
@@ -544,6 +553,11 @@ export type Database = {
         Returns: undefined
       }
       are_friends: { Args: { a: string; b: string }; Returns: boolean }
+      bump_weekly_aura: {
+        Args: { _amount: number; _user: string }
+        Returns: undefined
+      }
+      current_week_start: { Args: never; Returns: string }
       is_group_member: {
         Args: { _group: string; _user: string }
         Returns: boolean
@@ -563,6 +577,7 @@ export type Database = {
           member_count: number
         }[]
       }
+      process_weekly_leagues: { Args: never; Returns: undefined }
     }
     Enums: {
       challenge_category:
