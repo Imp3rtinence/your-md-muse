@@ -105,6 +105,15 @@ function Profile() {
           <p className="text-sm text-muted-foreground">Du hast noch keine Challenge gestartet.</p>
         )}
       </section>
+
+      {user && (
+        <AvatarEditor
+          userId={user.id}
+          open={editorOpen}
+          onClose={() => setEditorOpen(false)}
+          onSaved={() => qc.invalidateQueries({ queryKey: ["profile"] })}
+        />
+      )}
     </div>
   );
 }
