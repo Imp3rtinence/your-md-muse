@@ -16,6 +16,11 @@ export const Route = createFileRoute("/_app/profile")({
 
 function Profile() {
   const { profile, user, signOut, refreshProfile } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast.success("Bis bald!");
+  };
   const [editorOpen, setEditorOpen] = useState(false);
   const avatarUrl = useAvatarUrl(profile?.avatar_url);
 
