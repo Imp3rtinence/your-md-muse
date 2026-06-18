@@ -161,7 +161,7 @@ function Avatar({ color, letter }: { color: string; letter: string }) {
   );
 }
 
-function InfoTile({ icon, title, sub }: { icon: React.ReactNode; title: string; sub: string }) {
+function InfoTile({ icon, title, sub }: { icon: React.ReactNode; title: string; sub?: string }) {
   return (
     <div className="flex items-center gap-3 rounded-2xl bg-surface/40 px-4 py-3">
       <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-surface-2">
@@ -169,7 +169,7 @@ function InfoTile({ icon, title, sub }: { icon: React.ReactNode; title: string; 
       </span>
       <div className="min-w-0">
         <div className="font-display text-sm font-semibold leading-tight text-foreground">{title}</div>
-        <div className="text-[11px] leading-tight text-foreground/60">{sub}</div>
+        {sub && <div className="text-[11px] leading-tight text-foreground/60">{sub}</div>}
       </div>
     </div>
   );
