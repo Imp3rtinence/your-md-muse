@@ -1,11 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { useAvatarUrl } from "@/lib/avatar-url";
 import { AvatarEditor } from "@/components/AvatarEditor";
-import { Sparkles, Flame, LogOut, Camera } from "lucide-react";
+import { BadgeArt } from "@/components/BadgeArt";
+import { Sparkles, Flame, LogOut, Camera, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/_app/profile")({
   head: () => ({ meta: [{ title: "Profil – JoinUs" }] }),
@@ -74,18 +75,28 @@ function Profile() {
       </div>
 
       <section className="mt-8">
-        <h2 className="mb-3 font-display text-lg font-semibold">Abzeichen-Regal</h2>
+        <Link
+          to="/badges"
+          className="tap mb-3 flex items-center justify-between"
+        >
+          <h2 className="font-display text-lg font-semibold">Abzeichen-Regal</h2>
+          <span className="flex items-center gap-1 text-xs text-muted-foreground">
+            Alle ansehen <ChevronRight className="size-3.5" />
+          </span>
+        </Link>
         {badges?.length ? (
-          <div className="grid grid-cols-4 gap-2">
-            {badges.map((b: any) => (
-              <div key={b.badge.slug} className="rounded-2xl border border-border bg-surface p-3 text-center">
-                <div className="text-2xl">{b.badge.icon}</div>
-                <div className="mt-1 text-[10px] leading-tight text-muted-foreground">{b.badge.name}</div>
+          <Link to="/badges" className="grid grid-cols-4 gap-2">
+            {badges.slice(0, 4).map((b: any) => (
+              <div key={b.badge.slug} className="flex flex-col items-center rounded-2xl border border-border bg-surface p-2">
+                <BadgeArt slug={b.badge.slug} size={56} />
+                <div className="mt-1 line-clamp-1 text-[10px] leading-tight text-muted-foreground">{b.badge.name}</div>
               </div>
             ))}
-          </div>
+          </Link>
         ) : (
-          <p className="text-sm text-muted-foreground">Noch keine Abzeichen – starte deine erste Challenge.</p>
+          <Link to="/badges" className="block rounded-2xl border border-dashed border-border bg-surface/60 p-4 text-sm text-muted-foreground">
+            Noch keine Abzeichen – tippe hier, um alle zu sehen, die du freischalten kannst.
+          </Link>
         )}
       </section>
 

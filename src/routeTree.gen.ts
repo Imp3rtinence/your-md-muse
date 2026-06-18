@@ -17,6 +17,7 @@ import { Route as AppHomeRouteImport } from './routes/_app.home'
 import { Route as AppGroupsRouteImport } from './routes/_app.groups'
 import { Route as AppCreateRouteImport } from './routes/_app.create'
 import { Route as AppChatsRouteImport } from './routes/_app.chats'
+import { Route as AppBadgesRouteImport } from './routes/_app.badges'
 import { Route as AppJoinTokenRouteImport } from './routes/_app.join.$token'
 import { Route as AppGroupsIdRouteImport } from './routes/_app.groups.$id'
 import { Route as AppChallengeIdRouteImport } from './routes/_app.challenge.$id'
@@ -60,6 +61,11 @@ const AppChatsRoute = AppChatsRouteImport.update({
   path: '/chats',
   getParentRoute: () => AppRoute,
 } as any)
+const AppBadgesRoute = AppBadgesRouteImport.update({
+  id: '/badges',
+  path: '/badges',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppJoinTokenRoute = AppJoinTokenRouteImport.update({
   id: '/join/$token',
   path: '/join/$token',
@@ -79,6 +85,7 @@ const AppChallengeIdRoute = AppChallengeIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/badges': typeof AppBadgesRoute
   '/chats': typeof AppChatsRoute
   '/create': typeof AppCreateRoute
   '/groups': typeof AppGroupsRouteWithChildren
@@ -91,6 +98,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/badges': typeof AppBadgesRoute
   '/chats': typeof AppChatsRoute
   '/create': typeof AppCreateRoute
   '/groups': typeof AppGroupsRouteWithChildren
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_app/badges': typeof AppBadgesRoute
   '/_app/chats': typeof AppChatsRoute
   '/_app/create': typeof AppCreateRoute
   '/_app/groups': typeof AppGroupsRouteWithChildren
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/badges'
     | '/chats'
     | '/create'
     | '/groups'
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/badges'
     | '/chats'
     | '/create'
     | '/groups'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/auth'
+    | '/_app/badges'
     | '/_app/chats'
     | '/_app/create'
     | '/_app/groups'
@@ -218,6 +230,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppChatsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/badges': {
+      id: '/_app/badges'
+      path: '/badges'
+      fullPath: '/badges'
+      preLoaderRoute: typeof AppBadgesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/join/$token': {
       id: '/_app/join/$token'
       path: '/join/$token'
@@ -255,6 +274,7 @@ const AppGroupsRouteWithChildren = AppGroupsRoute._addFileChildren(
 )
 
 interface AppRouteChildren {
+  AppBadgesRoute: typeof AppBadgesRoute
   AppChatsRoute: typeof AppChatsRoute
   AppCreateRoute: typeof AppCreateRoute
   AppGroupsRoute: typeof AppGroupsRouteWithChildren
@@ -265,6 +285,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppBadgesRoute: AppBadgesRoute,
   AppChatsRoute: AppChatsRoute,
   AppCreateRoute: AppCreateRoute,
   AppGroupsRoute: AppGroupsRouteWithChildren,
