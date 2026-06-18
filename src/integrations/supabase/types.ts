@@ -218,6 +218,109 @@ export type Database = {
           },
         ]
       }
+      group_invites: {
+        Row: {
+          created_at: string
+          created_by: string
+          expires_at: string
+          group_id: string
+          id: string
+          max_uses: number | null
+          token: string
+          use_count: number
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          expires_at?: string
+          group_id: string
+          id?: string
+          max_uses?: number | null
+          token: string
+          use_count?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          expires_at?: string
+          group_id?: string
+          id?: string
+          max_uses?: number | null
+          token?: string
+          use_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_invites_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      group_members: {
+        Row: {
+          group_id: string
+          joined_at: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          group_id: string
+          joined_at?: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          group_id?: string
+          joined_at?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      groups: {
+        Row: {
+          created_at: string
+          creator_id: string
+          description: string | null
+          emoji: string
+          id: string
+          members_can_invite: boolean
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          creator_id: string
+          description?: string | null
+          emoji?: string
+          id?: string
+          members_can_invite?: boolean
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          creator_id?: string
+          description?: string | null
+          emoji?: string
+          id?: string
+          members_can_invite?: boolean
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           aura: number
@@ -433,7 +536,30 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_friend_to_group: {
+        Args: { _friend: string; _group: string }
+        Returns: undefined
+      }
       are_friends: { Args: { a: string; b: string }; Returns: boolean }
+      is_group_member: {
+        Args: { _group: string; _user: string }
+        Returns: boolean
+      }
+      is_group_owner: {
+        Args: { _group: string; _user: string }
+        Returns: boolean
+      }
+      join_group_with_token: { Args: { _token: string }; Returns: string }
+      preview_group_invite: {
+        Args: { _token: string }
+        Returns: {
+          emoji: string
+          expired: boolean
+          group_id: string
+          group_name: string
+          member_count: number
+        }[]
+      }
     }
     Enums: {
       challenge_category:
