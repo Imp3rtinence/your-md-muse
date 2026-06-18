@@ -127,20 +127,15 @@ function GroupDetail() {
 
       {/* Quick actions */}
       <div className="mt-4 grid grid-cols-3 gap-2">
-        <ActionTile to="/chats" icon={<MessageCircle className="size-5" />} label="Chat" />
-        <ActionTile to="/create" icon={<Plus className="size-5" />} label="Challenge" highlight />
-        {canInvite ? (
-          <button
-            onClick={() => setInviteOpen(true)}
-            className="tap flex flex-col items-center justify-center gap-1 rounded-2xl border border-border bg-surface p-3 text-xs font-display font-semibold"
-          >
-            <UserPlus className="size-5 text-primary" /> Einladen
-          </button>
-        ) : (
-          <div className="flex flex-col items-center justify-center gap-1 rounded-2xl border border-dashed border-border bg-surface/40 p-3 text-xs text-muted-foreground">
-            <UserPlus className="size-5" /> Einladen
-          </div>
-        )}
+        <ActionTile to="/chats" tone="sky" icon={<MessageCircle className="size-5" />} label="Chat" />
+        <ActionTile to="/create" tone="primary" icon={<Plus className="size-5" />} label="Challenge" />
+        <ActionTile
+          onClick={() => canInvite && setInviteOpen(true)}
+          tone="amber"
+          icon={<UserPlus className="size-5" />}
+          label="Einladen"
+          disabled={!canInvite}
+        />
       </div>
 
       {/* Weekly Leaderboard */}
