@@ -110,8 +110,8 @@ function Landing() {
 
           {/* Sekundäre Infos – flacher, ohne Button-Optik */}
           <div className="grid grid-cols-2 gap-3">
-            <InfoTile icon={<Users className="size-4 text-primary" strokeWidth={2.2} />} title="Freunde" sub="Privat & klein" />
-            <InfoTile icon={<Link2 className="size-4 text-accent" strokeWidth={2.2} />} title="Die Kette" sub="Reich sie weiter" />
+            <InfoTile icon={<Users className="size-4 text-primary" strokeWidth={2.2} />} title="Freunde" />
+            <InfoTile icon={<Link2 className="size-4 text-accent" strokeWidth={2.2} />} title="Die Kette" />
           </div>
 
           {/* CTA */}
