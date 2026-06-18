@@ -156,7 +156,7 @@ function ChallengeDetail() {
               <span className="mx-1 h-px w-4 bg-border" />
               <ChainDot username={c.creator?.username} current />
               {chain.forward.map((f: any) => (
-                <><span className="mx-1 h-px w-4 bg-border" /><ChainDot key={f.id} username={f.creator?.username} to={f.id} /></>
+                <span key={f.id} className="flex items-center"><span className="mx-1 h-px w-4 bg-border" /><ChainDot username={f.creator?.username} to={f.id} /></span>
               ))}
             </div>
           </div>
