@@ -1,12 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import type { ReactNode } from "react";
-import { Zap, Users, Link2 } from "lucide-react";
+import { Zap, Users, Link2, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "JoinUs – Mitmachen statt zuschauen" },
-      { name: "description", content: "Starte Challenges, mach mit, reich die Kette weiter." },
+      { title: "JoinUs – Machen statt scrollen" },
+      { name: "description", content: "Herausforderungen annehmen, Beweise liefern und die Kette am Leben halten." },
     ],
   }),
   component: Landing,
@@ -14,60 +13,73 @@ export const Route = createFileRoute("/")({
 
 function Landing() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background">
-      <div className="pointer-events-none absolute inset-0 opacity-60">
-        <div className="absolute -left-32 top-10 size-72 rounded-full blur-3xl" style={{ background: "var(--primary)" }} />
-        <div className="absolute right-[-80px] top-1/3 size-80 rounded-full blur-3xl" style={{ background: "var(--accent)" }} />
+    <div className="relative min-h-screen w-full bg-background text-foreground">
+      {/* Ambient glows */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -left-24 -top-24 size-72 rounded-full opacity-30 blur-[100px]" style={{ background: "var(--primary)" }} />
+        <div className="absolute bottom-10 -right-20 size-80 rounded-full opacity-20 blur-[120px]" style={{ background: "var(--accent)" }} />
       </div>
 
-      <div className="relative mx-auto flex min-h-screen max-w-md flex-col px-6 pb-10 pt-14">
+      <div className="relative mx-auto flex min-h-screen w-full max-w-md flex-col gap-8 px-6 pb-10 pt-10">
+        {/* Header */}
         <header className="flex items-center justify-between">
-          <span className="font-display text-2xl font-bold tracking-tight">
+          <div className="font-display text-2xl font-bold tracking-tighter">
             Join<span className="text-primary">Us</span>
-          </span>
-          <Link to="/auth" className="tap text-sm text-muted-foreground hover:text-foreground">
+          </div>
+          <Link to="/auth" className="tap text-sm font-medium text-muted-foreground transition-opacity hover:text-foreground">
             Anmelden
           </Link>
         </header>
 
-        <main className="mt-12 flex-1">
-          <h1 className="font-display text-5xl font-bold leading-[1.05] tracking-tight">
-            Mitmachen statt zuschauen.
-            <span className="block text-primary">Machen statt scrollen.</span>
-          </h1>
-          <p className="mt-4 text-base text-muted-foreground">
-            Challenges starten, mitmachen, Beweis hochladen – Kette weiterreichen. <span className="text-foreground">Du bist dran.</span>
-          </p>
+        <main className="flex flex-1 flex-col gap-10">
+          {/* Hero claim */}
+          <section className="space-y-4">
+            <h1 className="font-display text-[56px] font-bold leading-[0.9] tracking-tight">
+              Machen <br />
+              <span className="text-primary">statt</span> <br />
+              scrollen.
+            </h1>
+            <p className="max-w-[280px] text-base leading-relaxed text-muted-foreground">
+              Herausforderungen annehmen, Beweise liefern und die Kette am Leben halten.
+            </p>
+          </section>
 
-          <div className="mt-10 space-y-3">
-            <Feature icon={<Zap className="size-5" />} title="Daily Challenge" />
-            <Feature icon={<Users className="size-5" />} title="Mit Freunden" />
-            <Feature icon={<Link2 className="size-5" />} title="Die Kette" />
+          {/* Bento features */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="group relative col-span-2 flex flex-col gap-4 overflow-hidden rounded-3xl border border-border bg-surface/60 p-5 transition-colors hover:border-accent">
+              <div className="flex size-10 items-center justify-center rounded-full text-accent" style={{ background: "color-mix(in oklab, var(--accent) 12%, transparent)" }}>
+                <Zap className="size-5" strokeWidth={2} />
+              </div>
+              <div>
+                <h3 className="font-display text-xl font-bold">Daily Challenge</h3>
+                <p className="text-sm text-muted-foreground">Jeden Tag eine neue Tat.</p>
+              </div>
+              <div className="pointer-events-none absolute -bottom-4 -right-4 size-24 rounded-full opacity-5 blur-2xl transition-opacity group-hover:opacity-20" style={{ background: "var(--accent)" }} />
+            </div>
+
+            <div className="group flex flex-col gap-3 rounded-3xl border border-border bg-surface/60 p-5 transition-colors hover:border-primary">
+              <Users className="size-6 text-primary" strokeWidth={2} />
+              <span className="font-display text-lg font-bold">Freunde</span>
+            </div>
+
+            <div className="group flex flex-col gap-3 rounded-3xl border border-border bg-surface/60 p-5 transition-colors hover:border-foreground/40">
+              <Link2 className="size-6 text-muted-foreground" strokeWidth={2} />
+              <span className="font-display text-lg font-bold">Die Kette</span>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-auto pt-4">
+            <Link
+              to="/auth"
+              className="tap flex w-full items-center justify-center gap-3 rounded-2xl bg-primary py-5 font-display text-xl font-bold text-primary-foreground shadow-[0_20px_40px_-10px_color-mix(in_oklab,var(--primary)_40%,transparent)] transition-transform hover:scale-[1.02] active:scale-95"
+            >
+              Loslegen
+              <ArrowRight className="size-6" strokeWidth={2.5} />
+            </Link>
           </div>
         </main>
-
-        <div className="mt-10 space-y-3">
-          <Link
-            to="/auth"
-            className="tap group relative flex items-center justify-center overflow-hidden rounded-2xl bg-primary px-6 py-5 font-display text-lg font-bold tracking-tight text-primary-foreground transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_0_40px_-8px_var(--primary)] active:scale-[0.98]"
-          >
-            <span className="absolute inset-0 opacity-0 transition-opacity duration-2000 group-hover:opacity-100" style={{ background: "linear-gradient(90deg, transparent, oklch(1 0 0 / 20%), transparent)" }} />
-            Loslegen →
-          </Link>
-          <p className="text-center text-[11px] text-muted-foreground/70">
-            Privat · keine Fremd-DMs · kein Standorttracking
-          </p>
-        </div>
       </div>
-    </div>
-  );
-}
-
-function Feature({ icon, title }: { icon: ReactNode; title: string }) {
-  return (
-    <div className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-4 transition-colors hover:bg-surface-2">
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">{icon}</div>
-      <div className="font-display text-sm font-semibold">{title}</div>
     </div>
   );
 }
