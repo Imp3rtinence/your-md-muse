@@ -122,6 +122,16 @@ function Profile() {
         )}
       </section>
 
+      <section className="mt-10">
+        <button
+          onClick={handleSignOut}
+          className="tap flex w-full items-center justify-center gap-2 rounded-2xl border border-red-500/30 bg-red-500/10 px-5 py-3.5 font-medium text-red-400 transition hover:bg-red-500/20"
+        >
+          <LogOut className="size-4" />
+          Ausloggen
+        </button>
+      </section>
+
       {user && (
         <AvatarEditor
           userId={user.id}
