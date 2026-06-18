@@ -17,6 +17,8 @@ import { Route as AppHomeRouteImport } from './routes/_app.home'
 import { Route as AppGroupsRouteImport } from './routes/_app.groups'
 import { Route as AppCreateRouteImport } from './routes/_app.create'
 import { Route as AppChatsRouteImport } from './routes/_app.chats'
+import { Route as AppJoinTokenRouteImport } from './routes/_app.join.$token'
+import { Route as AppGroupsIdRouteImport } from './routes/_app.groups.$id'
 import { Route as AppChallengeIdRouteImport } from './routes/_app.challenge.$id'
 
 const AuthRoute = AuthRouteImport.update({
@@ -58,6 +60,16 @@ const AppChatsRoute = AppChatsRouteImport.update({
   path: '/chats',
   getParentRoute: () => AppRoute,
 } as any)
+const AppJoinTokenRoute = AppJoinTokenRouteImport.update({
+  id: '/join/$token',
+  path: '/join/$token',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGroupsIdRoute = AppGroupsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AppGroupsRoute,
+} as any)
 const AppChallengeIdRoute = AppChallengeIdRouteImport.update({
   id: '/challenge/$id',
   path: '/challenge/$id',
@@ -69,20 +81,24 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/chats': typeof AppChatsRoute
   '/create': typeof AppCreateRoute
-  '/groups': typeof AppGroupsRoute
+  '/groups': typeof AppGroupsRouteWithChildren
   '/home': typeof AppHomeRoute
   '/profile': typeof AppProfileRoute
   '/challenge/$id': typeof AppChallengeIdRoute
+  '/groups/$id': typeof AppGroupsIdRoute
+  '/join/$token': typeof AppJoinTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/chats': typeof AppChatsRoute
   '/create': typeof AppCreateRoute
-  '/groups': typeof AppGroupsRoute
+  '/groups': typeof AppGroupsRouteWithChildren
   '/home': typeof AppHomeRoute
   '/profile': typeof AppProfileRoute
   '/challenge/$id': typeof AppChallengeIdRoute
+  '/groups/$id': typeof AppGroupsIdRoute
+  '/join/$token': typeof AppJoinTokenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -91,10 +107,12 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_app/chats': typeof AppChatsRoute
   '/_app/create': typeof AppCreateRoute
-  '/_app/groups': typeof AppGroupsRoute
+  '/_app/groups': typeof AppGroupsRouteWithChildren
   '/_app/home': typeof AppHomeRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/challenge/$id': typeof AppChallengeIdRoute
+  '/_app/groups/$id': typeof AppGroupsIdRoute
+  '/_app/join/$token': typeof AppJoinTokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -107,6 +125,8 @@ export interface FileRouteTypes {
     | '/home'
     | '/profile'
     | '/challenge/$id'
+    | '/groups/$id'
+    | '/join/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -117,6 +137,8 @@ export interface FileRouteTypes {
     | '/home'
     | '/profile'
     | '/challenge/$id'
+    | '/groups/$id'
+    | '/join/$token'
   id:
     | '__root__'
     | '/'
@@ -128,6 +150,8 @@ export interface FileRouteTypes {
     | '/_app/home'
     | '/_app/profile'
     | '/_app/challenge/$id'
+    | '/_app/groups/$id'
+    | '/_app/join/$token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -194,6 +218,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppChatsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/join/$token': {
+      id: '/_app/join/$token'
+      path: '/join/$token'
+      fullPath: '/join/$token'
+      preLoaderRoute: typeof AppJoinTokenRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/groups/$id': {
+      id: '/_app/groups/$id'
+      path: '/$id'
+      fullPath: '/groups/$id'
+      preLoaderRoute: typeof AppGroupsIdRouteImport
+      parentRoute: typeof AppGroupsRoute
+    }
     '/_app/challenge/$id': {
       id: '/_app/challenge/$id'
       path: '/challenge/$id'
@@ -204,22 +242,36 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppGroupsRouteChildren {
+  AppGroupsIdRoute: typeof AppGroupsIdRoute
+}
+
+const AppGroupsRouteChildren: AppGroupsRouteChildren = {
+  AppGroupsIdRoute: AppGroupsIdRoute,
+}
+
+const AppGroupsRouteWithChildren = AppGroupsRoute._addFileChildren(
+  AppGroupsRouteChildren,
+)
+
 interface AppRouteChildren {
   AppChatsRoute: typeof AppChatsRoute
   AppCreateRoute: typeof AppCreateRoute
-  AppGroupsRoute: typeof AppGroupsRoute
+  AppGroupsRoute: typeof AppGroupsRouteWithChildren
   AppHomeRoute: typeof AppHomeRoute
   AppProfileRoute: typeof AppProfileRoute
   AppChallengeIdRoute: typeof AppChallengeIdRoute
+  AppJoinTokenRoute: typeof AppJoinTokenRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppChatsRoute: AppChatsRoute,
   AppCreateRoute: AppCreateRoute,
-  AppGroupsRoute: AppGroupsRoute,
+  AppGroupsRoute: AppGroupsRouteWithChildren,
   AppHomeRoute: AppHomeRoute,
   AppProfileRoute: AppProfileRoute,
   AppChallengeIdRoute: AppChallengeIdRoute,
+  AppJoinTokenRoute: AppJoinTokenRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
