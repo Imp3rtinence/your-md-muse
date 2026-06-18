@@ -76,6 +76,7 @@ export type Database = {
           created_at: string
           creator_id: string
           description: string | null
+          expires_at: string | null
           id: string
           is_daily: boolean
           parent_challenge_id: string | null
@@ -89,6 +90,7 @@ export type Database = {
           created_at?: string
           creator_id: string
           description?: string | null
+          expires_at?: string | null
           id?: string
           is_daily?: boolean
           parent_challenge_id?: string | null
@@ -102,6 +104,7 @@ export type Database = {
           created_at?: string
           creator_id?: string
           description?: string | null
+          expires_at?: string | null
           id?: string
           is_daily?: boolean
           parent_challenge_id?: string | null
