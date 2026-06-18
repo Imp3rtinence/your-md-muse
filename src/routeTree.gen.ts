@@ -19,8 +19,10 @@ import { Route as AppGroupsRouteImport } from './routes/_app.groups'
 import { Route as AppCreateRouteImport } from './routes/_app.create'
 import { Route as AppChatsRouteImport } from './routes/_app.chats'
 import { Route as AppBadgesRouteImport } from './routes/_app.badges'
+import { Route as AppGroupsIndexRouteImport } from './routes/_app.groups.index'
 import { Route as AppJoinTokenRouteImport } from './routes/_app.join.$token'
 import { Route as AppGroupsIdRouteImport } from './routes/_app.groups.$id'
+import { Route as AppGroupsIndexRouteImport } from './routes/_app.groups.index'
 import { Route as AppChallengeIdRouteImport } from './routes/_app.challenge.$id'
 
 const AuthRoute = AuthRouteImport.update({
@@ -72,6 +74,11 @@ const AppBadgesRoute = AppBadgesRouteImport.update({
   path: '/badges',
   getParentRoute: () => AppRoute,
 } as any)
+const AppGroupsIndexRoute = AppGroupsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppGroupsRoute,
+} as any)
 const AppJoinTokenRoute = AppJoinTokenRouteImport.update({
   id: '/join/$token',
   path: '/join/$token',
@@ -80,6 +87,11 @@ const AppJoinTokenRoute = AppJoinTokenRouteImport.update({
 const AppGroupsIdRoute = AppGroupsIdRouteImport.update({
   id: '/$id',
   path: '/$id',
+  getParentRoute: () => AppGroupsRoute,
+} as any)
+const AppGroupsIndexRoute = AppGroupsIndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => AppGroupsRoute,
 } as any)
 const AppChallengeIdRoute = AppChallengeIdRouteImport.update({
@@ -101,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/challenge/$id': typeof AppChallengeIdRoute
   '/groups/$id': typeof AppGroupsIdRoute
   '/join/$token': typeof AppJoinTokenRoute
+  '/groups/': typeof AppGroupsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -108,13 +121,13 @@ export interface FileRoutesByTo {
   '/badges': typeof AppBadgesRoute
   '/chats': typeof AppChatsRoute
   '/create': typeof AppCreateRoute
-  '/groups': typeof AppGroupsRouteWithChildren
   '/home': typeof AppHomeRoute
   '/league': typeof AppLeagueRoute
   '/profile': typeof AppProfileRoute
   '/challenge/$id': typeof AppChallengeIdRoute
   '/groups/$id': typeof AppGroupsIdRoute
   '/join/$token': typeof AppJoinTokenRoute
+  '/groups': typeof AppGroupsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -131,6 +144,7 @@ export interface FileRoutesById {
   '/_app/challenge/$id': typeof AppChallengeIdRoute
   '/_app/groups/$id': typeof AppGroupsIdRoute
   '/_app/join/$token': typeof AppJoinTokenRoute
+  '/_app/groups/': typeof AppGroupsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -147,6 +161,7 @@ export interface FileRouteTypes {
     | '/challenge/$id'
     | '/groups/$id'
     | '/join/$token'
+    | '/groups/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -154,13 +169,13 @@ export interface FileRouteTypes {
     | '/badges'
     | '/chats'
     | '/create'
-    | '/groups'
     | '/home'
     | '/league'
     | '/profile'
     | '/challenge/$id'
     | '/groups/$id'
     | '/join/$token'
+    | '/groups'
   id:
     | '__root__'
     | '/'
@@ -176,6 +191,7 @@ export interface FileRouteTypes {
     | '/_app/challenge/$id'
     | '/_app/groups/$id'
     | '/_app/join/$token'
+    | '/_app/groups/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -256,6 +272,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppBadgesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/groups/': {
+      id: '/_app/groups/'
+      path: '/'
+      fullPath: '/groups/'
+      preLoaderRoute: typeof AppGroupsIndexRouteImport
+      parentRoute: typeof AppGroupsRoute
+    }
     '/_app/join/$token': {
       id: '/_app/join/$token'
       path: '/join/$token'
@@ -282,10 +305,12 @@ declare module '@tanstack/react-router' {
 
 interface AppGroupsRouteChildren {
   AppGroupsIdRoute: typeof AppGroupsIdRoute
+  AppGroupsIndexRoute: typeof AppGroupsIndexRoute
 }
 
 const AppGroupsRouteChildren: AppGroupsRouteChildren = {
   AppGroupsIdRoute: AppGroupsIdRoute,
+  AppGroupsIndexRoute: AppGroupsIndexRoute,
 }
 
 const AppGroupsRouteWithChildren = AppGroupsRoute._addFileChildren(
