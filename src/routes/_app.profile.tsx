@@ -70,7 +70,7 @@ function Profile() {
           <h1 className="mt-4 font-display text-2xl font-bold">{profile?.display_name ?? profile?.username}</h1>
           <div className="text-sm text-muted-foreground">@{profile?.username} · privat</div>
         </div>
-        <button onClick={signOut} className="tap rounded-full border border-border p-2 text-muted-foreground">
+        <button onClick={handleSignOut} className="tap rounded-full border border-border p-2 text-muted-foreground">
           <LogOut className="size-4" />
         </button>
       </div>
