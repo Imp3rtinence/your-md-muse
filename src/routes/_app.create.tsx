@@ -24,18 +24,28 @@ function Create() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<CategoryValue>("creative");
   const [visibility, setVisibility] = useState<"friends" | "public">("friends");
+  const [durationH, setDurationH] = useState<number>(24);
   const [busy, setBusy] = useState(false);
+
+  const DURATIONS = [
+    { h: 12, label: "12 Std" },
+    { h: 24, label: "24 Std" },
+    { h: 72, label: "3 Tage" },
+    { h: 168, label: "7 Tage" },
+  ];
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
     if (title.trim().length < 3) { toast.error("Gib einen Titel ein."); return; }
     setBusy(true);
+    const expiresAt = new Date(Date.now() + durationH * 3600 * 1000).toISOString();
     const { data, error } = await (supabase as any).from("challenges").insert({
       creator_id: user.id,
       title: title.trim(),
       description: description.trim() || null,
       category, visibility,
+      expires_at: expiresAt,
       parent_challenge_id: parent ?? null,
     }).select("id").single();
     setBusy(false);
@@ -111,6 +121,28 @@ function Create() {
                 </button>
               );
             })}
+          </div>
+        </div>
+
+        <div>
+          <label className="lbl">Läuft ab in</label>
+          <div className="grid grid-cols-4 gap-2">
+            {DURATIONS.map((d) => {
+              const active = durationH === d.h;
+              return (
+                <button
+                  key={d.h} type="button"
+                  onClick={() => setDurationH(d.h)}
+                  className={"tap rounded-2xl border p-3 text-center transition " +
+                    (active ? "border-primary bg-primary/15" : "border-border bg-surface")}
+                >
+                  <div className="text-sm font-semibold">{d.label}</div>
+                </button>
+              );
+            })}
+          </div>
+          <div className="mt-2 text-xs text-muted-foreground">
+            Endet am {new Date(Date.now() + durationH * 3600 * 1000).toLocaleString("de-DE", { dateStyle: "medium", timeStyle: "short" })}
           </div>
         </div>
 
