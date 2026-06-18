@@ -1,4 +1,5 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 import { Zap, Users, Link2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -72,5 +73,3 @@ function Feature({ icon, title, body }: { icon: ReactNode; title: string; body: 
     </div>
   );
 }
-
-import type { ReactNode } from "react";
