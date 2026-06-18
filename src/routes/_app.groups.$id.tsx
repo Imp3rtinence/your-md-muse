@@ -451,9 +451,10 @@ function LinkAndContacts({ ensureLink, link, groupName, genBusy }: { ensureLink:
         </div>
       </div>
 
-      <ActionRow onClick={shareLink} icon={<Share2 className="size-5" />} label="Über App teilen" sub="WhatsApp, iMessage, Mail …" />
-      <ActionRow onClick={copyLink} icon={<LinkIcon className="size-5" />} label="Link kopieren" />
+      <ActionRow tone="emerald" onClick={shareLink} icon={<Share2 className="size-5" />} label="Über App teilen" sub="WhatsApp, iMessage, Mail …" />
+      <ActionRow tone="sky" onClick={copyLink} icon={<LinkIcon className="size-5" />} label="Link kopieren" />
       <ActionRow
+        tone="violet"
         onClick={pickFromPhonebook}
         icon={<BookUser className="size-5" />}
         label="Aus Telefonbuch wählen"
