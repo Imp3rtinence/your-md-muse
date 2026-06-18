@@ -19,7 +19,6 @@ import { Route as AppGroupsRouteImport } from './routes/_app.groups'
 import { Route as AppCreateRouteImport } from './routes/_app.create'
 import { Route as AppChatsRouteImport } from './routes/_app.chats'
 import { Route as AppBadgesRouteImport } from './routes/_app.badges'
-import { Route as AppLeagueRouteImport } from './routes/_app.league'
 import { Route as AppJoinTokenRouteImport } from './routes/_app.join.$token'
 import { Route as AppGroupsIdRouteImport } from './routes/_app.groups.$id'
 import { Route as AppChallengeIdRouteImport } from './routes/_app.challenge.$id'
@@ -71,11 +70,6 @@ const AppChatsRoute = AppChatsRouteImport.update({
 const AppBadgesRoute = AppBadgesRouteImport.update({
   id: '/badges',
   path: '/badges',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppLeagueRoute = AppLeagueRouteImport.update({
-  id: '/league',
-  path: '/league',
   getParentRoute: () => AppRoute,
 } as any)
 const AppJoinTokenRoute = AppJoinTokenRouteImport.update({
@@ -260,13 +254,6 @@ declare module '@tanstack/react-router' {
       path: '/badges'
       fullPath: '/badges'
       preLoaderRoute: typeof AppBadgesRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/league': {
-      id: '/_app/league'
-      path: '/league'
-      fullPath: '/league'
-      preLoaderRoute: typeof AppLeagueRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/join/$token': {
