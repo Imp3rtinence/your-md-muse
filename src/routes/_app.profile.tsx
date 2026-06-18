@@ -6,6 +6,8 @@ import { useAuth } from "@/lib/auth";
 import { useAvatarUrl } from "@/lib/avatar-url";
 import { AvatarEditor } from "@/components/AvatarEditor";
 import { BadgeArt } from "@/components/BadgeArt";
+import { LeagueBadge } from "@/components/LeagueBadge";
+import { getLeague, msUntilWeekEnd, formatCountdown } from "@/lib/leagues";
 import { toast } from "sonner";
 import { Sparkles, Flame, LogOut, Camera, ChevronRight } from "lucide-react";
 
@@ -79,6 +81,8 @@ function Profile() {
         <Stat icon={<Sparkles className="size-4 text-accent" />} label="Aura" value={profile?.aura ?? 0} />
         <Stat icon={<Flame className="size-4 text-primary" />} label="Streak" value={`${profile?.streak_days ?? 0} d`} />
       </div>
+
+      <LeagueCard tier={profile?.league_tier ?? 1} weeklyAura={profile?.weekly_aura ?? 0} />
 
       <section className="mt-8">
         <Link
