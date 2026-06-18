@@ -110,12 +110,21 @@ function Profile() {
         <h2 className="mb-3 font-display text-lg font-semibold">Deine Challenges</h2>
         {myChallenges?.length ? (
           <ul className="space-y-2">
-            {myChallenges.map((c: any) => (
-              <li key={c.id} className="rounded-2xl border border-border bg-surface px-4 py-3">
-                <div className="font-medium">{c.title}</div>
-                <div className="text-xs text-muted-foreground">{c.participant_count} dabei</div>
-              </li>
-            ))}
+            {myChallenges.map((c: any) => {
+              const expired = c.expires_at && new Date(c.expires_at) < new Date();
+              return (
+                <li key={c.id}>
+                  <Link
+                    to="/challenge/$id"
+                    params={{ id: c.id }}
+                    className={`tap block rounded-2xl border border-border px-4 py-3 ${expired ? "bg-muted/40 opacity-60" : "bg-surface"}`}
+                  >
+                    <div className="font-medium">{c.title}</div>
+                    <div className="text-xs text-muted-foreground">{c.participant_count} dabei {expired && "· abgelaufen"}</div>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         ) : (
           <p className="text-sm text-muted-foreground">Du hast noch keine Challenge gestartet.</p>
