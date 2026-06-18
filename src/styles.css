@@ -127,3 +127,9 @@
   100% { transform: scale(1); opacity: 1; }
 }
 .animate-pop { animation: pop 360ms cubic-bezier(.2,.8,.2,1) both; }
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fade-in 500ms cubic-bezier(.2,.8,.2,1) both; }
