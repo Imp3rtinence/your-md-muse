@@ -11,6 +11,9 @@ type Profile = {
   aura: number;
   streak_days: number;
   is_private: boolean;
+  league_tier: number;
+  weekly_aura: number;
+  week_start: string;
 };
 
 type AuthCtx = {
