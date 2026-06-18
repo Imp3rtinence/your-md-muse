@@ -1,10 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { categoryMeta, STICKERS } from "@/lib/categories";
-import { ArrowLeft, Camera, Flag, Loader2, Link2 } from "lucide-react";
+import { ArrowLeft, Camera, Flag, Loader2, Link2, Users } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_app/challenge/$id")({
