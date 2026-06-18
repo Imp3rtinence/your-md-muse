@@ -41,7 +41,7 @@ function Profile() {
     enabled: !!user,
     queryFn: async () => {
       const { data } = await (supabase as any)
-        .from("challenges").select("id,title,category,participant_count,created_at")
+        .from("challenges").select("id,title,category,participant_count,created_at,expires_at")
         .eq("creator_id", user!.id).order("created_at", { ascending: false }).limit(20);
       return data ?? [];
     },
