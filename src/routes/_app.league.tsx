@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { useAvatarUrl } from "@/lib/avatar-url";
 import { LEAGUES, getLeague, msUntilWeekEnd, formatCountdown, PROMOTION_COUNT, DEMOTION_COUNT } from "@/lib/leagues";
-import { ChevronLeft, ArrowUp, ArrowDown, Minus, Trophy } from "lucide-react";
+import { ChevronLeft, ArrowUp, ArrowDown, Minus, Trophy, Sparkles } from "lucide-react";
 import { LeagueBadge } from "@/components/LeagueBadge";
 
 export const Route = createFileRoute("/_app/league")({
