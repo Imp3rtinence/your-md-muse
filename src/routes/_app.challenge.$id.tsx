@@ -7,6 +7,15 @@ import { categoryMeta, STICKERS } from "@/lib/categories";
 import { ArrowLeft, Camera, Flag, Loader2, Link2, Users } from "lucide-react";
 import { toast } from "sonner";
 import { useAvatarUrl } from "@/lib/avatar-url";
+import { useProofUrl } from "@/lib/proof-url";
+
+function ProofMedia({ path, type, username }: { path: string; type: string; username?: string }) {
+  const url = useProofUrl(path);
+  if (!url) return <div className="aspect-square w-full animate-pulse bg-surface-2" />;
+  return type === "video"
+    ? <video src={url} controls className="aspect-square w-full object-cover" />
+    : <img src={url} alt={`Beweis von @${username ?? ""}`} className="aspect-square w-full object-cover" />;
+}
 
 function AvatarBubble({ path, username, ring }: { path?: string | null; username?: string | null; ring: string }) {
   const url = useAvatarUrl(path);
