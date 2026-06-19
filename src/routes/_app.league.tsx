@@ -90,6 +90,9 @@ function LeaguePage() {
         <p className="mt-2 text-[11px] text-muted-foreground">
           Wochen-Aura zählt fürs Liga-Ranking und resettet jeden Montag. All-time Aura bleibt für immer.
         </p>
+      </div>
+
+
 
 
       {/* Rules */}
