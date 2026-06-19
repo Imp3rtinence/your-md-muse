@@ -4,6 +4,7 @@ import { useAuth } from "@/lib/auth";
 import { Home, Users, Plus, MessageCircle, User } from "lucide-react";
 
 export const Route = createFileRoute("/_app")({
+  ssr: false,
   component: AppShell,
 });
 
@@ -28,9 +29,9 @@ function AppShell() {
 
 function BottomNav() {
   const path = useRouterState({ select: (s) => s.location.pathname });
-  const items: Array<{ to: "/home" | "/groups" | "/create" | "/chats" | "/profile"; icon: typeof Home; label: string; primary?: boolean }> = [
+  const items: Array<{ to: "/home" | "/groups/" | "/create" | "/chats" | "/profile"; icon: typeof Home; label: string; primary?: boolean }> = [
     { to: "/home", icon: Home, label: "Home" },
-    { to: "/groups", icon: Users, label: "Gruppen" },
+    { to: "/groups/", icon: Users, label: "Gruppen" },
     { to: "/create", icon: Plus, label: "Neu", primary: true },
     { to: "/chats", icon: MessageCircle, label: "Chats" },
     { to: "/profile", icon: User, label: "Profil" },
@@ -41,7 +42,8 @@ function BottomNav() {
          style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}>
       <div className="flex items-stretch justify-between rounded-3xl border border-border bg-surface/90 px-2 py-2 backdrop-blur-xl shadow-2xl">
         {items.map(({ to, icon: Icon, label, primary }) => {
-          const active = path === to || (to !== "/home" && path.startsWith(to));
+          const toBase = to.replace(/\/$/, "") || "/";
+          const active = path === toBase || (toBase !== "/home" && path.startsWith(toBase));
           if (primary) {
             return (
               <Link key={to} to={to} className="tap relative -mt-6 flex flex-1 items-center justify-center">
