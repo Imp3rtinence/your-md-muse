@@ -108,10 +108,9 @@ function ChallengeDetail() {
       const path = `${user.id}/${id}/${crypto.randomUUID()}.${ext}`;
       const { error: upErr } = await supabase.storage.from("proofs").upload(path, file);
       if (upErr) throw upErr;
-      const { data: pub } = supabase.storage.from("proofs").getPublicUrl(path);
       const { error: insErr } = await (supabase as any).from("submissions").insert({
         challenge_id: id, user_id: user.id,
-        media_url: pub.publicUrl,
+        media_url: path,
         media_type: file.type.startsWith("video") ? "video" : "image",
       });
       if (insErr) throw insErr;
