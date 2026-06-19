@@ -4,10 +4,14 @@ import { useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { categoryMeta, STICKERS } from "@/lib/categories";
-import { ArrowLeft, Camera, Flag, Loader2, Link2, Users } from "lucide-react";
+import { ArrowLeft, Camera, Flag, Loader2, Link2, Users, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useAvatarUrl } from "@/lib/avatar-url";
 import { useProofUrl } from "@/lib/proof-url";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 function ProofMedia({ path, type, username }: { path: string; type: string; username?: string }) {
   const url = useProofUrl(path);
