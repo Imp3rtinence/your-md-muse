@@ -206,9 +206,12 @@ function LeaderRow({
         </div>
         <div className="truncate text-[11px] text-muted-foreground">@{row.username}</div>
       </div>
-      <div className="flex items-center gap-1 text-sm font-semibold tabular-nums">
-        {row.weekly_aura}
-        <ZoneIcon className={`size-3.5 ${zoneColor}`} />
+      <div className="flex flex-col items-end">
+        <div className="flex items-center gap-1 text-sm font-semibold tabular-nums">
+          {row.weekly_aura}
+          <ZoneIcon className={`size-3.5 ${zoneColor}`} />
+        </div>
+        <div className="text-[10px] text-muted-foreground tabular-nums">{row.aura} all-time</div>
       </div>
     </li>
   );
