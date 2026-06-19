@@ -31,6 +31,7 @@ function LeaguePage() {
       const { data } = await (supabase as any)
         .from("profiles")
         .select("id,username,display_name,avatar_url,weekly_aura,aura,league_tier")
+
         .eq("league_tier", tier)
         .order("weekly_aura", { ascending: false })
         .order("aura", { ascending: false })
