@@ -257,11 +257,7 @@ function ChallengeDetail() {
             <div className="grid grid-cols-2 gap-2">
               {submissions.map((s: any) => (
                 <figure key={s.id} className="overflow-hidden rounded-2xl border border-border bg-surface">
-                  {s.media_type === "video" ? (
-                    <video src={s.media_url} controls className="aspect-square w-full object-cover" />
-                  ) : (
-                    <img src={s.media_url} alt={`Beweis von @${s.user?.username}`} className="aspect-square w-full object-cover" />
-                  )}
+                  <ProofMedia path={s.media_url} type={s.media_type} username={s.user?.username} />
                   <figcaption className="px-2 py-1.5 text-[11px] text-muted-foreground">@{s.user?.username}</figcaption>
                 </figure>
               ))}
