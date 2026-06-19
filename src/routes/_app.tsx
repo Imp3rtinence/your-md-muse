@@ -4,6 +4,7 @@ import { useAuth } from "@/lib/auth";
 import { Home, Users, Plus, MessageCircle, User } from "lucide-react";
 
 export const Route = createFileRoute("/_app")({
+  ssr: false,
   component: AppShell,
 });
 
