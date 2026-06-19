@@ -6,6 +6,17 @@ import { useAuth } from "@/lib/auth";
 import { categoryMeta, STICKERS } from "@/lib/categories";
 import { ArrowLeft, Camera, Flag, Loader2, Link2, Users } from "lucide-react";
 import { toast } from "sonner";
+import { useAvatarUrl } from "@/lib/avatar-url";
+
+function AvatarBubble({ path, username, ring }: { path?: string | null; username?: string | null; ring: string }) {
+  const url = useAvatarUrl(path);
+  if (url) return <img src={url} alt={username ?? ""} className={`size-12 rounded-full object-cover ring-2 ${ring}`} />;
+  return (
+    <div className={`flex size-12 items-center justify-center rounded-full bg-surface-2 font-semibold text-muted-foreground ring-2 ${ring}`}>
+      {(username ?? "?").slice(0, 2).toUpperCase()}
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/_app/challenge/$id")({
   head: () => ({ meta: [{ title: "Challenge – JoinUs" }] }),
