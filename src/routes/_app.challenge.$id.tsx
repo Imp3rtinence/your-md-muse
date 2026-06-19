@@ -4,10 +4,14 @@ import { useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { categoryMeta, STICKERS } from "@/lib/categories";
-import { ArrowLeft, Camera, Flag, Loader2, Link2, Users } from "lucide-react";
+import { ArrowLeft, Camera, Flag, Loader2, Link2, Users, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useAvatarUrl } from "@/lib/avatar-url";
 import { useProofUrl } from "@/lib/proof-url";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 function ProofMedia({ path, type, username }: { path: string; type: string; username?: string }) {
   const url = useProofUrl(path);
@@ -40,6 +44,11 @@ function ChallengeDetail() {
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [justFinished, setJustFinished] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDesc, setEditDesc] = useState("");
+  const [savingEdit, setSavingEdit] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const { data: c } = useQuery({
     queryKey: ["challenge", id],
@@ -140,8 +149,40 @@ function ChallengeDetail() {
     toast.success("Danke – wir schauen es uns an.");
   };
 
+  const openEdit = () => {
+    setEditTitle(c.title ?? "");
+    setEditDesc(c.description ?? "");
+    setEditOpen(true);
+  };
+
+  const saveEdit = async () => {
+    if (!editTitle.trim()) { toast.error("Titel darf nicht leer sein"); return; }
+    setSavingEdit(true);
+    const { error } = await (supabase as any).from("challenges")
+      .update({ title: editTitle.trim(), description: editDesc.trim() || null })
+      .eq("id", id);
+    setSavingEdit(false);
+    if (error) { toast.error(error.message); return; }
+    setEditOpen(false);
+    toast.success("Challenge aktualisiert");
+    qc.invalidateQueries({ queryKey: ["challenge", id] });
+    qc.invalidateQueries({ queryKey: ["feed"] });
+  };
+
+  const removeChallenge = async () => {
+    if (!confirm("Challenge wirklich löschen? Alle Beweise und Kommentare gehen verloren.")) return;
+    setDeleting(true);
+    const { error } = await (supabase as any).from("challenges").delete().eq("id", id);
+    setDeleting(false);
+    if (error) { toast.error(error.message); return; }
+    toast.success("Challenge gelöscht");
+    qc.invalidateQueries({ queryKey: ["feed"] });
+    nav({ to: "/home" });
+  };
+
   if (!c) return <div className="p-6 text-muted-foreground">…</div>;
   const cat = categoryMeta(c.category);
+  const isOwner = user?.id === c.creator_id;
 
   return (
     <div className="pb-6">
@@ -149,10 +190,38 @@ function ChallengeDetail() {
         <button onClick={() => nav({ to: "/home" })} className="tap -ml-2 flex items-center text-muted-foreground">
           <ArrowLeft className="size-5" />
         </button>
-        <button onClick={report} className="tap text-xs text-muted-foreground hover:text-destructive">
-          <Flag className="size-4" />
-        </button>
+        <div className="flex items-center gap-3">
+          {isOwner && (
+            <>
+              <button onClick={openEdit} className="tap text-muted-foreground hover:text-foreground" aria-label="Bearbeiten">
+                <Pencil className="size-4" />
+              </button>
+              <button onClick={removeChallenge} disabled={deleting} className="tap text-muted-foreground hover:text-destructive disabled:opacity-50" aria-label="Löschen">
+                <Trash2 className="size-4" />
+              </button>
+            </>
+          )}
+          <button onClick={report} className="tap text-xs text-muted-foreground hover:text-destructive">
+            <Flag className="size-4" />
+          </button>
+        </div>
       </header>
+
+      <Dialog open={editOpen} onOpenChange={setEditOpen}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>Challenge bearbeiten</DialogTitle></DialogHeader>
+          <div className="space-y-3">
+            <Input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} placeholder="Titel" />
+            <Textarea value={editDesc} onChange={(e) => setEditDesc(e.target.value)} placeholder="Beschreibung" rows={4} />
+          </div>
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setEditOpen(false)}>Abbrechen</Button>
+            <Button onClick={saveEdit} disabled={savingEdit}>
+              {savingEdit ? <Loader2 className="size-4 animate-spin" /> : "Speichern"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <div className="px-5 pt-5">
         <div className="flex items-center gap-2 text-xs">
