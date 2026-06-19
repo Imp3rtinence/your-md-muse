@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { useAvatarUrl } from "@/lib/avatar-url";
 import { LEAGUES, getLeague, msUntilWeekEnd, formatCountdown, PROMOTION_COUNT, DEMOTION_COUNT } from "@/lib/leagues";
-import { ChevronLeft, ArrowUp, ArrowDown, Minus, Trophy } from "lucide-react";
+import { ChevronLeft, ArrowUp, ArrowDown, Minus, Trophy, Sparkles } from "lucide-react";
 import { LeagueBadge } from "@/components/LeagueBadge";
 
 export const Route = createFileRoute("/_app/league")({
@@ -31,6 +31,7 @@ function LeaguePage() {
       const { data } = await (supabase as any)
         .from("profiles")
         .select("id,username,display_name,avatar_url,weekly_aura,aura,league_tier")
+
         .eq("league_tier", tier)
         .order("weekly_aura", { ascending: false })
         .order("aura", { ascending: false })
@@ -64,13 +65,35 @@ function LeaguePage() {
           <LeagueBadge tier={tier} size={120} />
           <div className={`mt-3 font-display text-3xl font-bold ${league.color}`}>{league.name}</div>
           <div className="mt-1 text-sm text-muted-foreground">Liga {tier} von 8</div>
-          <div className="mt-4 flex items-center gap-2 rounded-full border border-border bg-background/60 px-3 py-1.5 text-sm">
-            <Trophy className="size-4 text-accent" />
-            <span className="font-semibold">{profile?.weekly_aura ?? 0}</span>
-            <span className="text-muted-foreground">Aura diese Woche</span>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            <div className="flex items-center gap-2 rounded-full border border-border bg-background/60 px-3 py-1.5 text-sm">
+              <Trophy className="size-4 text-accent" />
+              <span className="font-semibold tabular-nums">{profile?.weekly_aura ?? 0}</span>
+              <span className="text-muted-foreground">diese Woche</span>
+            </div>
+            <div className="flex items-center gap-2 rounded-full border border-border bg-background/60 px-3 py-1.5 text-sm">
+              <Sparkles className="size-4 text-primary" />
+              <span className="font-semibold tabular-nums">{profile?.aura ?? 0}</span>
+              <span className="text-muted-foreground">all-time</span>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Wie verdiene ich Aura? */}
+      <div className="mt-4 rounded-2xl border border-border bg-surface p-4">
+        <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">So verdienst du Aura</div>
+        <ul className="space-y-1.5 text-sm">
+          <li className="flex items-center justify-between"><span>Challenge erstellen</span><span className="font-semibold text-accent">+10</span></li>
+          <li className="flex items-center justify-between"><span>Proof einreichen</span><span className="font-semibold text-accent">+20</span></li>
+        </ul>
+        <p className="mt-2 text-[11px] text-muted-foreground">
+          Wochen-Aura zählt fürs Liga-Ranking und resettet jeden Montag. All-time Aura bleibt für immer.
+        </p>
+      </div>
+
+
+
 
       {/* Rules */}
       <div className="mt-4 grid grid-cols-2 gap-3 text-xs">
@@ -152,7 +175,7 @@ function LeaderRow({
   rank: number;
   zone: "promo" | "safe" | "demo";
   isMe: boolean;
-  row: { id: string; username: string; display_name: string | null; avatar_url: string | null; weekly_aura: number };
+  row: { id: string; username: string; display_name: string | null; avatar_url: string | null; weekly_aura: number; aura: number };
 }) {
   const avatar = useAvatarUrl(row.avatar_url);
   const dot =
@@ -183,9 +206,12 @@ function LeaderRow({
         </div>
         <div className="truncate text-[11px] text-muted-foreground">@{row.username}</div>
       </div>
-      <div className="flex items-center gap-1 text-sm font-semibold tabular-nums">
-        {row.weekly_aura}
-        <ZoneIcon className={`size-3.5 ${zoneColor}`} />
+      <div className="flex flex-col items-end">
+        <div className="flex items-center gap-1 text-sm font-semibold tabular-nums">
+          {row.weekly_aura}
+          <ZoneIcon className={`size-3.5 ${zoneColor}`} />
+        </div>
+        <div className="text-[10px] text-muted-foreground tabular-nums">{row.aura} all-time</div>
       </div>
     </li>
   );
