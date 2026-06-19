@@ -22,6 +22,7 @@ import { Route as AppBadgesRouteImport } from './routes/_app.badges'
 import { Route as AppGroupsIndexRouteImport } from './routes/_app.groups.index'
 import { Route as AppJoinTokenRouteImport } from './routes/_app.join.$token'
 import { Route as AppGroupsIdRouteImport } from './routes/_app.groups.$id'
+import { Route as AppChatUserIdRouteImport } from './routes/_app.chat.$userId'
 import { Route as AppChallengeIdRouteImport } from './routes/_app.challenge.$id'
 
 const AuthRoute = AuthRouteImport.update({
@@ -88,6 +89,11 @@ const AppGroupsIdRoute = AppGroupsIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => AppGroupsRoute,
 } as any)
+const AppChatUserIdRoute = AppChatUserIdRouteImport.update({
+  id: '/chat/$userId',
+  path: '/chat/$userId',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppChallengeIdRoute = AppChallengeIdRouteImport.update({
   id: '/challenge/$id',
   path: '/challenge/$id',
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/league': typeof AppLeagueRoute
   '/profile': typeof AppProfileRoute
   '/challenge/$id': typeof AppChallengeIdRoute
+  '/chat/$userId': typeof AppChatUserIdRoute
   '/groups/$id': typeof AppGroupsIdRoute
   '/join/$token': typeof AppJoinTokenRoute
   '/groups/': typeof AppGroupsIndexRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByTo {
   '/league': typeof AppLeagueRoute
   '/profile': typeof AppProfileRoute
   '/challenge/$id': typeof AppChallengeIdRoute
+  '/chat/$userId': typeof AppChatUserIdRoute
   '/groups/$id': typeof AppGroupsIdRoute
   '/join/$token': typeof AppJoinTokenRoute
   '/groups': typeof AppGroupsIndexRoute
@@ -136,6 +144,7 @@ export interface FileRoutesById {
   '/_app/league': typeof AppLeagueRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/challenge/$id': typeof AppChallengeIdRoute
+  '/_app/chat/$userId': typeof AppChatUserIdRoute
   '/_app/groups/$id': typeof AppGroupsIdRoute
   '/_app/join/$token': typeof AppJoinTokenRoute
   '/_app/groups/': typeof AppGroupsIndexRoute
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/league'
     | '/profile'
     | '/challenge/$id'
+    | '/chat/$userId'
     | '/groups/$id'
     | '/join/$token'
     | '/groups/'
@@ -167,6 +177,7 @@ export interface FileRouteTypes {
     | '/league'
     | '/profile'
     | '/challenge/$id'
+    | '/chat/$userId'
     | '/groups/$id'
     | '/join/$token'
     | '/groups'
@@ -183,6 +194,7 @@ export interface FileRouteTypes {
     | '/_app/league'
     | '/_app/profile'
     | '/_app/challenge/$id'
+    | '/_app/chat/$userId'
     | '/_app/groups/$id'
     | '/_app/join/$token'
     | '/_app/groups/'
@@ -287,6 +299,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppGroupsIdRouteImport
       parentRoute: typeof AppGroupsRoute
     }
+    '/_app/chat/$userId': {
+      id: '/_app/chat/$userId'
+      path: '/chat/$userId'
+      fullPath: '/chat/$userId'
+      preLoaderRoute: typeof AppChatUserIdRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/challenge/$id': {
       id: '/_app/challenge/$id'
       path: '/challenge/$id'
@@ -320,6 +339,7 @@ interface AppRouteChildren {
   AppLeagueRoute: typeof AppLeagueRoute
   AppProfileRoute: typeof AppProfileRoute
   AppChallengeIdRoute: typeof AppChallengeIdRoute
+  AppChatUserIdRoute: typeof AppChatUserIdRoute
   AppJoinTokenRoute: typeof AppJoinTokenRoute
 }
 
@@ -332,6 +352,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppLeagueRoute: AppLeagueRoute,
   AppProfileRoute: AppProfileRoute,
   AppChallengeIdRoute: AppChallengeIdRoute,
+  AppChatUserIdRoute: AppChatUserIdRoute,
   AppJoinTokenRoute: AppJoinTokenRoute,
 }
 
