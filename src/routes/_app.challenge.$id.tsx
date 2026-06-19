@@ -209,13 +209,7 @@ function ChallengeDetail() {
               }
               return list.map((s: any) => (
                 <div key={s.user_id} className="flex shrink-0 flex-col items-center gap-1.5">
-                  {s.user?.avatar_url ? (
-                    <img src={s.user.avatar_url} alt={s.user.username} className="size-12 rounded-full object-cover ring-2 ring-border" />
-                  ) : (
-                    <div className="flex size-12 items-center justify-center rounded-full bg-surface-2 font-semibold text-muted-foreground ring-2 ring-border">
-                      {(s.user?.username ?? "?").slice(0, 2).toUpperCase()}
-                    </div>
-                  )}
+                  <AvatarBubble path={s.user?.avatar_url} username={s.user?.username} ring="ring-border" />
                   <span className="max-w-[72px] truncate text-[11px] font-medium">@{s.user?.username}</span>
                 </div>
               ));
