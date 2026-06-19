@@ -7,6 +7,15 @@ import { categoryMeta, STICKERS } from "@/lib/categories";
 import { ArrowLeft, Camera, Flag, Loader2, Link2, Users } from "lucide-react";
 import { toast } from "sonner";
 import { useAvatarUrl } from "@/lib/avatar-url";
+import { useProofUrl } from "@/lib/proof-url";
+
+function ProofMedia({ path, type, username }: { path: string; type: string; username?: string }) {
+  const url = useProofUrl(path);
+  if (!url) return <div className="aspect-square w-full animate-pulse bg-surface-2" />;
+  return type === "video"
+    ? <video src={url} controls className="aspect-square w-full object-cover" />
+    : <img src={url} alt={`Beweis von @${username ?? ""}`} className="aspect-square w-full object-cover" />;
+}
 
 function AvatarBubble({ path, username, ring }: { path?: string | null; username?: string | null; ring: string }) {
   const url = useAvatarUrl(path);
@@ -99,10 +108,9 @@ function ChallengeDetail() {
       const path = `${user.id}/${id}/${crypto.randomUUID()}.${ext}`;
       const { error: upErr } = await supabase.storage.from("proofs").upload(path, file);
       if (upErr) throw upErr;
-      const { data: pub } = supabase.storage.from("proofs").getPublicUrl(path);
       const { error: insErr } = await (supabase as any).from("submissions").insert({
         challenge_id: id, user_id: user.id,
-        media_url: pub.publicUrl,
+        media_url: path,
         media_type: file.type.startsWith("video") ? "video" : "image",
       });
       if (insErr) throw insErr;
@@ -249,11 +257,7 @@ function ChallengeDetail() {
             <div className="grid grid-cols-2 gap-2">
               {submissions.map((s: any) => (
                 <figure key={s.id} className="overflow-hidden rounded-2xl border border-border bg-surface">
-                  {s.media_type === "video" ? (
-                    <video src={s.media_url} controls className="aspect-square w-full object-cover" />
-                  ) : (
-                    <img src={s.media_url} alt={`Beweis von @${s.user?.username}`} className="aspect-square w-full object-cover" />
-                  )}
+                  <ProofMedia path={s.media_url} type={s.media_type} username={s.user?.username} />
                   <figcaption className="px-2 py-1.5 text-[11px] text-muted-foreground">@{s.user?.username}</figcaption>
                 </figure>
               ))}
