@@ -192,13 +192,7 @@ function ChallengeDetail() {
             {/* Creator */}
             <div className="flex shrink-0 flex-col items-center gap-1.5">
               <div className="relative">
-                {c.creator?.avatar_url ? (
-                  <img src={c.creator.avatar_url} alt={c.creator.username} className="size-12 rounded-full object-cover ring-2 ring-primary" />
-                ) : (
-                  <div className="flex size-12 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground ring-2 ring-primary">
-                    {(c.creator?.username ?? "?").slice(0, 2).toUpperCase()}
-                  </div>
-                )}
+                <AvatarBubble path={c.creator?.avatar_url} username={c.creator?.username} ring="ring-primary" />
                 <span className="absolute -bottom-1 -right-1 rounded-full bg-primary px-1.5 py-0.5 text-[9px] font-bold text-primary-foreground">Host</span>
               </div>
               <span className="max-w-[72px] truncate text-[11px] font-medium">@{c.creator?.username}</span>
