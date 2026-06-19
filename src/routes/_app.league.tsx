@@ -175,7 +175,7 @@ function LeaderRow({
   rank: number;
   zone: "promo" | "safe" | "demo";
   isMe: boolean;
-  row: { id: string; username: string; display_name: string | null; avatar_url: string | null; weekly_aura: number };
+  row: { id: string; username: string; display_name: string | null; avatar_url: string | null; weekly_aura: number; aura: number };
 }) {
   const avatar = useAvatarUrl(row.avatar_url);
   const dot =
