@@ -42,7 +42,8 @@ function BottomNav() {
          style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}>
       <div className="flex items-stretch justify-between rounded-3xl border border-border bg-surface/90 px-2 py-2 backdrop-blur-xl shadow-2xl">
         {items.map(({ to, icon: Icon, label, primary }) => {
-          const active = path === to || (to !== "/home" && path.startsWith(to));
+          const toBase = to.replace(/\/$/, "") || "/";
+          const active = path === toBase || (toBase !== "/home" && path.startsWith(toBase));
           if (primary) {
             return (
               <Link key={to} to={to} className="tap relative -mt-6 flex flex-1 items-center justify-center">
