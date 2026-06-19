@@ -179,6 +179,48 @@ export type Database = {
           },
         ]
       }
+      direct_messages: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          read_at: string | null
+          recipient_id: string
+          sender_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          recipient_id: string
+          sender_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          recipient_id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "direct_messages_recipient_id_fkey"
+            columns: ["recipient_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "direct_messages_sender_id_fkey"
+            columns: ["sender_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       friendships: {
         Row: {
           addressee_id: string
@@ -567,6 +609,20 @@ export type Database = {
         Returns: boolean
       }
       join_group_with_token: { Args: { _token: string }; Returns: string }
+      list_dm_threads: {
+        Args: never
+        Returns: {
+          last_at: string
+          last_body: string
+          last_sender_id: string
+          other_avatar_url: string
+          other_display_name: string
+          other_id: string
+          other_username: string
+          unread_count: number
+        }[]
+      }
+      mark_dm_thread_read: { Args: { _other: string }; Returns: undefined }
       preview_group_invite: {
         Args: { _token: string }
         Returns: {
@@ -578,6 +634,20 @@ export type Database = {
         }[]
       }
       process_weekly_leagues: { Args: never; Returns: undefined }
+      respond_friend_request: {
+        Args: { _accept: boolean; _other: string }
+        Returns: undefined
+      }
+      search_users: {
+        Args: { _q: string }
+        Returns: {
+          avatar_url: string
+          display_name: string
+          id: string
+          username: string
+        }[]
+      }
+      send_friend_request: { Args: { _other: string }; Returns: undefined }
     }
     Enums: {
       challenge_category:
