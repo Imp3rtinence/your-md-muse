@@ -1,0 +1,28 @@
+{
+  "common": { "back": "Retour", "next": "Suivant", "done": "Terminé", "skip": "Passer", "cancel": "Annuler", "save": "Enregistrer", "delete": "Supprimer", "loading": "Chargement…", "retry": "Réessayer", "ok": "OK" },
+  "nav": { "home": "Accueil", "groups": "Équipes", "create": "Créer", "chats": "Discussions", "profile": "Profil" },
+  "auth": {
+    "title": "Bienvenue sur Komma", "subtitle": "Participer plutôt que regarder.",
+    "email": "E-mail", "password": "Mot de passe",
+    "signin": "Se connecter", "signup": "S'inscrire",
+    "google": "Continuer avec Google", "or": "ou",
+    "legalHint": "En continuant, tu acceptes nos {{terms}} et tu as pris connaissance de notre {{imprint}}.",
+    "terms": "CGU", "imprint": "Mentions légales"
+  },
+  "onboarding": {
+    "languageTitle": "Quelle langue parles-tu ?",
+    "languageSubtitle": "Tu pourras la changer plus tard dans ton profil.",
+    "welcomeTitle": "Bienvenue sur <1>Komma</1>,",
+    "welcomeTitleLine2": "content que tu sois là.",
+    "welcomeText": "Komma c'est une petite pause loin du scroll — et un coup de pouce pour vraiment faire un truc. Trois questions rapides et c'est parti.",
+    "howItWorks": "Comment ça marche", "howItWorksDetail": "Lance un défi · poste ta preuve · collecte de l'Aura",
+    "go": "C'est parti",
+    "interestsTitle": "T'as envie de quoi ?", "interestsSubtitle": "Choisis jusqu'à quatre. On te propose des défis qui collent.",
+    "interests": { "bewegung": "Bouger", "kreativ": "Créativité", "lernen": "Apprendre", "sozial": "Social", "natur": "Nature", "mut": "Courage", "musik": "Musique", "essen": "Cuisine" },
+    "dynamicWaitTitle": "Une dernière petite question…", "dynamicHint": "Personnalisé pour toi", "dynamicThinking": "L'IA réfléchit…",
+    "contextTitle": "Avec qui tu veux commencer ?", "contextSubtitle": "Tu peux rejoindre ou créer d'autres équipes quand tu veux.",
+    "contexts": { "friends": "Amis", "school": "École", "sport": "Club / sport", "neighborhood": "Quartier", "solo": "Solo pour l'instant" }
+  },
+  "profile": { "language": "Langue", "legal": "Mentions légales", "terms": "CGU", "imprint": "Mentions légales", "logout": "Déconnexion" },
+  "legal": { "termsTitle": "Conditions d'utilisation", "imprintTitle": "Mentions légales", "back": "Retour" }
+}

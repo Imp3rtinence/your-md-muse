@@ -1,0 +1,29 @@
+{
+  "common": { "back": "Geri", "next": "İleri", "done": "Tamam", "skip": "Atla", "cancel": "İptal", "save": "Kaydet", "delete": "Sil", "loading": "Yükleniyor…", "retry": "Tekrar dene", "ok": "Tamam" },
+  "nav": { "home": "Anasayfa", "groups": "Ekipler", "create": "Oluştur", "chats": "Sohbetler", "profile": "Profil" },
+  "auth": {
+    "title": "Komma'ya hoş geldin",
+    "subtitle": "İzlemek yerine katıl.",
+    "email": "E-posta", "password": "Şifre",
+    "signin": "Giriş yap", "signup": "Kayıt ol",
+    "google": "Google ile devam et", "or": "veya",
+    "legalHint": "Devam ederek {{terms}} kabul eder ve {{imprint}} bilgilerini tanırsın.",
+    "terms": "Kullanım Şartları", "imprint": "Künye"
+  },
+  "onboarding": {
+    "languageTitle": "Hangi dili konuşuyorsun?",
+    "languageSubtitle": "Profilinden istediğin zaman değiştirebilirsin.",
+    "welcomeTitle": "<1>Komma</1>'ya hoş geldin,",
+    "welcomeTitleLine2": "burada olmana sevindik.",
+    "welcomeText": "Komma kaydırmaktan kısa bir mola — ve gerçekten bir şey yapman için küçük bir dürtü. Üç kısa soru, sonra içeridesin.",
+    "howItWorks": "Nasıl çalışır", "howItWorksDetail": "Görev başlat · kanıt paylaş · Aura topla",
+    "go": "Başla",
+    "interestsTitle": "Ne yapmak istersin?", "interestsSubtitle": "En fazla dört seç. Sana uygun görevler önereceğiz.",
+    "interests": { "bewegung": "Hareket", "kreativ": "Yaratıcılık", "lernen": "Öğrenmek", "sozial": "Sosyal", "natur": "Doğa", "mut": "Cesaret", "musik": "Müzik", "essen": "Yemek" },
+    "dynamicWaitTitle": "Bir kısa soru daha…", "dynamicHint": "Senin seçimlerine özel", "dynamicThinking": "Yapay zekâ düşünüyor…",
+    "contextTitle": "Kiminle başlamak istersin?", "contextSubtitle": "Daha sonra istediğin zaman yeni ekip kurabilir veya katılabilirsin.",
+    "contexts": { "friends": "Arkadaşlar", "school": "Okul", "sport": "Kulüp / spor", "neighborhood": "Mahalle", "solo": "Şimdilik yalnız" }
+  },
+  "profile": { "language": "Dil", "legal": "Yasal", "terms": "Kullanım Şartları", "imprint": "Künye", "logout": "Çıkış" },
+  "legal": { "termsTitle": "Kullanım Şartları", "imprintTitle": "Künye", "back": "Geri" }
+}

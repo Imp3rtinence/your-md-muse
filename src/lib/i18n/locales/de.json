@@ -1,0 +1,80 @@
+{
+  "common": {
+    "back": "Zurück",
+    "next": "Weiter",
+    "done": "Fertig",
+    "skip": "Überspringen",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "loading": "Lädt …",
+    "retry": "Nochmal versuchen",
+    "ok": "Ok"
+  },
+  "nav": {
+    "home": "Start",
+    "groups": "Crews",
+    "create": "Erstellen",
+    "chats": "Chats",
+    "profile": "Profil"
+  },
+  "auth": {
+    "title": "Willkommen bei Komma",
+    "subtitle": "Mitmachen statt zuschauen.",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "signin": "Einloggen",
+    "signup": "Registrieren",
+    "google": "Mit Google fortfahren",
+    "or": "oder",
+    "legalHint": "Mit dem Fortfahren akzeptierst du unsere {{terms}} und kennst unser {{imprint}}.",
+    "terms": "AGB",
+    "imprint": "Impressum"
+  },
+  "onboarding": {
+    "languageTitle": "Welche Sprache sprichst du?",
+    "languageSubtitle": "Du kannst sie später jederzeit im Profil ändern.",
+    "welcomeTitle": "Willkommen bei <1>Komma</1>,",
+    "welcomeTitleLine2": "schön dass du da bist.",
+    "welcomeText": "Komma ist eine kleine Pause vom Scrollen — und ein Anstupser, mal wirklich was zu machen. Drei kurze Fragen, dann bist du drin.",
+    "howItWorks": "So funktioniert's",
+    "howItWorksDetail": "Challenge starten · Beweis posten · Aura sammeln",
+    "go": "Los",
+    "interestsTitle": "Worauf hast du Lust?",
+    "interestsSubtitle": "Wähl bis zu vier. Wir schlagen dir dazu passende Challenges vor.",
+    "interests": {
+      "bewegung": "Bewegung",
+      "kreativ": "Kreativität",
+      "lernen": "Lernen",
+      "sozial": "Soziales",
+      "natur": "Natur",
+      "mut": "Mut",
+      "musik": "Musik",
+      "essen": "Kochen"
+    },
+    "dynamicWaitTitle": "Eine kurze Frage noch …",
+    "dynamicHint": "Personalisiert für deine Auswahl",
+    "dynamicThinking": "KI denkt nach …",
+    "contextTitle": "Mit wem willst du loslegen?",
+    "contextSubtitle": "Du kannst später jederzeit weitere Crews gründen oder beitreten.",
+    "contexts": {
+      "friends": "Freunde",
+      "school": "Schule",
+      "sport": "Verein / Sport",
+      "neighborhood": "Nachbarschaft",
+      "solo": "Erstmal allein"
+    }
+  },
+  "profile": {
+    "language": "Sprache",
+    "legal": "Rechtliches",
+    "terms": "AGB",
+    "imprint": "Impressum",
+    "logout": "Abmelden"
+  },
+  "legal": {
+    "termsTitle": "Allgemeine Geschäftsbedingungen",
+    "imprintTitle": "Impressum",
+    "back": "Zurück"
+  }
+}

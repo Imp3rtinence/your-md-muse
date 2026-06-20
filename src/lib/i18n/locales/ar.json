@@ -1,0 +1,29 @@
+{
+  "common": { "back": "رجوع", "next": "التالي", "done": "تم", "skip": "تخطي", "cancel": "إلغاء", "save": "حفظ", "delete": "حذف", "loading": "جارٍ التحميل…", "retry": "حاول مرة أخرى", "ok": "حسناً" },
+  "nav": { "home": "الرئيسية", "groups": "الفرق", "create": "إنشاء", "chats": "المحادثات", "profile": "الملف" },
+  "auth": {
+    "title": "أهلاً بك في Komma",
+    "subtitle": "شارك بدلاً من المشاهدة.",
+    "email": "البريد الإلكتروني", "password": "كلمة المرور",
+    "signin": "تسجيل الدخول", "signup": "إنشاء حساب",
+    "google": "المتابعة باستخدام Google", "or": "أو",
+    "legalHint": "بالمتابعة فإنك تقبل {{terms}} وتقر بـ {{imprint}}.",
+    "terms": "الشروط", "imprint": "بيانات الناشر"
+  },
+  "onboarding": {
+    "languageTitle": "ما اللغة التي تتحدثها؟",
+    "languageSubtitle": "يمكنك تغييرها لاحقاً من ملفك الشخصي.",
+    "welcomeTitle": "أهلاً بك في <1>Komma</1>،",
+    "welcomeTitleLine2": "سعداء بوجودك.",
+    "welcomeText": "Komma استراحة صغيرة من التمرير — ودفعة لتفعل شيئاً حقيقياً. ثلاثة أسئلة قصيرة وستكون معنا.",
+    "howItWorks": "كيف يعمل", "howItWorksDetail": "ابدأ تحدياً · انشر دليلك · اجمع Aura",
+    "go": "هيا",
+    "interestsTitle": "ماذا يحلو لك؟", "interestsSubtitle": "اختر حتى أربعة. سنقترح تحديات مناسبة.",
+    "interests": { "bewegung": "حركة", "kreativ": "إبداع", "lernen": "تعلم", "sozial": "اجتماعي", "natur": "طبيعة", "mut": "شجاعة", "musik": "موسيقى", "essen": "طبخ" },
+    "dynamicWaitTitle": "سؤال قصير آخر…", "dynamicHint": "مخصص لاختياراتك", "dynamicThinking": "الذكاء الاصطناعي يفكر…",
+    "contextTitle": "مع من تريد أن تبدأ؟", "contextSubtitle": "يمكنك إنشاء أو الانضمام إلى فرق أخرى في أي وقت.",
+    "contexts": { "friends": "الأصدقاء", "school": "المدرسة", "sport": "النادي / الرياضة", "neighborhood": "الجيران", "solo": "وحدي الآن" }
+  },
+  "profile": { "language": "اللغة", "legal": "قانوني", "terms": "الشروط", "imprint": "بيانات الناشر", "logout": "تسجيل الخروج" },
+  "legal": { "termsTitle": "شروط الاستخدام", "imprintTitle": "بيانات الناشر", "back": "رجوع" }
+}

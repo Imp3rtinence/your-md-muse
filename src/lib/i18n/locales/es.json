@@ -1,0 +1,28 @@
+{
+  "common": { "back": "Atrás", "next": "Siguiente", "done": "Listo", "skip": "Saltar", "cancel": "Cancelar", "save": "Guardar", "delete": "Eliminar", "loading": "Cargando…", "retry": "Reintentar", "ok": "OK" },
+  "nav": { "home": "Inicio", "groups": "Equipos", "create": "Crear", "chats": "Chats", "profile": "Perfil" },
+  "auth": {
+    "title": "Bienvenido a Komma", "subtitle": "Participa en lugar de mirar.",
+    "email": "Correo", "password": "Contraseña",
+    "signin": "Entrar", "signup": "Registrarse",
+    "google": "Continuar con Google", "or": "o",
+    "legalHint": "Al continuar aceptas nuestros {{terms}} y conoces nuestro {{imprint}}.",
+    "terms": "Términos", "imprint": "Aviso legal"
+  },
+  "onboarding": {
+    "languageTitle": "¿Qué idioma hablas?",
+    "languageSubtitle": "Puedes cambiarlo más tarde en tu perfil.",
+    "welcomeTitle": "Bienvenido a <1>Komma</1>,",
+    "welcomeTitleLine2": "qué bien que estés aquí.",
+    "welcomeText": "Komma es una pequeña pausa del scroll y un empujoncito para hacer algo de verdad. Tres preguntas cortas y estás dentro.",
+    "howItWorks": "Cómo funciona", "howItWorksDetail": "Inicia un reto · publica tu prueba · suma Aura",
+    "go": "Vamos",
+    "interestsTitle": "¿Qué te apetece?", "interestsSubtitle": "Elige hasta cuatro. Te propondremos retos adecuados.",
+    "interests": { "bewegung": "Movimiento", "kreativ": "Creatividad", "lernen": "Aprender", "sozial": "Social", "natur": "Naturaleza", "mut": "Valentía", "musik": "Música", "essen": "Cocinar" },
+    "dynamicWaitTitle": "Una pregunta corta más…", "dynamicHint": "Personalizado para ti", "dynamicThinking": "La IA está pensando…",
+    "contextTitle": "¿Con quién quieres empezar?", "contextSubtitle": "Más tarde puedes crear o unirte a más equipos.",
+    "contexts": { "friends": "Amigos", "school": "Escuela", "sport": "Club / deporte", "neighborhood": "Barrio", "solo": "De momento solo" }
+  },
+  "profile": { "language": "Idioma", "legal": "Legal", "terms": "Términos", "imprint": "Aviso legal", "logout": "Salir" },
+  "legal": { "termsTitle": "Términos de uso", "imprintTitle": "Aviso legal", "back": "Atrás" }
+}

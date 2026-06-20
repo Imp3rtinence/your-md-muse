@@ -1,0 +1,29 @@
+{
+  "common": { "back": "Назад", "next": "Далі", "done": "Готово", "skip": "Пропустити", "cancel": "Скасувати", "save": "Зберегти", "delete": "Видалити", "loading": "Завантаження…", "retry": "Спробувати ще раз", "ok": "Ок" },
+  "nav": { "home": "Головна", "groups": "Команди", "create": "Створити", "chats": "Чати", "profile": "Профіль" },
+  "auth": {
+    "title": "Ласкаво просимо в Komma",
+    "subtitle": "Бери участь, а не просто дивись.",
+    "email": "Email", "password": "Пароль",
+    "signin": "Увійти", "signup": "Зареєструватися",
+    "google": "Продовжити з Google", "or": "або",
+    "legalHint": "Продовжуючи, ти приймаєш наші {{terms}} і знайомий з {{imprint}}.",
+    "terms": "Умови", "imprint": "Імпресум"
+  },
+  "onboarding": {
+    "languageTitle": "Якою мовою ти говориш?",
+    "languageSubtitle": "Можеш змінити це в профілі в будь-який час.",
+    "welcomeTitle": "Ласкаво просимо в <1>Komma</1>,",
+    "welcomeTitleLine2": "раді тебе бачити.",
+    "welcomeText": "Komma — це маленька пауза від скролінгу й поштовх зробити щось справжнє. Три короткі питання — і ти в грі.",
+    "howItWorks": "Як це працює", "howItWorksDetail": "Почни челендж · надішли доказ · збирай Auru",
+    "go": "Поїхали",
+    "interestsTitle": "Що тобі цікаво?", "interestsSubtitle": "Обери до чотирьох. Підкажемо відповідні челенджі.",
+    "interests": { "bewegung": "Рух", "kreativ": "Творчість", "lernen": "Навчання", "sozial": "Соціальне", "natur": "Природа", "mut": "Сміливість", "musik": "Музика", "essen": "Готування" },
+    "dynamicWaitTitle": "Ще одне коротке питання…", "dynamicHint": "Персонально для твого вибору", "dynamicThinking": "ШІ думає…",
+    "contextTitle": "З ким хочеш почати?", "contextSubtitle": "Пізніше зможеш створити чи приєднатися до інших команд.",
+    "contexts": { "friends": "Друзі", "school": "Школа", "sport": "Клуб / спорт", "neighborhood": "Сусіди", "solo": "Поки сам" }
+  },
+  "profile": { "language": "Мова", "legal": "Юридичне", "terms": "Умови", "imprint": "Імпресум", "logout": "Вийти" },
+  "legal": { "termsTitle": "Умови користування", "imprintTitle": "Імпресум", "back": "Назад" }
+}
