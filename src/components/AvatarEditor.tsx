@@ -38,6 +38,7 @@ export function AvatarEditor({
   onSaved: (path: string) => void;
 }) {
   const fileInput = useRef<HTMLInputElement>(null);
+  const cameraInput = useRef<HTMLInputElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const [src, setSrc] = useState<string | null>(null);
   const [filter, setFilter] = useState<Filter>("none");
