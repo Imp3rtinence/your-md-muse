@@ -836,6 +836,18 @@ export type Database = {
           unread_count: number
         }[]
       }
+      list_friend_requests: {
+        Args: never
+        Returns: {
+          avatar_url: string
+          created_at: string
+          direction: string
+          display_name: string
+          friendship_id: string
+          other_id: string
+          username: string
+        }[]
+      }
       mark_dm_thread_read: { Args: { _other: string }; Returns: undefined }
       match_challenges: {
         Args: {
