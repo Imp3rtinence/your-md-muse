@@ -60,8 +60,11 @@ function ChallengeDetail() {
   const [deleting, setDeleting] = useState(false);
   const cheer = useServerFn(botCheerSubmission);
   const askExplain = useServerFn(explainChallenge);
+  const translate = useServerFn(translateChallenge);
   const [explanation, setExplanation] = useState<string | null>(null);
   const [explainBusy, setExplainBusy] = useState(false);
+  const [translation, setTranslation] = useState<{ title: string; description: string; lang: Lang } | null>(null);
+  const [transBusy, setTransBusy] = useState<Lang | null>(null);
 
   const { data: c } = useQuery({
     queryKey: ["challenge", id],
