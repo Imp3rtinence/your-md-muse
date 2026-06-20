@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
-import { Plus, Users, ChevronRight, X, Loader2 } from "lucide-react";
+import { Plus, Users, ChevronRight, X, Loader2, Sparkles } from "lucide-react";
+import { recommendCrews, embedCrew } from "@/lib/ai/embeddings.functions";
 
 export const Route = createFileRoute("/_app/groups/")({
   head: () => ({ meta: [{ title: "Crews – Komma" }] }),
