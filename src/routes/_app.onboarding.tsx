@@ -100,10 +100,11 @@ function Onboarding() {
       <div className="relative mx-auto flex max-w-md flex-col gap-6">
         {/* Progress */}
         <div className="flex gap-1.5">
-          {[0, 1, 2].map((i) => (
+          {[0, 1, 2, 3].map((i) => (
             <div key={i} className={`h-1 flex-1 rounded-full ${i <= step ? "bg-primary" : "bg-surface-2"}`} />
           ))}
         </div>
+
 
         {step === 0 && (
           <section className="space-y-4">
