@@ -7,10 +7,11 @@ import { useAuth } from "@/lib/auth";
 import { categoryMeta } from "@/lib/categories";
 import { getMyAiProfile } from "@/lib/ai/onboarding.functions";
 import { searchChallenges } from "@/lib/ai/embeddings.functions";
-import { Flame, Loader2, Search, Sparkles, Users as UsersIcon, Wand2 } from "lucide-react";
+import { Flame, Loader2, MapPin, Search, Sparkles, Users as UsersIcon, Wand2 } from "lucide-react";
 import { BotBadge } from "@/components/BotBadge";
 import { useProofUrl } from "@/lib/proof-url";
 import { AdSlot, AD_SLOTS } from "@/components/AdSlot";
+import { useTrackLocation } from "@/lib/use-location";
 
 export const Route = createFileRoute("/_app/home")({
   head: () => ({ meta: [{ title: "Home – Komma" }] }),
