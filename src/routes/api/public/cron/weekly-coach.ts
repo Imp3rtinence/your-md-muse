@@ -95,7 +95,7 @@ Interessen: ${(p.interests ?? []).join(", ") || "(unbekannt)"}.
 
             await supabase.from("weekly_recaps").upsert({
               user_id: p.id,
-              week_start: weekStart.toISOString().slice(0, 10),
+              week_start: weekStartIso,
               summary: output.summary,
               suggestion: output.suggestion,
               stats: { aura: stats.aura, events: stats.events, league_tier: p.league_tier },
