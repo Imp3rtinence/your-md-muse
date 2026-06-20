@@ -77,7 +77,12 @@ function Onboarding() {
         .eq("id", user.id);
       if (error) throw error;
       // KI-Analyse im Hintergrund → danach Profil-Embedding
-      analyze({ data: { interests, context: ctx } })
+      analyze({
+        data: {
+          interests,
+          context: ctx + (dynAnswer ? ` | ${dynAnswer.question} → ${dynAnswer.answer}` : ""),
+        },
+      })
         .then(() => embedMe())
         .catch((e) => console.warn("AI analyze failed", e));
       await refreshProfile();
