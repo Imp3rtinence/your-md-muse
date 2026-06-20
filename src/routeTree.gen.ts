@@ -25,6 +25,7 @@ import { Route as AppJoinTokenRouteImport } from './routes/_app.join.$token'
 import { Route as AppGroupsIdRouteImport } from './routes/_app.groups.$id'
 import { Route as AppChatUserIdRouteImport } from './routes/_app.chat.$userId'
 import { Route as AppChallengeIdRouteImport } from './routes/_app.challenge.$id'
+import { Route as ApiPublicCronWeeklyCoachRouteImport } from './routes/api/public/cron/weekly-coach'
 import { Route as ApiPublicCronGenerateChallengesRouteImport } from './routes/api/public/cron/generate-challenges'
 
 const AuthRoute = AuthRouteImport.update({
@@ -106,6 +107,12 @@ const AppChallengeIdRoute = AppChallengeIdRouteImport.update({
   path: '/challenge/$id',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPublicCronWeeklyCoachRoute =
+  ApiPublicCronWeeklyCoachRouteImport.update({
+    id: '/api/public/cron/weekly-coach',
+    path: '/api/public/cron/weekly-coach',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicCronGenerateChallengesRoute =
   ApiPublicCronGenerateChallengesRouteImport.update({
     id: '/api/public/cron/generate-challenges',
@@ -130,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/join/$token': typeof AppJoinTokenRoute
   '/groups/': typeof AppGroupsIndexRoute
   '/api/public/cron/generate-challenges': typeof ApiPublicCronGenerateChallengesRoute
+  '/api/public/cron/weekly-coach': typeof ApiPublicCronWeeklyCoachRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -147,6 +155,7 @@ export interface FileRoutesByTo {
   '/join/$token': typeof AppJoinTokenRoute
   '/groups': typeof AppGroupsIndexRoute
   '/api/public/cron/generate-challenges': typeof ApiPublicCronGenerateChallengesRoute
+  '/api/public/cron/weekly-coach': typeof ApiPublicCronWeeklyCoachRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -167,6 +176,7 @@ export interface FileRoutesById {
   '/_app/join/$token': typeof AppJoinTokenRoute
   '/_app/groups/': typeof AppGroupsIndexRoute
   '/api/public/cron/generate-challenges': typeof ApiPublicCronGenerateChallengesRoute
+  '/api/public/cron/weekly-coach': typeof ApiPublicCronWeeklyCoachRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/join/$token'
     | '/groups/'
     | '/api/public/cron/generate-challenges'
+    | '/api/public/cron/weekly-coach'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/join/$token'
     | '/groups'
     | '/api/public/cron/generate-challenges'
+    | '/api/public/cron/weekly-coach'
   id:
     | '__root__'
     | '/'
@@ -223,6 +235,7 @@ export interface FileRouteTypes {
     | '/_app/join/$token'
     | '/_app/groups/'
     | '/api/public/cron/generate-challenges'
+    | '/api/public/cron/weekly-coach'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -230,6 +243,7 @@ export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiPublicCronGenerateChallengesRoute: typeof ApiPublicCronGenerateChallengesRoute
+  ApiPublicCronWeeklyCoachRoute: typeof ApiPublicCronWeeklyCoachRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -346,6 +360,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppChallengeIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/public/cron/weekly-coach': {
+      id: '/api/public/cron/weekly-coach'
+      path: '/api/public/cron/weekly-coach'
+      fullPath: '/api/public/cron/weekly-coach'
+      preLoaderRoute: typeof ApiPublicCronWeeklyCoachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/cron/generate-challenges': {
       id: '/api/public/cron/generate-challenges'
       path: '/api/public/cron/generate-challenges'
@@ -405,6 +426,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiPublicCronGenerateChallengesRoute: ApiPublicCronGenerateChallengesRoute,
+  ApiPublicCronWeeklyCoachRoute: ApiPublicCronWeeklyCoachRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
