@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Zap, Users, Link2, ArrowRight, Flag, Camera, Send } from "lucide-react";
+import { Zap, Users, Link2, ArrowRight, Flag, Camera, Send, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
