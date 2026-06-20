@@ -25,8 +25,11 @@ function AppShell() {
 
   const hideNav = path === "/onboarding";
   return (
-    <div className="mx-auto flex min-h-dvh max-w-md flex-col bg-background">
-      <main className={"flex-1 " + (hideNav ? "" : "pb-24")}>
+    <div
+      className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-background"
+      style={{ paddingTop: "env(safe-area-inset-top)" }}
+    >
+      <main className={"flex-1 w-full " + (hideNav ? "" : "pb-28")}>
         <Outlet />
       </main>
       {!hideNav && <BottomNav />}
