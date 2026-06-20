@@ -27,6 +27,7 @@ function Create() {
   const askAi = useServerFn(suggestChallenge);
   const askHero = useServerFn(generateHeroImage);
   const askEmbed = useServerFn(embedChallenge);
+  const askMod = useServerFn(moderationHint);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
