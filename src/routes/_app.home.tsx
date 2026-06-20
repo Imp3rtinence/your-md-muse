@@ -71,6 +71,8 @@ function Home() {
         </div>
       </header>
 
+      <SmartSearch />
+
       {isLoading ? (
         <div className="mt-8 h-56 animate-pulse rounded-3xl bg-surface" />
       ) : daily ? (
