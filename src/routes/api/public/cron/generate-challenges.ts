@@ -2,22 +2,25 @@ import { createFileRoute } from "@tanstack/react-router";
 import { createClient } from "@supabase/supabase-js";
 import { generateText, Output } from "ai";
 import { z } from "zod";
+import { timingSafeEqual } from "crypto";
 import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
 import type { Database } from "@/integrations/supabase/types";
 
 /**
  * Tägliche KI-Challenge-Generierung.
- * Wird von pg_cron aufgerufen — sicher durch apikey-Header (Supabase Anon Key).
- * Wählt zufällige Bots, generiert passende Challenges, schreibt sie als deren Posts.
+ * Wird von pg_cron aufgerufen — geschützt durch hochentropisches CRON_SECRET
+ * im `x-cron-secret`-Header (fail-closed, timing-safe Vergleich).
  */
 export const Route = createFileRoute("/api/public/cron/generate-challenges")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        // 1. Auth: hochentropisches CRON_SECRET im x-cron-secret Header erforderlich
-        const provided = request.headers.get("x-cron-secret");
-        const expected = process.env.CRON_SECRET;
-        if (!expected || !provided || provided !== expected) {
+        const provided = request.headers.get("x-cron-secret") ?? "";
+        const expected = process.env.CRON_SECRET ?? "";
+        if (!expected) return new Response("Unauthorized", { status: 401 });
+        const a = Buffer.from(provided);
+        const b = Buffer.from(expected);
+        if (a.length !== b.length || !timingSafeEqual(a, b)) {
           return new Response("Unauthorized", { status: 401 });
         }
 
