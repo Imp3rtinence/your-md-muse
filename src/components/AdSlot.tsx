@@ -34,7 +34,17 @@ export function AdSlot({ slot, variant = "inline", format, className = "" }: AdS
   }, []);
 
   useEffect(() => {
-    if (!slot || !mounted || pushed.current) return;
+    if (!slot || !mounted) return;
+    // Lazy-load adsbygoogle.js on the client only (avoids SSR hydration mismatch from auto-ads).
+    const SRC = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`;
+    if (!document.querySelector(`script[src^="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]`)) {
+      const s = document.createElement("script");
+      s.src = SRC;
+      s.async = true;
+      s.crossOrigin = "anonymous";
+      document.head.appendChild(s);
+    }
+    if (pushed.current) return;
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
       pushed.current = true;
