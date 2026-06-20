@@ -242,6 +242,41 @@ function SmartSearch() {
   );
 }
 
+function WeeklyRecap() {
+  const { user } = useAuth();
+  const { data } = useQuery({
+    queryKey: ["weekly-recap", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data } = await (supabase as any)
+        .from("weekly_recaps")
+        .select("summary, suggestion, stats, week_start")
+        .eq("user_id", user!.id)
+        .order("week_start", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      return data;
+    },
+    staleTime: 5 * 60_000,
+  });
+  if (!data) return null;
+  const stats = (data.stats ?? {}) as any;
+  return (
+    <section className="mt-5 rounded-2xl border border-primary/30 bg-primary/5 p-4">
+      <div className="mb-1 flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-primary">
+        <Sparkles className="size-3" /> Deine Woche
+      </div>
+      <p className="text-sm font-medium">{data.summary}</p>
+      <p className="mt-2 text-xs text-muted-foreground">→ {data.suggestion}</p>
+      {(stats.aura || stats.events) && (
+        <div className="mt-2 text-[11px] text-muted-foreground">
+          {stats.events ? `${stats.events} Aktionen` : ""}{stats.events && stats.aura ? " · " : ""}{stats.aura ? `+${stats.aura} Aura` : ""}
+        </div>
+      )}
+    </section>
+  );
+}
+
 function EmptyState() {
   return (
     <div className="mt-8 rounded-3xl border border-dashed border-border bg-surface p-8 text-center">
