@@ -88,7 +88,7 @@ function ChallengeDetail() {
     queryFn: async () => {
       const { data } = await (supabase as any)
         .from("comments")
-        .select("*, user:profiles!comments_user_id_fkey(username,display_name,avatar_url)")
+        .select("*, user:profiles!comments_user_id_fkey(username,display_name,avatar_url,is_ai_bot)")
         .eq("challenge_id", id)
         .order("created_at", { ascending: true });
       return data ?? [];
