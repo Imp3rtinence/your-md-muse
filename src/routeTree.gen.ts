@@ -9,11 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LegalImpressumRouteImport } from './routes/legal.impressum'
 import { Route as LegalAgbRouteImport } from './routes/legal.agb'
+import { Route as IdeasFriendsChallengesRouteImport } from './routes/ideas.friends-challenges'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
 import { Route as AppOnboardingRouteImport } from './routes/_app.onboarding'
 import { Route as AppLeagueRouteImport } from './routes/_app.league'
@@ -31,6 +33,11 @@ import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/e
 import { Route as ApiPublicCronWeeklyCoachRouteImport } from './routes/api/public/cron/weekly-coach'
 import { Route as ApiPublicCronGenerateChallengesRouteImport } from './routes/api/public/cron/generate-challenges'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -53,6 +60,11 @@ const LegalImpressumRoute = LegalImpressumRouteImport.update({
 const LegalAgbRoute = LegalAgbRouteImport.update({
   id: '/legal/agb',
   path: '/legal/agb',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IdeasFriendsChallengesRoute = IdeasFriendsChallengesRouteImport.update({
+  id: '/ideas/friends-challenges',
+  path: '/ideas/friends-challenges',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppProfileRoute = AppProfileRouteImport.update({
@@ -142,6 +154,7 @@ const ApiPublicCronGenerateChallengesRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/badges': typeof AppBadgesRoute
   '/chats': typeof AppChatsRoute
   '/create': typeof AppCreateRoute
@@ -150,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/league': typeof AppLeagueRoute
   '/onboarding': typeof AppOnboardingRoute
   '/profile': typeof AppProfileRoute
+  '/ideas/friends-challenges': typeof IdeasFriendsChallengesRoute
   '/legal/agb': typeof LegalAgbRoute
   '/legal/impressum': typeof LegalImpressumRoute
   '/challenge/$id': typeof AppChallengeIdRoute
@@ -164,6 +178,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/badges': typeof AppBadgesRoute
   '/chats': typeof AppChatsRoute
   '/create': typeof AppCreateRoute
@@ -171,6 +186,7 @@ export interface FileRoutesByTo {
   '/league': typeof AppLeagueRoute
   '/onboarding': typeof AppOnboardingRoute
   '/profile': typeof AppProfileRoute
+  '/ideas/friends-challenges': typeof IdeasFriendsChallengesRoute
   '/legal/agb': typeof LegalAgbRoute
   '/legal/impressum': typeof LegalImpressumRoute
   '/challenge/$id': typeof AppChallengeIdRoute
@@ -187,6 +203,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_app/badges': typeof AppBadgesRoute
   '/_app/chats': typeof AppChatsRoute
   '/_app/create': typeof AppCreateRoute
@@ -195,6 +212,7 @@ export interface FileRoutesById {
   '/_app/league': typeof AppLeagueRoute
   '/_app/onboarding': typeof AppOnboardingRoute
   '/_app/profile': typeof AppProfileRoute
+  '/ideas/friends-challenges': typeof IdeasFriendsChallengesRoute
   '/legal/agb': typeof LegalAgbRoute
   '/legal/impressum': typeof LegalImpressumRoute
   '/_app/challenge/$id': typeof AppChallengeIdRoute
@@ -211,6 +229,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/sitemap.xml'
     | '/badges'
     | '/chats'
     | '/create'
@@ -219,6 +238,7 @@ export interface FileRouteTypes {
     | '/league'
     | '/onboarding'
     | '/profile'
+    | '/ideas/friends-challenges'
     | '/legal/agb'
     | '/legal/impressum'
     | '/challenge/$id'
@@ -233,6 +253,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/sitemap.xml'
     | '/badges'
     | '/chats'
     | '/create'
@@ -240,6 +261,7 @@ export interface FileRouteTypes {
     | '/league'
     | '/onboarding'
     | '/profile'
+    | '/ideas/friends-challenges'
     | '/legal/agb'
     | '/legal/impressum'
     | '/challenge/$id'
@@ -255,6 +277,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/auth'
+    | '/sitemap.xml'
     | '/_app/badges'
     | '/_app/chats'
     | '/_app/create'
@@ -263,6 +286,7 @@ export interface FileRouteTypes {
     | '/_app/league'
     | '/_app/onboarding'
     | '/_app/profile'
+    | '/ideas/friends-challenges'
     | '/legal/agb'
     | '/legal/impressum'
     | '/_app/challenge/$id'
@@ -279,6 +303,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  IdeasFriendsChallengesRoute: typeof IdeasFriendsChallengesRoute
   LegalAgbRoute: typeof LegalAgbRoute
   LegalImpressumRoute: typeof LegalImpressumRoute
   ApiPublicCronGenerateChallengesRoute: typeof ApiPublicCronGenerateChallengesRoute
@@ -288,6 +314,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -321,6 +354,13 @@ declare module '@tanstack/react-router' {
       path: '/legal/agb'
       fullPath: '/legal/agb'
       preLoaderRoute: typeof LegalAgbRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ideas/friends-challenges': {
+      id: '/ideas/friends-challenges'
+      path: '/ideas/friends-challenges'
+      fullPath: '/ideas/friends-challenges'
+      preLoaderRoute: typeof IdeasFriendsChallengesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/profile': {
@@ -486,6 +526,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  IdeasFriendsChallengesRoute: IdeasFriendsChallengesRoute,
   LegalAgbRoute: LegalAgbRoute,
   LegalImpressumRoute: LegalImpressumRoute,
   ApiPublicCronGenerateChallengesRoute: ApiPublicCronGenerateChallengesRoute,

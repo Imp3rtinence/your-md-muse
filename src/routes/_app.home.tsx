@@ -250,10 +250,12 @@ function SmartSearch() {
           <button
             type="button"
             onClick={() => { setQ(""); setResults(null); }}
+            aria-label="Suche zurücksetzen"
             className="text-xs text-muted-foreground"
           >
             ×
           </button>
+
         )}
         <button type="submit" disabled={busy || !q.trim()} className="tap rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground disabled:opacity-50">
           {busy ? <Loader2 className="size-3 animate-spin" /> : "Suchen"}

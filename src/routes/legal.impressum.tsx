@@ -6,11 +6,29 @@ export const Route = createFileRoute("/legal/impressum")({
   head: () => ({
     meta: [
       { title: "Impressum – Komma" },
-      { name: "description", content: "Impressum und Anbieterkennzeichnung der Komma-App – Gotham Consulting GmbH." },
+      { name: "description", content: "Impressum und Anbieterkennzeichnung der Komma-App – betrieben von der Gotham Consulting GmbH." },
+      { property: "og:title", content: "Impressum – Komma" },
+      { property: "og:description", content: "Anbieterkennzeichnung der Komma-App, Gotham Consulting GmbH." },
+      { property: "og:url", content: "https://komma.fun/legal/impressum" },
+    ],
+    links: [{ rel: "canonical", href: "https://komma.fun/legal/impressum" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Gotham Consulting GmbH",
+          url: "https://komma.fun/",
+          brand: "Komma",
+          email: "info@komma.fun",
+        }),
+      },
     ],
   }),
   component: ImpressumPage,
 });
+
 
 type Section = { title: string; body: string[] };
 
