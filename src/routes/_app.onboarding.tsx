@@ -56,8 +56,10 @@ function Onboarding() {
         .update({ interests, onboarded_at: new Date().toISOString() })
         .eq("id", user.id);
       if (error) throw error;
-      // KI-Analyse im Hintergrund anstossen – Fehler nicht blockieren
-      analyze({ data: { interests, context: ctx } }).catch((e) => console.warn("AI analyze failed", e));
+      // KI-Analyse im Hintergrund → danach Profil-Embedding
+      analyze({ data: { interests, context: ctx } })
+        .then(() => embedMe())
+        .catch((e) => console.warn("AI analyze failed", e));
       await refreshProfile();
       toast.success("Los geht's!");
       nav({ to: "/home" });
