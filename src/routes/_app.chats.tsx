@@ -150,6 +150,7 @@ function Chats() {
           meId={user?.id}
           onChange={() => {
             qc.invalidateQueries({ queryKey: ["friendships", user?.id] });
+            qc.invalidateQueries({ queryKey: ["friend-requests", user?.id] });
             qc.invalidateQueries({ queryKey: ["dm-threads"] });
           }}
         />
