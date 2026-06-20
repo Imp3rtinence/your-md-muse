@@ -443,9 +443,10 @@ function Pill({ label }: { label: string }) {
 function IconBtn({ onClick, icon, tone, label }: { onClick: () => void; icon: React.ReactNode; tone: "emerald" | "rose"; label?: string }) {
   const cls = tone === "emerald" ? "bg-emerald-500/15 text-emerald-400" : "bg-rose-500/15 text-rose-400";
   return (
-    <button onClick={onClick} className={`tap grid size-8 place-items-center rounded-full ${cls}`}>
+    <button onClick={onClick} aria-label={label} className={`tap grid size-8 place-items-center rounded-full ${cls}`}>
       {icon}
     </button>
+
   );
 }
 
