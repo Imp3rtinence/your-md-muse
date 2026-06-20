@@ -57,8 +57,9 @@ function Landing() {
           </ol>
 
           {/* Hero Daily Challenge */}
-          <article
-            className="group relative overflow-hidden rounded-3xl border border-border bg-surface/70 transition-colors hover:border-accent"
+          <Link
+            to="/auth"
+            className="group relative block overflow-hidden rounded-3xl border border-border bg-surface/70 transition-colors hover:border-accent"
             style={{ boxShadow: "0 20px 60px -20px color-mix(in oklab, var(--accent) 35%, transparent)" }}
           >
             {/* Thumbnail */}
@@ -91,7 +92,7 @@ function Landing() {
               </div>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2.5 animate-fade-in">
+                <div className="flex items-center gap-2.5">
                   <div className="flex -space-x-2">
                     <Avatar color="var(--primary)" letter="L" />
                     <Avatar color="var(--accent)" letter="M" />
@@ -101,12 +102,13 @@ function Landing() {
                     3 Freunde machen mit
                   </span>
                 </div>
-                <div className="text-[12px] font-medium text-foreground/60">
-                  1.248 dabei
-                </div>
+                <span className="flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1.5 text-[12px] font-bold text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                  Mitmachen
+                  <ChevronRight className="size-3.5 transition-transform group-hover:translate-x-0.5" strokeWidth={2.5} />
+                </span>
               </div>
             </div>
-          </article>
+          </Link>
 
           {/* Sekundäre Infos – flacher, ohne Button-Optik */}
           <div className="grid grid-cols-2 gap-3">
