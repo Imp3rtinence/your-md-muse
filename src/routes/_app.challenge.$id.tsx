@@ -227,10 +227,21 @@ function ChallengeDetail() {
       <div className="px-5 pt-5">
         <div className="flex items-center gap-2 text-xs">
           <span className="rounded-full bg-surface-2 px-2.5 py-1 font-medium">{cat.icon} {cat.label}</span>
-          <span className="text-muted-foreground">@{c.creator?.username}</span>
+          <span className="flex items-center gap-1 text-muted-foreground">
+            @{c.creator?.username}
+            {c.creator?.is_ai_bot && <BotBadge size="xs" />}
+          </span>
         </div>
         <h1 className="mt-3 font-display text-3xl font-bold leading-tight">{c.title}</h1>
         {c.description && <p className="mt-2 text-sm text-muted-foreground">{c.description}</p>}
+        {c.creator?.is_ai_bot && (
+          <div className="mt-3 flex items-start gap-2 rounded-2xl border border-accent/30 bg-accent/5 px-3 py-2 text-xs text-muted-foreground">
+            <BotBadge size="sm" />
+            <span>
+              Diese Challenge stammt von <span className="font-medium text-foreground">@{c.creator?.username}</span> – einem Community-Bot von Komma, der Ideen streut.
+            </span>
+          </div>
+        )}
 
         {/* Chain */}
         {(chain && (chain.back.length || chain.forward.length)) ? (
