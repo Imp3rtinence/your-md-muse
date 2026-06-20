@@ -118,7 +118,7 @@ Regeln:
 
         if (insertError) return new Response(insertError.message, { status: 500 });
 
-        // Embeddings für jede frische Challenge nachziehen (best-effort).
+        // Embeddings + KI-Coverbild für jede frische Challenge nachziehen (best-effort).
         // WICHTIG: über die zurückgegebenen Zeilen iterieren (DB-Reihenfolge
         // ≠ Input-Reihenfolge), sonst landen Embeddings an der falschen Challenge.
         await Promise.allSettled((inserted ?? []).map(async (row: any) => {
@@ -128,11 +128,45 @@ Regeln:
             headers: { "Content-Type": "application/json", "Lovable-API-Key": lovableKey },
             body: JSON.stringify({ model: "openai/text-embedding-3-small", input: text }),
           });
-          if (!er.ok) return;
-          const ejson = await er.json();
-          const vec = ejson?.data?.[0]?.embedding;
-          if (!Array.isArray(vec)) return;
-          await supabase.from("challenges").update({ embedding: `[${vec.join(",")}]` as any }).eq("id", row.id);
+          if (er.ok) {
+            const ejson = await er.json();
+            const vec = ejson?.data?.[0]?.embedding;
+            if (Array.isArray(vec)) {
+              await supabase.from("challenges").update({ embedding: `[${vec.join(",")}]` as any }).eq("id", row.id);
+            }
+          }
+
+          // KI-Coverbild (Nano Banana) — thematisch passend statt buntem Default
+          try {
+            const prompt = `Buntes, jugendliches Cover-Bild im Sticker/Illustrations-Stil für eine Mut-/Spass-Challenge.
+Thema: ${row.title}. ${row.description ?? ""}
+Stil: flach, freundlich, modern, leuchtende Farben, kein Text, kein Logo, quadratisch.`;
+            const ir = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Lovable-API-Key": lovableKey },
+              body: JSON.stringify({
+                model: "google/gemini-2.5-flash-image",
+                messages: [{ role: "user", content: prompt }],
+                modalities: ["image", "text"],
+              }),
+            });
+            if (!ir.ok) return;
+            const ij = await ir.json();
+            const b64Url: string | undefined = ij?.choices?.[0]?.message?.images?.[0]?.image_url?.url
+              ?? ij?.choices?.[0]?.message?.images?.[0]?.url;
+            if (!b64Url) return;
+            const m = b64Url.match(/^data:(image\/\w+);base64,(.+)$/);
+            if (!m) return;
+            const mime = m[1];
+            const ext = mime.split("/")[1] ?? "png";
+            const bytes = Uint8Array.from(atob(m[2]), (c) => c.charCodeAt(0));
+            const path = `hero/${row.id}.${ext}`;
+            const { error: upErr } = await supabase.storage
+              .from("proofs")
+              .upload(path, bytes, { contentType: mime, upsert: true });
+            if (upErr) return;
+            await supabase.from("challenges").update({ hero_image_url: path }).eq("id", row.id);
+          } catch { /* best-effort */ }
         }));
 
         return Response.json({ created: inserted?.length ?? 0, weekday });
