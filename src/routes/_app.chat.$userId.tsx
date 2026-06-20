@@ -63,35 +63,14 @@ function ChatThread() {
   const messagesQ = useQuery({
     queryKey: ["dm", me, otherId],
     enabled: !!me,
+    refetchInterval: 5000,
+    refetchIntervalInBackground: false,
     queryFn: async () => {
       const { data, error } = await (supabase as any).rpc("get_dm_thread", { _other: otherId, _limit: 500 });
       if (error) throw error;
       return (data ?? []) as Message[];
     },
   });
-
-
-  // Realtime
-  useEffect(() => {
-    if (!me) return;
-    const ch = supabase
-      .channel(`dm-${me}-${otherId}`)
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "direct_messages" },
-        (payload: any) => {
-          const row = (payload.new ?? payload.old) as Message | undefined;
-          if (!row) return;
-          const involvesPair =
-            (row.sender_id === me && row.recipient_id === otherId) ||
-            (row.sender_id === otherId && row.recipient_id === me);
-          if (!involvesPair) return;
-          qc.invalidateQueries({ queryKey: ["dm", me, otherId] });
-        }
-      )
-      .subscribe();
-    return () => { supabase.removeChannel(ch); };
-  }, [me, otherId, qc]);
 
   // Mark thread read on view + when new messages arrive
   useEffect(() => {

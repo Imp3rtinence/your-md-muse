@@ -13,7 +13,17 @@ export const generateHeroImage = createServerFn({ method: "POST" })
     const key = process.env.LOVABLE_API_KEY;
     if (!key) throw new Error("LOVABLE_API_KEY missing");
 
+    // Ownership check — only the challenge creator can (re)generate its hero image.
+    const { data: ch, error: chErr } = await (context.supabase as any)
+      .from("challenges")
+      .select("creator_id")
+      .eq("id", data.challenge_id)
+      .maybeSingle();
+    if (chErr) throw chErr;
+    if (!ch || ch.creator_id !== context.userId) throw new Error("Forbidden");
+
     const gateway = createLovableAiGatewayProvider(key);
+
 
     // Lovable Gateway: image generation via /images/generations-style call.
     // Der OpenAI-compatible Provider unterstützt das via raw fetch.

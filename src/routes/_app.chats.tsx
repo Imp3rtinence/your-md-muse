@@ -64,18 +64,13 @@ function Chats() {
     },
   });
 
-  // Realtime: any DM concerning the user → refresh threads
+  // Poll DM threads (realtime publication disabled for privacy)
   useEffect(() => {
     if (!user) return;
-    const ch = supabase
-      .channel("dm-threads-feed")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "direct_messages" },
-        () => { qc.invalidateQueries({ queryKey: ["dm-threads"] }); }
-      )
-      .subscribe();
-    return () => { supabase.removeChannel(ch); };
+    const t = setInterval(() => {
+      qc.invalidateQueries({ queryKey: ["dm-threads"] });
+    }, 10000);
+    return () => clearInterval(t);
   }, [user, qc]);
 
   const incoming = (friendsQ.data ?? []).filter(f => f.status === "pending" && f.addressee_id === user?.id);

@@ -14,10 +14,10 @@ export const Route = createFileRoute("/api/public/cron/generate-challenges")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        // 1. Auth: nur Aufrufe mit gültigem apikey-Header akzeptieren
-        const apikey = request.headers.get("apikey");
-        const expected = process.env.SUPABASE_PUBLISHABLE_KEY;
-        if (!apikey || !expected || apikey !== expected) {
+        // 1. Auth: hochentropisches CRON_SECRET im x-cron-secret Header erforderlich
+        const provided = request.headers.get("x-cron-secret");
+        const expected = process.env.CRON_SECRET;
+        if (!expected || !provided || provided !== expected) {
           return new Response("Unauthorized", { status: 401 });
         }
 
