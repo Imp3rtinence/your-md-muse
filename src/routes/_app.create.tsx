@@ -25,6 +25,7 @@ function Create() {
   const { parent } = useSearch({ from: "/_app/create" });
   const askAi = useServerFn(suggestChallenge);
   const askHero = useServerFn(generateHeroImage);
+  const askEmbed = useServerFn(embedChallenge);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
