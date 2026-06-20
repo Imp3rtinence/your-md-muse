@@ -422,6 +422,38 @@ function HeroImage({ path }: { path?: string | null }) {
   );
 }
 
+function SimilarChallenges({ id }: { id: string }) {
+  const fetchSimilar = useServerFn(similarChallenges);
+  const { data } = useQuery({
+    queryKey: ["similar", id],
+    queryFn: () => fetchSimilar({ data: { challenge_id: id } }),
+    staleTime: 60_000,
+    retry: false,
+  });
+  const list = (data ?? []) as Array<{ id: string; title: string; participant_count: number }>;
+  if (!list.length) return null;
+  return (
+    <section className="mt-8">
+      <h2 className="mb-3 flex items-center gap-1.5 font-display text-lg font-semibold">
+        <Sparkles className="size-4 text-accent" /> Ähnliche Challenges
+      </h2>
+      <div className="grid gap-2">
+        {list.map((s) => (
+          <Link
+            key={s.id}
+            to="/challenge/$id"
+            params={{ id: s.id }}
+            className="tap flex items-center justify-between rounded-2xl border border-border bg-surface px-3 py-2.5"
+          >
+            <div className="line-clamp-1 text-sm font-medium">{s.title}</div>
+            <div className="ml-2 shrink-0 text-xs text-muted-foreground">{s.participant_count} dabei</div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function ChainDot({ username, current, to }: { username?: string; current?: boolean; to?: string }) {
   const dot = (
     <div className={"flex size-9 items-center justify-center rounded-full text-[10px] font-semibold " +
