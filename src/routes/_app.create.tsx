@@ -1,11 +1,14 @@
 import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
+import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { CATEGORIES, type CategoryValue } from "@/lib/categories";
 import { toast } from "sonner";
-import { ShieldAlert, Loader2 } from "lucide-react";
+import { ShieldAlert, Loader2, Sparkles, Wand2 } from "lucide-react";
+import { suggestChallenge } from "@/lib/ai/smart-create.functions";
+import { generateHeroImage } from "@/lib/ai/hero-image.functions";
 
 const searchSchema = z.object({ parent: z.string().optional() });
 
@@ -19,13 +22,22 @@ function Create() {
   const nav = useNavigate();
   const { user } = useAuth();
   const { parent } = useSearch({ from: "/_app/create" });
+  const askAi = useServerFn(suggestChallenge);
+  const askHero = useServerFn(generateHeroImage);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<CategoryValue>("creative");
   const [visibility, setVisibility] = useState<"friends" | "public">("friends");
   const [durationH, setDurationH] = useState<number>(24);
+  const [tags, setTags] = useState<string[]>([]);
+  const [difficulty, setDifficulty] = useState<"leicht" | "mittel" | "mutig" | null>(null);
+  const [withHero, setWithHero] = useState(true);
   const [busy, setBusy] = useState(false);
+
+  // AI assist
+  const [aiKeyword, setAiKeyword] = useState("");
+  const [aiBusy, setAiBusy] = useState(false);
 
   const DURATIONS = [
     { h: 12, label: "12 Std" },
@@ -33,6 +45,28 @@ function Create() {
     { h: 72, label: "3 Tage" },
     { h: 168, label: "7 Tage" },
   ];
+
+  const runAi = async (mode: "from-keyword" | "improve") => {
+    setAiBusy(true);
+    try {
+      const res = await askAi({
+        data: mode === "from-keyword"
+          ? { keyword: aiKeyword }
+          : { keyword: title || aiKeyword || "verbessere meinen Entwurf", current_title: title, current_description: description },
+      });
+      setTitle(res.title);
+      setDescription(res.description);
+      setCategory(res.category);
+      setDurationH(res.duration_hours);
+      setTags(res.tags);
+      setDifficulty(res.difficulty);
+      toast.success("Vorschlag eingefügt — passe ihn an, wie du magst.");
+    } catch (e: any) {
+      toast.error(e?.message ?? "KI hat nicht reagiert.");
+    } finally {
+      setAiBusy(false);
+    }
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,9 +81,16 @@ function Create() {
       category, visibility,
       expires_at: expiresAt,
       parent_challenge_id: parent ?? null,
+      tags,
+      difficulty,
     }).select("id").single();
+    if (error) { setBusy(false); toast.error(error.message); return; }
+    // Hero-Bild im Hintergrund (blockt navigation nicht lang)
+    if (withHero) {
+      askHero({ data: { challenge_id: data.id, title: title.trim(), description: description.trim() || null } })
+        .catch((e) => console.warn("Hero image failed", e));
+    }
     setBusy(false);
-    if (error) { toast.error(error.message); return; }
     toast.success("Challenge ist live ⚡");
     nav({ to: "/challenge/$id", params: { id: data.id } });
   };
@@ -62,6 +103,43 @@ function Create() {
       <p className="mt-1 text-sm text-muted-foreground">
         Mach mit, mach es echt. Lieber klein und konkret als groß und schwammig.
       </p>
+
+      {/* KI-Assistent */}
+      <section className="mt-5 rounded-2xl border border-accent/30 bg-accent/5 p-4">
+        <div className="flex items-center gap-1.5 text-sm font-semibold">
+          <Sparkles className="size-4 text-accent" /> Mit KI ausarbeiten
+        </div>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Tipp ein Stichwort ein — Komma macht einen Vorschlag, den du frei anpassen kannst.
+        </p>
+        <div className="mt-3 flex gap-2">
+          <input
+            value={aiKeyword}
+            onChange={(e) => setAiKeyword(e.target.value)}
+            placeholder="z.B. Skateboard, Frühstück malen, Nachbar fragen"
+            className="input flex-1"
+          />
+          <button
+            type="button"
+            onClick={() => runAi("from-keyword")}
+            disabled={aiBusy || !aiKeyword.trim()}
+            className="tap inline-flex items-center gap-1 rounded-2xl bg-accent px-3 py-2 text-sm font-semibold text-accent-foreground disabled:opacity-50"
+          >
+            {aiBusy ? <Loader2 className="size-4 animate-spin" /> : <Wand2 className="size-4" />}
+            Vorschlag
+          </button>
+        </div>
+        {title && (
+          <button
+            type="button"
+            onClick={() => runAi("improve")}
+            disabled={aiBusy}
+            className="tap mt-2 text-xs font-medium text-accent underline-offset-2 hover:underline disabled:opacity-50"
+          >
+            ✨ Aktuellen Entwurf verbessern
+          </button>
+        )}
+      </section>
 
       <form onSubmit={submit} className="mt-6 space-y-5">
         <div>
@@ -80,6 +158,25 @@ function Create() {
             className="input"
           />
         </div>
+
+        {tags.length > 0 && (
+          <div>
+            <label className="lbl">Tags</label>
+            <div className="flex flex-wrap gap-1.5">
+              {tags.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => setTags(tags.filter((x) => x !== t))}
+                  className="tap rounded-full bg-surface-2 px-2.5 py-1 text-xs text-muted-foreground hover:text-foreground"
+                  title="Entfernen"
+                >
+                  #{t} ×
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div>
           <label className="lbl">Kategorie</label>
@@ -145,6 +242,20 @@ function Create() {
             Endet am {new Date(Date.now() + durationH * 3600 * 1000).toLocaleString("de-DE", { dateStyle: "medium", timeStyle: "short" })}
           </div>
         </div>
+
+        <label className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 text-sm">
+          <input
+            type="checkbox"
+            checked={withHero}
+            onChange={(e) => setWithHero(e.target.checked)}
+            className="size-4 accent-primary"
+          />
+          <span className="flex-1">
+            <span className="font-medium">KI-Coverbild erstellen</span>
+            <span className="ml-2 text-xs text-muted-foreground">Wird im Hintergrund generiert.</span>
+          </span>
+          <Sparkles className="size-4 text-accent" />
+        </label>
 
         <div className="flex gap-2 rounded-2xl border border-border bg-surface p-3 text-xs text-muted-foreground">
           <ShieldAlert className="size-4 shrink-0 text-accent" />
