@@ -1,13 +1,35 @@
 {
-  "common": { "back": "Retour", "next": "Suivant", "done": "Terminé", "skip": "Passer", "cancel": "Annuler", "save": "Enregistrer", "delete": "Supprimer", "loading": "Chargement…", "retry": "Réessayer", "ok": "OK" },
-  "nav": { "home": "Accueil", "groups": "Équipes", "create": "Créer", "chats": "Discussions", "profile": "Profil" },
+  "common": {
+    "back": "Retour",
+    "next": "Suivant",
+    "done": "Terminé",
+    "skip": "Passer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "loading": "Chargement…",
+    "retry": "Réessayer",
+    "ok": "OK"
+  },
+  "nav": {
+    "home": "Accueil",
+    "groups": "Équipes",
+    "create": "Créer",
+    "chats": "Discussions",
+    "profile": "Profil"
+  },
   "auth": {
-    "title": "Bienvenue sur Komma", "subtitle": "Participer plutôt que regarder.",
-    "email": "E-mail", "password": "Mot de passe",
-    "signin": "Se connecter", "signup": "S'inscrire",
-    "google": "Continuer avec Google", "or": "ou",
+    "title": "Bienvenue sur Komma",
+    "subtitle": "Participer plutôt que regarder.",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "signin": "Se connecter",
+    "signup": "S'inscrire",
+    "google": "Continuer avec Google",
+    "or": "ou",
     "legalHint": "En continuant, tu acceptes nos {{terms}} et tu as pris connaissance de notre {{imprint}}.",
-    "terms": "CGU", "imprint": "Mentions légales"
+    "terms": "CGU",
+    "imprint": "Mentions légales"
   },
   "onboarding": {
     "languageTitle": "Quelle langue parles-tu ?",
@@ -15,14 +37,193 @@
     "welcomeTitle": "Bienvenue sur <1>Komma</1>,",
     "welcomeTitleLine2": "content que tu sois là.",
     "welcomeText": "Komma c'est une petite pause loin du scroll — et un coup de pouce pour vraiment faire un truc. Trois questions rapides et c'est parti.",
-    "howItWorks": "Comment ça marche", "howItWorksDetail": "Lance un défi · poste ta preuve · collecte de l'Aura",
+    "howItWorks": "Comment ça marche",
+    "howItWorksDetail": "Lance un défi · poste ta preuve · collecte de l'Aura",
     "go": "C'est parti",
-    "interestsTitle": "T'as envie de quoi ?", "interestsSubtitle": "Choisis jusqu'à quatre. On te propose des défis qui collent.",
-    "interests": { "bewegung": "Bouger", "kreativ": "Créativité", "lernen": "Apprendre", "sozial": "Social", "natur": "Nature", "mut": "Courage", "musik": "Musique", "essen": "Cuisine" },
-    "dynamicWaitTitle": "Une dernière petite question…", "dynamicHint": "Personnalisé pour toi", "dynamicThinking": "L'IA réfléchit…",
-    "contextTitle": "Avec qui tu veux commencer ?", "contextSubtitle": "Tu peux rejoindre ou créer d'autres équipes quand tu veux.",
-    "contexts": { "friends": "Amis", "school": "École", "sport": "Club / sport", "neighborhood": "Quartier", "solo": "Solo pour l'instant" }
+    "interestsTitle": "T'as envie de quoi ?",
+    "interestsSubtitle": "Choisis jusqu'à quatre. On te propose des défis qui collent.",
+    "interests": {
+      "bewegung": "Bouger",
+      "kreativ": "Créativité",
+      "lernen": "Apprendre",
+      "sozial": "Social",
+      "natur": "Nature",
+      "mut": "Courage",
+      "musik": "Musique",
+      "essen": "Cuisine"
+    },
+    "dynamicWaitTitle": "Une dernière petite question…",
+    "dynamicHint": "Personnalisé pour toi",
+    "dynamicThinking": "L'IA réfléchit…",
+    "contextTitle": "Avec qui tu veux commencer ?",
+    "contextSubtitle": "Tu peux rejoindre ou créer d'autres équipes quand tu veux.",
+    "contexts": {
+      "friends": "Amis",
+      "school": "École",
+      "sport": "Club / sport",
+      "neighborhood": "Quartier",
+      "solo": "Solo pour l'instant"
+    }
   },
-  "profile": { "language": "Langue", "legal": "Mentions légales", "terms": "CGU", "imprint": "Mentions légales", "logout": "Déconnexion" },
-  "legal": { "termsTitle": "Conditions d'utilisation", "imprintTitle": "Mentions légales", "back": "Retour" }
+  "profile": {
+    "language": "Langue",
+    "legal": "Mentions légales",
+    "terms": "CGU",
+    "imprint": "Mentions légales",
+    "logout": "Déconnexion"
+  },
+  "legal": {
+    "back": "Retour",
+    "agb": {
+      "title": "Conditions générales d'utilisation",
+      "updated": "Mise à jour : juin 2026 · valable pour l'application « Komma »",
+      "authoritative": "La version contraignante de ces conditions est l'allemande. Cette traduction est fournie à titre informatif uniquement.",
+      "sections": [
+        {
+          "title": "1. Champ d'application et fournisseur",
+          "body": [
+            "Les présentes CGU régissent l'utilisation de l'application « Komma » exploitée par Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Allemagne (« Fournisseur »). En t'inscrivant, tu acceptes ces CGU."
+          ]
+        },
+        {
+          "title": "2. Description du service",
+          "body": [
+            "Komma est une plateforme sociale participative où les utilisateur·rice·s créent et rejoignent des challenges, téléversent des preuves et forment des crews. Certains contenus sont générés par IA et signalés comme tels."
+          ]
+        },
+        {
+          "title": "3. Inscription et âge minimal",
+          "body": [
+            "Un compte gratuit est requis. L'utilisation est autorisée à partir de 14 ans. Pour les mineurs, l'accord parental est requis."
+          ]
+        },
+        {
+          "title": "4. Contenus utilisateurs et droits",
+          "body": [
+            "Tu restes l'auteur·rice de tes contenus et accordes au Fournisseur une licence non exclusive, mondiale et gratuite pour les stocker et les afficher dans l'application. Tu garantis ne pas violer les droits de tiers."
+          ]
+        },
+        {
+          "title": "5. Règles de conduite",
+          "body": [
+            "Il est interdit de publier des contenus qui :"
+          ],
+          "list": [
+            "violent le droit applicable,",
+            "violent les droits de tiers,",
+            "glorifient la violence, sont discriminatoires, pornographiques ou nuisibles aux mineurs,",
+            "harcèlent, menacent ou incitent à des infractions,",
+            "contiennent des malwares ou compromettent la sécurité."
+          ]
+        },
+        {
+          "title": "6. Messages directs et chiffrement",
+          "body": [
+            "Les messages directs sont stockés chiffrés au repos sur le serveur. Il n'y a pas de chiffrement de bout en bout ; le Fournisseur peut déchiffrer les messages dans des cas justifiés pour respecter des obligations légales."
+          ]
+        },
+        {
+          "title": "7. Contenus générés par IA",
+          "body": [
+            "Challenges, suggestions, traductions, images de couverture et badges peuvent être générés en tout ou partie par IA. Ils peuvent contenir des erreurs et ne remplacent pas un conseil professionnel ou juridique."
+          ]
+        },
+        {
+          "title": "8. Disponibilité",
+          "body": [
+            "Le Fournisseur vise une haute disponibilité mais ne la garantit pas. Maintenance, pannes tierces ou force majeure peuvent occasionner des limitations."
+          ]
+        },
+        {
+          "title": "9. Responsabilité",
+          "body": [
+            "Le Fournisseur est responsable sans limitation en cas de dol et faute lourde ainsi qu'au titre de la loi allemande sur la responsabilité du fait des produits. Pour faute légère uniquement en cas de manquement aux obligations contractuelles essentielles et dans la limite des dommages typiquement prévisibles."
+          ]
+        },
+        {
+          "title": "10. Résiliation",
+          "body": [
+            "Tu peux supprimer ton compte à tout moment dans les paramètres du profil. Le Fournisseur peut résilier pour motif grave en cas de violations sérieuses."
+          ]
+        },
+        {
+          "title": "11. Modification des CGU",
+          "body": [
+            "Les modifications sont affichées dans l'application. À défaut d'opposition dans les quatre semaines, elles sont réputées acceptées."
+          ]
+        },
+        {
+          "title": "12. Dispositions finales",
+          "body": [
+            "Le droit allemand s'applique, à l'exclusion de la CVIM. Si une clause est invalide, les autres restent en vigueur. Le for est, dans la mesure permise, le siège du Fournisseur."
+          ]
+        }
+      ],
+      "contact": "Pour toute question sur ces CGU, utilise les coordonnées des {{imprint}}."
+    },
+    "impressum": {
+      "title": "Mentions légales",
+      "subtitle": "Informations selon § 5 DDG et § 18 MStV",
+      "sections": [
+        {
+          "title": "Fournisseur",
+          "body": [
+            "Gotham Consulting GmbH",
+            "Rosenweg 4",
+            "99820 Hörselberg-Hainich",
+            "Allemagne"
+          ]
+        },
+        {
+          "title": "Représentants",
+          "body": [
+            "Représentée par la direction de Gotham Consulting GmbH."
+          ]
+        },
+        {
+          "title": "Contact",
+          "body": [
+            "E-mail : hallo@komma.app"
+          ]
+        },
+        {
+          "title": "Registre du commerce",
+          "body": [
+            "Inscription au registre du commerce du tribunal compétent. Le numéro exact est communiqué sur demande."
+          ]
+        },
+        {
+          "title": "Responsable du contenu selon § 18 (2) MStV",
+          "body": [
+            "Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich"
+          ]
+        },
+        {
+          "title": "Règlement des litiges UE",
+          "body": [
+            "La Commission européenne fournit une plateforme de règlement en ligne des litiges : https://ec.europa.eu/consumers/odr/. Nous ne sommes pas tenus de participer aux procédures de règlement."
+          ]
+        },
+        {
+          "title": "Responsabilité du contenu",
+          "body": [
+            "En tant que prestataire de services, nous sommes responsables de notre propre contenu selon § 7 (1) DDG. Selon §§ 8–10 DDG, nous ne sommes pas tenus de surveiller les informations de tiers."
+          ]
+        },
+        {
+          "title": "Responsabilité des liens",
+          "body": [
+            "Notre offre contient des liens vers des sites externes dont nous n'influençons pas le contenu. Le fournisseur respectif en est toujours responsable."
+          ]
+        },
+        {
+          "title": "Droits d'auteur",
+          "body": [
+            "Les contenus créés par les opérateurs du site sont soumis au droit d'auteur allemand. Les contenus créés par les utilisateurs restent leur propriété."
+          ]
+        }
+      ],
+      "seeAlso": "Voir aussi nos {{terms}}."
+    }
+  }
 }

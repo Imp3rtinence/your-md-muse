@@ -73,8 +73,156 @@
     "logout": "Abmelden"
   },
   "legal": {
-    "termsTitle": "Allgemeine Geschäftsbedingungen",
-    "imprintTitle": "Impressum",
-    "back": "Zurück"
+    "back": "Zurück",
+    "agb": {
+      "title": "Allgemeine Geschäftsbedingungen",
+      "updated": "Stand: Juni 2026 · gültig für die App „Komma\"",
+      "sections": [
+        {
+          "title": "1. Geltungsbereich und Anbieter",
+          "body": [
+            "Diese Allgemeinen Geschäftsbedingungen („AGB\") gelten für die Nutzung der App „Komma\" der Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich (nachfolgend „Anbieter\"). Mit der Registrierung erklärst du dich mit diesen AGB einverstanden."
+          ]
+        },
+        {
+          "title": "2. Leistungsbeschreibung",
+          "body": [
+            "Komma ist eine soziale Mitmach-Plattform, auf der Nutzer:innen Challenges erstellen, daran teilnehmen, Beweise hochladen und Crews bilden können. Teile der Inhalte werden durch KI erzeugt und sind als solche gekennzeichnet."
+          ]
+        },
+        {
+          "title": "3. Registrierung und Mindestalter",
+          "body": [
+            "Zur Nutzung ist ein kostenloses Konto erforderlich. Die Nutzung ist ab dem vollendeten 14. Lebensjahr gestattet. Bei Minderjährigen wird die Zustimmung der Erziehungsberechtigten vorausgesetzt."
+          ]
+        },
+        {
+          "title": "4. Nutzerinhalte und Rechteeinräumung",
+          "body": [
+            "Du bleibst Urheber:in deiner Inhalte und räumst dem Anbieter ein einfaches, weltweites, unentgeltliches Nutzungsrecht zur Speicherung und Anzeige innerhalb der App ein. Du sicherst zu, keine Rechte Dritter zu verletzen."
+          ]
+        },
+        {
+          "title": "5. Verhaltensregeln",
+          "body": [
+            "Verboten ist das Hochladen oder Verbreiten von Inhalten, die"
+          ],
+          "list": [
+            "gegen geltendes Recht verstoßen,",
+            "Rechte Dritter verletzen,",
+            "gewaltverherrlichend, diskriminierend, pornografisch oder jugendgefährdend sind,",
+            "andere belästigen, bedrohen oder zu Straftaten anleiten,",
+            "Schadsoftware enthalten oder die Sicherheit beeinträchtigen."
+          ]
+        },
+        {
+          "title": "6. Direktnachrichten und Verschlüsselung",
+          "body": [
+            "Direktnachrichten werden serverseitig verschlüsselt gespeichert (at rest). Eine Ende-zu-Ende-Verschlüsselung erfolgt nicht; der Anbieter kann Nachrichten zur Erfüllung gesetzlicher Pflichten in begründeten Einzelfällen entschlüsseln."
+          ]
+        },
+        {
+          "title": "7. KI-generierte Inhalte",
+          "body": [
+            "Challenges, Vorschläge, Übersetzungen, Coverbilder und Badges können ganz oder teilweise durch KI erstellt sein. Sie können Fehler enthalten und ersetzen keine fachliche oder rechtliche Beratung."
+          ]
+        },
+        {
+          "title": "8. Verfügbarkeit",
+          "body": [
+            "Der Anbieter ist um hohe Verfügbarkeit bemüht, schuldet diese aber nicht. Wartung, Störungen Dritter oder höhere Gewalt können zu Einschränkungen führen."
+          ]
+        },
+        {
+          "title": "9. Haftung",
+          "body": [
+            "Der Anbieter haftet uneingeschränkt für Vorsatz und grobe Fahrlässigkeit sowie nach dem ProdHaftG. Für leichte Fahrlässigkeit nur bei Verletzung wesentlicher Vertragspflichten und begrenzt auf den typischerweise vorhersehbaren Schaden."
+          ]
+        },
+        {
+          "title": "10. Kündigung",
+          "body": [
+            "Du kannst dein Konto jederzeit in den Profil-Einstellungen löschen. Der Anbieter darf bei schweren Verstößen außerordentlich kündigen."
+          ]
+        },
+        {
+          "title": "11. Änderungen der AGB",
+          "body": [
+            "Änderungen werden in der App angezeigt. Widersprichst du nicht innerhalb von vier Wochen, gelten sie als angenommen."
+          ]
+        },
+        {
+          "title": "12. Schlussbestimmungen",
+          "body": [
+            "Es gilt deutsches Recht unter Ausschluss des UN-Kaufrechts. Sollte eine Bestimmung unwirksam sein, bleibt die Wirksamkeit der übrigen unberührt. Gerichtsstand ist, soweit zulässig, der Sitz des Anbieters."
+          ]
+        }
+      ],
+      "contact": "Bei Fragen zu diesen AGB wende dich bitte an die im {{imprint}} genannten Kontaktdaten."
+    },
+    "impressum": {
+      "title": "Impressum",
+      "subtitle": "Angaben gemäß § 5 DDG und § 18 MStV",
+      "sections": [
+        {
+          "title": "Anbieter",
+          "body": [
+            "Gotham Consulting GmbH",
+            "Rosenweg 4",
+            "99820 Hörselberg-Hainich",
+            "Deutschland"
+          ]
+        },
+        {
+          "title": "Vertretungsberechtigte",
+          "body": [
+            "Vertreten durch die Geschäftsführung der Gotham Consulting GmbH."
+          ]
+        },
+        {
+          "title": "Kontakt",
+          "body": [
+            "E-Mail: hallo@komma.app"
+          ]
+        },
+        {
+          "title": "Registereintrag",
+          "body": [
+            "Eintragung im Handelsregister beim zuständigen Amtsgericht. Die genaue Registernummer wird auf Anfrage mitgeteilt."
+          ]
+        },
+        {
+          "title": "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV",
+          "body": [
+            "Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich"
+          ]
+        },
+        {
+          "title": "EU-Streitschlichtung",
+          "body": [
+            "Die EU-Kommission stellt eine Plattform zur Online-Streitbeilegung bereit: https://ec.europa.eu/consumers/odr/. Wir sind nicht verpflichtet, an Streitbeilegungsverfahren teilzunehmen."
+          ]
+        },
+        {
+          "title": "Haftung für Inhalte",
+          "body": [
+            "Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte verantwortlich. Nach §§ 8–10 DDG nicht verpflichtet, fremde Informationen zu überwachen."
+          ]
+        },
+        {
+          "title": "Haftung für Links",
+          "body": [
+            "Unser Angebot enthält Links zu externen Websites, auf deren Inhalte wir keinen Einfluss haben. Verantwortlich ist stets der jeweilige Anbieter."
+          ]
+        },
+        {
+          "title": "Urheberrecht",
+          "body": [
+            "Die durch die Seitenbetreiber erstellten Inhalte unterliegen dem deutschen Urheberrecht. Nutzer-generierte Inhalte verbleiben bei den jeweiligen Urheber:innen."
+          ]
+        }
+      ],
+      "seeAlso": "Siehe auch unsere {{terms}}."
+    }
   }
 }
