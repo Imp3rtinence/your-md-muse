@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { categoryMeta } from "@/lib/categories";
-import { Flame, Sparkles, Users as UsersIcon } from "lucide-react";
+import { getMyAiProfile } from "@/lib/ai/onboarding.functions";
+import { Flame, Sparkles, Users as UsersIcon, Wand2 } from "lucide-react";
 
 export const Route = createFileRoute("/_app/home")({
   head: () => ({ meta: [{ title: "Home – Komma" }] }),
@@ -20,6 +22,14 @@ type Challenge = {
 
 function Home() {
   const { profile } = useAuth();
+  const fetchAi = useServerFn(getMyAiProfile);
+
+  const { data: aiProfile } = useQuery({
+    queryKey: ["my-ai-profile"],
+    queryFn: () => fetchAi(),
+    staleTime: 60_000,
+    retry: false,
+  });
 
   const { data: challenges, isLoading } = useQuery({
     queryKey: ["home-feed"],
@@ -63,9 +73,44 @@ function Home() {
         <EmptyState />
       )}
 
+      <ForYouSection ai={aiProfile} />
+
       <Section title="🔥 Trending" items={trending} />
       <Section title="🆕 Neu" items={fresh} />
     </div>
+  );
+}
+
+function ForYouSection({ ai }: { ai: any }) {
+  if (!ai || !ai.suggested_challenges?.length) return null;
+  return (
+    <section className="mt-8">
+      <div className="mb-3 flex items-center gap-2">
+        <Wand2 className="size-4 text-primary" />
+        <h3 className="font-display text-lg font-semibold">Für dich gestartet</h3>
+      </div>
+      {ai.summary && <p className="mb-3 text-sm text-muted-foreground">{ai.summary}</p>}
+      <div className="-mx-5 flex gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {ai.suggested_challenges.map((s: any, i: number) => {
+          const cat = categoryMeta(s.category);
+          return (
+            <Link
+              key={i}
+              to="/create"
+              search={{ title: s.title, description: s.description, category: s.category } as any}
+              className="block w-64 shrink-0 rounded-2xl border border-primary/30 bg-primary/5 p-4"
+            >
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary">
+                <Sparkles className="size-3" /> KI-Vorschlag
+              </div>
+              <div className="mt-2 line-clamp-2 font-display text-base font-semibold">{s.title}</div>
+              <div className="mt-1 line-clamp-2 text-xs text-muted-foreground">{s.description}</div>
+              <div className="mt-3 text-xs">{cat.icon} {cat.label} · {s.duration_minutes} Min</div>
+            </Link>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 
