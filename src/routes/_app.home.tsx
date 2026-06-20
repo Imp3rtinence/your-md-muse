@@ -17,7 +17,7 @@ type Challenge = {
   category: string; visibility: string;
   participant_count: number; created_at: string; is_daily: boolean;
   creator_id: string;
-  creator?: { username: string; display_name: string | null; avatar_url: string | null };
+  creator?: { username: string; display_name: string | null; avatar_url: string | null; is_ai_bot?: boolean };
 };
 
 function Home() {
