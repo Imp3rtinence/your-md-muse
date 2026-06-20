@@ -54,6 +54,10 @@ function ChallengeDetail() {
   const [editDesc, setEditDesc] = useState("");
   const [savingEdit, setSavingEdit] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const cheer = useServerFn(botCheerSubmission);
+  const askExplain = useServerFn(explainChallenge);
+  const [explanation, setExplanation] = useState<string | null>(null);
+  const [explainBusy, setExplainBusy] = useState(false);
 
   const { data: c } = useQuery({
     queryKey: ["challenge", id],
