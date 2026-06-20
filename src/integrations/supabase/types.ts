@@ -77,12 +77,16 @@ export type Database = {
           created_by_ai: boolean
           creator_id: string
           description: string | null
+          difficulty: string | null
+          embedding: string | null
           expires_at: string | null
+          hero_image_url: string | null
           id: string
           is_daily: boolean
           parent_challenge_id: string | null
           participant_count: number
           region: string | null
+          tags: string[]
           title: string
           visibility: Database["public"]["Enums"]["challenge_visibility"]
         }
@@ -92,12 +96,16 @@ export type Database = {
           created_by_ai?: boolean
           creator_id: string
           description?: string | null
+          difficulty?: string | null
+          embedding?: string | null
           expires_at?: string | null
+          hero_image_url?: string | null
           id?: string
           is_daily?: boolean
           parent_challenge_id?: string | null
           participant_count?: number
           region?: string | null
+          tags?: string[]
           title: string
           visibility?: Database["public"]["Enums"]["challenge_visibility"]
         }
@@ -107,12 +115,16 @@ export type Database = {
           created_by_ai?: boolean
           creator_id?: string
           description?: string | null
+          difficulty?: string | null
+          embedding?: string | null
           expires_at?: string | null
+          hero_image_url?: string | null
           id?: string
           is_daily?: boolean
           parent_challenge_id?: string | null
           participant_count?: number
           region?: string | null
+          tags?: string[]
           title?: string
           visibility?: Database["public"]["Enums"]["challenge_visibility"]
         }
@@ -341,6 +353,7 @@ export type Database = {
           created_at: string
           creator_id: string
           description: string | null
+          embedding: string | null
           emoji: string
           id: string
           kind: string
@@ -352,6 +365,7 @@ export type Database = {
           created_at?: string
           creator_id: string
           description?: string | null
+          embedding?: string | null
           emoji?: string
           id?: string
           kind?: string
@@ -363,6 +377,7 @@ export type Database = {
           created_at?: string
           creator_id?: string
           description?: string | null
+          embedding?: string | null
           emoji?: string
           id?: string
           kind?: string
@@ -573,6 +588,7 @@ export type Database = {
       user_ai_profile: {
         Row: {
           created_at: string
+          interest_embedding: string | null
           suggested_challenges: Json
           suggested_crew_kinds: Json
           summary: string | null
@@ -583,6 +599,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          interest_embedding?: string | null
           suggested_challenges?: Json
           suggested_crew_kinds?: Json
           summary?: string | null
@@ -593,6 +610,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          interest_embedding?: string | null
           suggested_challenges?: Json
           suggested_crew_kinds?: Json
           summary?: string | null
@@ -629,6 +647,41 @@ export type Database = {
           },
           {
             foreignKeyName: "user_badges_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      weekly_recaps: {
+        Row: {
+          created_at: string
+          stats: Json
+          suggestion: string
+          summary: string
+          user_id: string
+          week_start: string
+        }
+        Insert: {
+          created_at?: string
+          stats?: Json
+          suggestion: string
+          summary: string
+          user_id: string
+          week_start: string
+        }
+        Update: {
+          created_at?: string
+          stats?: Json
+          suggestion?: string
+          summary?: string
+          user_id?: string
+          week_start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "weekly_recaps_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
@@ -674,6 +727,35 @@ export type Database = {
         }[]
       }
       mark_dm_thread_read: { Args: { _other: string }; Returns: undefined }
+      match_challenges: {
+        Args: {
+          exclude_id?: string
+          match_count?: number
+          query_embedding: string
+        }
+        Returns: {
+          category: Database["public"]["Enums"]["challenge_category"]
+          creator_id: string
+          description: string
+          hero_image_url: string
+          id: string
+          participant_count: number
+          similarity: number
+          title: string
+        }[]
+      }
+      match_crews: {
+        Args: { match_count?: number; query_embedding: string }
+        Returns: {
+          description: string
+          emoji: string
+          id: string
+          kind: string
+          member_count: number
+          name: string
+          similarity: number
+        }[]
+      }
       preview_group_invite: {
         Args: { _token: string }
         Returns: {

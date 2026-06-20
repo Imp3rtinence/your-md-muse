@@ -1,24 +1,28 @@
 # Komma KI-Ausbau — Fortschritt
 
-## ✅ A. Bot-Profile als Community-Mitglieder
-- `profiles.is_ai_bot` + `profiles.bot_persona` (jsonb)
-- 12 Bots seeded: Lumi, Brix, Mossi, Nuvo, Pippa, Kuro, Echo, Vesper, Tilda, Fenn, Solé, Rooki — je mit Emoji, Bio, Spezialität
-- `BotBadge`-Komponente sichtbar auf Home-Karten und Challenge-Detail (inkl. Hinweisbox)
+## ✅ Fertig
+- **A. Bot-Profile** — 12 Bots mit Namen/Emoji/Bio/Spezialität, sichtbares 🤖-Badge in Feeds und Detail
+- **B. Content-Motor** — täglicher pg_cron-Job 06:00 generiert 5–8 Challenges via Bots, jeweils mit Embedding
+- **C. Smart-Create** — „✨ Mit KI ausarbeiten" + „Verbessern" im Create-Flow
+- **D. Sanfter Moderation-Hinweis** — KI-Risiko-Check beim Posten, fragt nur freundlich nach (kein Block)
+- **E. Embeddings + Semantische Suche** — pgvector, `match_challenges`/`match_crews`-RPCs
+  - Ähnliche Challenges auf Detailseite
+  - Freie Such-Box auf Home
+  - Crew-Buddy auf Crews-Seite („Passt zu dir")
+- **F. Wöchentlicher KI-Coach** — `weekly_recaps` Tabelle, pg_cron Sonntag 18:00, Karte auf Home
+- **G2. Beweis-Feedback** — Bots kommentieren neue Submissions
+- **G3. Auto-Tags** — Smart-Create schlägt Hashtags vor
+- **G6. Schwierigkeit** — leicht/mittel/mutig im Smart-Create
+- **G8. Hero-Bilder** — Nano-Banana Coverbilder optional bei Create
+- **G9. Erklär's mir** — Button auf jeder Challenge-Karte
 
-## ✅ B. Content-Motor
-- `challenges.created_by_ai` Spalte
-- Server-Route `/api/public/cron/generate-challenges` (apikey-geschützt)
-- KI-Prompt picked passenden Bot je Spezialität, generiert 5–8 Challenges täglich
-- `pg_cron` Job `komma-generate-challenges-daily` läuft täglich 06:00 UTC
+## 🟡 Noch offen (kleinere Polish-Features)
+- **G5 Mehrsprachigkeit** — Übersetzen-Button + Cache-Tabelle
+- **G7 Personalisierte Badges** — KI erfindet seltene Badges aus Mustern
+- **G10 Dynamisches Onboarding-Quiz** — KI-Folgefragen statt fixer Liste
 
-## ⏭️ Als nächstes (in Reihenfolge)
-3. **C. Smart-Create + G3 Auto-Tags + G8 Hero-Bild**
-4. **E. Embeddings + G4 Semantische Suche + G1 Crew-Buddy**
-5. **G2 Beweis-Feedback + G9 „Erklär's mir"**
-6. **D. Hinweis-Moderation (sanft, kein Block)**
-7. **F. Wochen-Coach + G7 Personal. Badges**
-8. **G5 Mehrsprachigkeit + G6 Schwierigkeit + G10 Dynamisches Quiz**
-
----
-
-(Vollständige Strategie siehe Chat-Verlauf vom Plan-Approval.)
+## 🛠 Tech-Backbone
+- Lovable AI Gateway (`gemini-3-flash-preview` Default, `gemini-2.5-flash-image`, `text-embedding-3-small@1536`)
+- pgvector + HNSW Index
+- pg_cron-Jobs: `komma-generate-challenges-daily`, `komma-weekly-coach`
+- Server-Routes geschützt via Supabase Anon-apikey Header

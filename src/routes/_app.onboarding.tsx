@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { ArrowRight, Check, Loader2, Sparkles } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { analyzeOnboarding } from "@/lib/ai/onboarding.functions";
+import { embedMyProfile } from "@/lib/ai/embeddings.functions";
 
 export const Route = createFileRoute("/_app/onboarding")({
   head: () => ({ meta: [{ title: "Willkommen – Komma" }] }),
@@ -37,6 +38,7 @@ function Onboarding() {
   const nav = useNavigate();
   const { user, refreshProfile } = useAuth();
   const analyze = useServerFn(analyzeOnboarding);
+  const embedMe = useServerFn(embedMyProfile);
   const [step, setStep] = useState(0);
   const [interests, setInterests] = useState<string[]>([]);
   const [ctx, setCtx] = useState<string | null>(null);
@@ -54,8 +56,10 @@ function Onboarding() {
         .update({ interests, onboarded_at: new Date().toISOString() })
         .eq("id", user.id);
       if (error) throw error;
-      // KI-Analyse im Hintergrund anstossen – Fehler nicht blockieren
-      analyze({ data: { interests, context: ctx } }).catch((e) => console.warn("AI analyze failed", e));
+      // KI-Analyse im Hintergrund → danach Profil-Embedding
+      analyze({ data: { interests, context: ctx } })
+        .then(() => embedMe())
+        .catch((e) => console.warn("AI analyze failed", e));
       await refreshProfile();
       toast.success("Los geht's!");
       nav({ to: "/home" });

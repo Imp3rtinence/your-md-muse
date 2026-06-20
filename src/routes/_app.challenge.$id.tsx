@@ -13,6 +13,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { BotBadge } from "@/components/BotBadge";
+import { useServerFn } from "@tanstack/react-start";
+import { botCheerSubmission } from "@/lib/ai/bot-cheer.functions";
+import { explainChallenge } from "@/lib/ai/explain.functions";
+import { Sparkles } from "lucide-react";
+import { similarChallenges } from "@/lib/ai/embeddings.functions";
 
 function ProofMedia({ path, type, username }: { path: string; type: string; username?: string }) {
   const url = useProofUrl(path);
@@ -50,6 +55,10 @@ function ChallengeDetail() {
   const [editDesc, setEditDesc] = useState("");
   const [savingEdit, setSavingEdit] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const cheer = useServerFn(botCheerSubmission);
+  const askExplain = useServerFn(explainChallenge);
+  const [explanation, setExplanation] = useState<string | null>(null);
+  const [explainBusy, setExplainBusy] = useState(false);
 
   const { data: c } = useQuery({
     queryKey: ["challenge", id],
@@ -80,7 +89,7 @@ function ChallengeDetail() {
     queryFn: async () => {
       const { data } = await (supabase as any)
         .from("comments")
-        .select("*, user:profiles!comments_user_id_fkey(username,display_name,avatar_url)")
+        .select("*, user:profiles!comments_user_id_fkey(username,display_name,avatar_url,is_ai_bot)")
         .eq("challenge_id", id)
         .order("created_at", { ascending: true });
       return data ?? [];
@@ -128,6 +137,10 @@ function ChallengeDetail() {
       toast.success("Beweis hochgeladen – du bist dran! +20 Aura");
       qc.invalidateQueries({ queryKey: ["submissions", id] });
       qc.invalidateQueries({ queryKey: ["challenge", id] });
+      // Im Hintergrund: ein Bot feuert kurz an
+      cheer({ data: { challenge_id: id } })
+        .then(() => qc.invalidateQueries({ queryKey: ["comments", id] }))
+        .catch(() => {});
     } catch (e: any) { toast.error(e.message ?? "Upload fehlgeschlagen"); }
     finally { setUploading(false); }
   };
@@ -233,7 +246,48 @@ function ChallengeDetail() {
           </span>
         </div>
         <h1 className="mt-3 font-display text-3xl font-bold leading-tight">{c.title}</h1>
+        {c.difficulty && (
+          <span className="mt-2 inline-block rounded-full bg-surface-2 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+            {c.difficulty}
+          </span>
+        )}
         {c.description && <p className="mt-2 text-sm text-muted-foreground">{c.description}</p>}
+        {Array.isArray(c.tags) && c.tags.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {c.tags.map((t: string) => (
+              <span key={t} className="rounded-full bg-surface-2 px-2 py-0.5 text-[11px] text-muted-foreground">#{t}</span>
+            ))}
+          </div>
+        )}
+        <HeroImage path={c.hero_image_url} />
+
+        {/* Erklär's mir */}
+        <div className="mt-3">
+          {explanation ? (
+            <div className="rounded-2xl border border-accent/30 bg-accent/5 px-3 py-2 text-sm text-foreground">
+              <div className="mb-1 flex items-center gap-1 text-[10px] uppercase tracking-wider text-accent"><Sparkles className="size-3" /> Erklärung</div>
+              {explanation}
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={async () => {
+                setExplainBusy(true);
+                try {
+                  const r = await askExplain({ data: { title: c.title, description: c.description } });
+                  setExplanation(r.explanation);
+                } catch { toast.error("Geht gerade nicht."); }
+                finally { setExplainBusy(false); }
+              }}
+              disabled={explainBusy}
+              className="tap inline-flex items-center gap-1 rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground disabled:opacity-50"
+            >
+              {explainBusy ? <Loader2 className="size-3 animate-spin" /> : <Sparkles className="size-3 text-accent" />}
+              Erklär's mir
+            </button>
+          )}
+        </div>
+
         {c.creator?.is_ai_bot && (
           <div className="mt-3 flex items-start gap-2 rounded-2xl border border-accent/30 bg-accent/5 px-3 py-2 text-xs text-muted-foreground">
             <BotBadge size="sm" />
@@ -348,10 +402,55 @@ function ChallengeDetail() {
           )}
         </section>
 
+        {/* Ähnliche Challenges */}
+        <SimilarChallenges id={id} />
+
         {/* Comments */}
         <Comments id={id} comments={comments ?? []} />
       </div>
     </div>
+  );
+}
+
+function HeroImage({ path }: { path?: string | null }) {
+  const url = useProofUrl(path);
+  if (!url) return null;
+  return (
+    <div className="mt-4 overflow-hidden rounded-2xl border border-border bg-surface-2">
+      <img src={url} alt="" className="aspect-[16/10] w-full object-cover" />
+    </div>
+  );
+}
+
+function SimilarChallenges({ id }: { id: string }) {
+  const fetchSimilar = useServerFn(similarChallenges);
+  const { data } = useQuery({
+    queryKey: ["similar", id],
+    queryFn: () => fetchSimilar({ data: { challenge_id: id } }),
+    staleTime: 60_000,
+    retry: false,
+  });
+  const list = (data ?? []) as Array<{ id: string; title: string; participant_count: number }>;
+  if (!list.length) return null;
+  return (
+    <section className="mt-8">
+      <h2 className="mb-3 flex items-center gap-1.5 font-display text-lg font-semibold">
+        <Sparkles className="size-4 text-accent" /> Ähnliche Challenges
+      </h2>
+      <div className="grid gap-2">
+        {list.map((s) => (
+          <Link
+            key={s.id}
+            to="/challenge/$id"
+            params={{ id: s.id }}
+            className="tap flex items-center justify-between rounded-2xl border border-border bg-surface px-3 py-2.5"
+          >
+            <div className="line-clamp-1 text-sm font-medium">{s.title}</div>
+            <div className="ml-2 shrink-0 text-xs text-muted-foreground">{s.participant_count} dabei</div>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -389,7 +488,10 @@ function Comments({ id, comments }: { id: string; comments: any[] }) {
       <div className="space-y-3">
         {comments.map((c) => (
           <div key={c.id} className="rounded-2xl border border-border bg-surface px-3 py-2.5">
-            <div className="text-xs font-semibold text-muted-foreground">@{c.user?.username}</div>
+            <div className="flex items-center gap-1 text-xs font-semibold text-muted-foreground">
+              @{c.user?.username}
+              {c.user?.is_ai_bot && <BotBadge size="xs" />}
+            </div>
             <div className="mt-0.5 text-sm">{c.body}</div>
           </div>
         ))}

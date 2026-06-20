@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
-import { Plus, Users, ChevronRight, X, Loader2 } from "lucide-react";
+import { Plus, Users, ChevronRight, X, Loader2, Sparkles } from "lucide-react";
+import { recommendCrews, embedCrew } from "@/lib/ai/embeddings.functions";
 
 export const Route = createFileRoute("/_app/groups/")({
   head: () => ({ meta: [{ title: "Crews – Komma" }] }),
@@ -95,6 +97,9 @@ function Groups() {
         </ul>
       )}
 
+      <CrewBuddy />
+
+
       {createOpen && (
         <CreateGroupModal
           onClose={() => setCreateOpen(false)}
@@ -112,6 +117,7 @@ function CreateGroupModal({ onClose, onCreated }: { onClose: () => void; onCreat
   const [emoji, setEmoji] = useState("👥");
   const [kind, setKind] = useState("friends");
   const [busy, setBusy] = useState(false);
+  const doEmbed = useServerFn(embedCrew);
 
   const submit = async () => {
     if (!user) return;
@@ -119,10 +125,11 @@ function CreateGroupModal({ onClose, onCreated }: { onClose: () => void; onCreat
     if (n.length < 2) return toast.error("Name min. 2 Zeichen");
     setBusy(true);
     try {
-      const { error } = await (supabase as any).from("groups").insert({
+      const { data, error } = await (supabase as any).from("groups").insert({
         name: n, description: desc.trim() || null, emoji, kind, creator_id: user.id,
-      });
+      }).select("id").single();
       if (error) throw error;
+      if (data?.id) doEmbed({ data: { crew_id: data.id } }).catch(() => {});
       toast.success("Crew erstellt");
       onCreated();
     } catch (e: any) {
@@ -169,5 +176,41 @@ function CreateGroupModal({ onClose, onCreated }: { onClose: () => void; onCreat
         </button>
       </div>
     </div>
+  );
+}
+
+function CrewBuddy() {
+  const fetchRec = useServerFn(recommendCrews);
+  const { data } = useQuery({
+    queryKey: ["crew-recommendations"],
+    queryFn: () => fetchRec(),
+    staleTime: 5 * 60_000,
+    retry: false,
+  });
+  const list = (data ?? []) as Array<{ id: string; name: string; emoji: string; description: string | null; kind: string; member_count: number }>;
+  if (!list.length) return null;
+  return (
+    <section className="mt-8">
+      <h2 className="mb-3 flex items-center gap-1.5 font-display text-lg font-semibold">
+        <Sparkles className="size-4 text-accent" /> Passt zu dir
+      </h2>
+      <ul className="space-y-2">
+        {list.map((c) => (
+          <li key={c.id}>
+            <Link
+              to="/groups/$id" params={{ id: c.id }}
+              className="tap flex items-center gap-3 rounded-2xl border border-accent/30 bg-accent/5 p-3"
+            >
+              <div className="grid size-12 place-items-center rounded-2xl bg-primary/15 text-2xl">{c.emoji}</div>
+              <div className="min-w-0 flex-1">
+                <div className="truncate font-display font-semibold">{c.name}</div>
+                <div className="line-clamp-1 text-xs text-muted-foreground">{c.description ?? `${c.member_count} Mitglieder`}</div>
+              </div>
+              <ChevronRight className="size-4 text-muted-foreground" />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
