@@ -27,53 +27,55 @@ export const SUPPORTED_LOCALES = [
 ] as const;
 
 export type LocaleCode = (typeof SUPPORTED_LOCALES)[number]["code"];
-
 export const RTL_LOCALES: LocaleCode[] = ["ar"];
+
+const resources = {
+  de: { translation: de },
+  en: { translation: en },
+  tr: { translation: tr },
+  ar: { translation: ar },
+  uk: { translation: uk },
+  fr: { translation: fr },
+  es: { translation: es },
+  it: { translation: it },
+  pl: { translation: pl },
+  ru: { translation: ru },
+};
 
 let initialized = false;
 
 export function initI18n() {
-  if (initialized || typeof window === "undefined") return i18n;
+  if (initialized) return i18n;
   initialized = true;
-  i18n
-    .use(LanguageDetector)
-    .use(initReactI18next)
-    .init({
-      resources: {
-        de: { translation: de },
-        en: { translation: en },
-        tr: { translation: tr },
-        ar: { translation: ar },
-        uk: { translation: uk },
-        fr: { translation: fr },
-        es: { translation: es },
-        it: { translation: it },
-        pl: { translation: pl },
-        ru: { translation: ru },
-      },
-      fallbackLng: "de",
-      supportedLngs: SUPPORTED_LOCALES.map((l) => l.code),
-      interpolation: { escapeValue: false },
-      detection: {
-        order: ["localStorage", "navigator"],
-        caches: ["localStorage"],
-        lookupLocalStorage: "komma-lang",
-      },
-    });
-
-  i18n.on("languageChanged", (lng) => {
-    if (typeof document !== "undefined") {
-      document.documentElement.lang = lng;
-      document.documentElement.dir = RTL_LOCALES.includes(lng as LocaleCode) ? "rtl" : "ltr";
-    }
+  const isClient = typeof window !== "undefined";
+  const chain = isClient ? i18n.use(LanguageDetector) : i18n;
+  chain.use(initReactI18next).init({
+    resources,
+    fallbackLng: "de",
+    lng: isClient ? undefined : "de",
+    supportedLngs: SUPPORTED_LOCALES.map((l) => l.code),
+    interpolation: { escapeValue: false },
+    react: { useSuspense: false },
+    detection: {
+      order: ["localStorage", "navigator"],
+      caches: ["localStorage"],
+      lookupLocalStorage: "komma-lang",
+    },
   });
 
-  if (typeof document !== "undefined") {
-    document.documentElement.lang = i18n.language || "de";
-    document.documentElement.dir = RTL_LOCALES.includes((i18n.language as LocaleCode) ?? "de") ? "rtl" : "ltr";
+  if (isClient) {
+    const apply = (lng: string) => {
+      document.documentElement.lang = lng;
+      document.documentElement.dir = RTL_LOCALES.includes(lng as LocaleCode) ? "rtl" : "ltr";
+    };
+    apply(i18n.language || "de");
+    i18n.on("languageChanged", apply);
   }
 
   return i18n;
 }
+
+// Eager init so useTranslation() works on first render.
+initI18n();
 
 export { i18n };
