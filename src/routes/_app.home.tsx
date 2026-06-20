@@ -10,6 +10,7 @@ import { searchChallenges } from "@/lib/ai/embeddings.functions";
 import { Flame, Loader2, Search, Sparkles, Users as UsersIcon, Wand2 } from "lucide-react";
 import { BotBadge } from "@/components/BotBadge";
 import { useProofUrl } from "@/lib/proof-url";
+import { AdSlot, AD_SLOTS } from "@/components/AdSlot";
 
 export const Route = createFileRoute("/_app/home")({
   head: () => ({ meta: [{ title: "Home – Komma" }] }),
@@ -86,6 +87,7 @@ function Home() {
       <ForYouSection ai={aiProfile} />
 
       <Section title="🔥 Trending" items={trending} />
+      <AdSlot slot={AD_SLOTS.feed} variant="feed" className="mt-6" />
       <Section title="🆕 Neu" items={fresh} />
     </div>
   );

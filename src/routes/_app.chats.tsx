@@ -1,11 +1,12 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { useAvatarUrl } from "@/lib/avatar-url";
 import { toast } from "sonner";
 import { MessageCircle, Search, UserPlus, Check, X, Loader2 } from "lucide-react";
+import { AdSlot, AD_SLOTS } from "@/components/AdSlot";
 
 export const Route = createFileRoute("/_app/chats")({
   head: () => ({ meta: [{ title: "Chats – Komma" }] }),
@@ -158,7 +159,16 @@ function ChatsTab({ threads, loading, onPickFriend }: { threads: Thread[]; loadi
   }
   return (
     <ul className="mt-4 space-y-1.5">
-      {threads.map((t) => <ThreadRow key={t.other_id} t={t} />)}
+      {threads.map((t, i) => (
+        <Fragment key={t.other_id}>
+          <ThreadRow t={t} />
+          {(i + 1) % 10 === 0 && i < threads.length - 1 && (
+            <li className="list-none">
+              <AdSlot slot={AD_SLOTS.chats} variant="inline" />
+            </li>
+          )}
+        </Fragment>
+      ))}
     </ul>
   );
 }
