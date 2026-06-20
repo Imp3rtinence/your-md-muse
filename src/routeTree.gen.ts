@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LegalImpressumRouteImport } from './routes/legal.impressum'
+import { Route as LegalAgbRouteImport } from './routes/legal.agb'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
 import { Route as AppOnboardingRouteImport } from './routes/_app.onboarding'
 import { Route as AppLeagueRouteImport } from './routes/_app.league'
@@ -40,6 +42,16 @@ const AppRoute = AppRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalImpressumRoute = LegalImpressumRouteImport.update({
+  id: '/legal/impressum',
+  path: '/legal/impressum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalAgbRoute = LegalAgbRouteImport.update({
+  id: '/legal/agb',
+  path: '/legal/agb',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppProfileRoute = AppProfileRouteImport.update({
@@ -131,6 +143,8 @@ export interface FileRoutesByFullPath {
   '/league': typeof AppLeagueRoute
   '/onboarding': typeof AppOnboardingRoute
   '/profile': typeof AppProfileRoute
+  '/legal/agb': typeof LegalAgbRoute
+  '/legal/impressum': typeof LegalImpressumRoute
   '/challenge/$id': typeof AppChallengeIdRoute
   '/chat/$userId': typeof AppChatUserIdRoute
   '/groups/$id': typeof AppGroupsIdRoute
@@ -149,6 +163,8 @@ export interface FileRoutesByTo {
   '/league': typeof AppLeagueRoute
   '/onboarding': typeof AppOnboardingRoute
   '/profile': typeof AppProfileRoute
+  '/legal/agb': typeof LegalAgbRoute
+  '/legal/impressum': typeof LegalImpressumRoute
   '/challenge/$id': typeof AppChallengeIdRoute
   '/chat/$userId': typeof AppChatUserIdRoute
   '/groups/$id': typeof AppGroupsIdRoute
@@ -170,6 +186,8 @@ export interface FileRoutesById {
   '/_app/league': typeof AppLeagueRoute
   '/_app/onboarding': typeof AppOnboardingRoute
   '/_app/profile': typeof AppProfileRoute
+  '/legal/agb': typeof LegalAgbRoute
+  '/legal/impressum': typeof LegalImpressumRoute
   '/_app/challenge/$id': typeof AppChallengeIdRoute
   '/_app/chat/$userId': typeof AppChatUserIdRoute
   '/_app/groups/$id': typeof AppGroupsIdRoute
@@ -191,6 +209,8 @@ export interface FileRouteTypes {
     | '/league'
     | '/onboarding'
     | '/profile'
+    | '/legal/agb'
+    | '/legal/impressum'
     | '/challenge/$id'
     | '/chat/$userId'
     | '/groups/$id'
@@ -209,6 +229,8 @@ export interface FileRouteTypes {
     | '/league'
     | '/onboarding'
     | '/profile'
+    | '/legal/agb'
+    | '/legal/impressum'
     | '/challenge/$id'
     | '/chat/$userId'
     | '/groups/$id'
@@ -229,6 +251,8 @@ export interface FileRouteTypes {
     | '/_app/league'
     | '/_app/onboarding'
     | '/_app/profile'
+    | '/legal/agb'
+    | '/legal/impressum'
     | '/_app/challenge/$id'
     | '/_app/chat/$userId'
     | '/_app/groups/$id'
@@ -242,6 +266,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
+  LegalAgbRoute: typeof LegalAgbRoute
+  LegalImpressumRoute: typeof LegalImpressumRoute
   ApiPublicCronGenerateChallengesRoute: typeof ApiPublicCronGenerateChallengesRoute
   ApiPublicCronWeeklyCoachRoute: typeof ApiPublicCronWeeklyCoachRoute
 }
@@ -267,6 +293,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/impressum': {
+      id: '/legal/impressum'
+      path: '/legal/impressum'
+      fullPath: '/legal/impressum'
+      preLoaderRoute: typeof LegalImpressumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/agb': {
+      id: '/legal/agb'
+      path: '/legal/agb'
+      fullPath: '/legal/agb'
+      preLoaderRoute: typeof LegalAgbRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/profile': {
@@ -425,6 +465,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
+  LegalAgbRoute: LegalAgbRoute,
+  LegalImpressumRoute: LegalImpressumRoute,
   ApiPublicCronGenerateChallengesRoute: ApiPublicCronGenerateChallengesRoute,
   ApiPublicCronWeeklyCoachRoute: ApiPublicCronWeeklyCoachRoute,
 }

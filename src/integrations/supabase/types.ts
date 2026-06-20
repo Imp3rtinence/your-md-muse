@@ -241,6 +241,7 @@ export type Database = {
       direct_messages: {
         Row: {
           body: string
+          body_cipher: string | null
           created_at: string
           id: string
           read_at: string | null
@@ -249,6 +250,7 @@ export type Database = {
         }
         Insert: {
           body: string
+          body_cipher?: string | null
           created_at?: string
           id?: string
           read_at?: string | null
@@ -257,6 +259,7 @@ export type Database = {
         }
         Update: {
           body?: string
+          body_cipher?: string | null
           created_at?: string
           id?: string
           read_at?: string | null
@@ -738,6 +741,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      _dm_key: { Args: never; Returns: string }
       add_friend_to_group: {
         Args: { _friend: string; _group: string }
         Returns: undefined
@@ -748,6 +752,17 @@ export type Database = {
         Returns: undefined
       }
       current_week_start: { Args: never; Returns: string }
+      get_dm_thread: {
+        Args: { _limit?: number; _other: string }
+        Returns: {
+          body: string
+          created_at: string
+          id: string
+          read_at: string
+          recipient_id: string
+          sender_id: string
+        }[]
+      }
       is_group_member: {
         Args: { _group: string; _user: string }
         Returns: boolean
@@ -824,6 +839,7 @@ export type Database = {
           username: string
         }[]
       }
+      send_dm: { Args: { _body: string; _recipient: string }; Returns: string }
       send_friend_request: { Args: { _other: string }; Returns: undefined }
     }
     Enums: {

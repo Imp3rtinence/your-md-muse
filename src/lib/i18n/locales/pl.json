@@ -1,0 +1,28 @@
+{
+  "common": { "back": "Wstecz", "next": "Dalej", "done": "Gotowe", "skip": "Pomiń", "cancel": "Anuluj", "save": "Zapisz", "delete": "Usuń", "loading": "Ładowanie…", "retry": "Spróbuj ponownie", "ok": "OK" },
+  "nav": { "home": "Start", "groups": "Ekipy", "create": "Utwórz", "chats": "Czaty", "profile": "Profil" },
+  "auth": {
+    "title": "Witamy w Komma", "subtitle": "Działaj, zamiast tylko patrzeć.",
+    "email": "E-mail", "password": "Hasło",
+    "signin": "Zaloguj się", "signup": "Załóż konto",
+    "google": "Kontynuuj z Google", "or": "lub",
+    "legalHint": "Kontynuując akceptujesz nasz {{terms}} i znasz {{imprint}}.",
+    "terms": "Regulamin", "imprint": "Impressum"
+  },
+  "onboarding": {
+    "languageTitle": "W jakim języku mówisz?",
+    "languageSubtitle": "Możesz to później zmienić w profilu.",
+    "welcomeTitle": "Witamy w <1>Komma</1>,",
+    "welcomeTitleLine2": "fajnie, że jesteś.",
+    "welcomeText": "Komma to mała przerwa od przewijania i pstryczek, żeby naprawdę coś zrobić. Trzy krótkie pytania i jesteś w środku.",
+    "howItWorks": "Jak to działa", "howItWorksDetail": "Zacznij wyzwanie · wrzuć dowód · zbieraj Aurę",
+    "go": "Lecimy",
+    "interestsTitle": "Na co masz ochotę?", "interestsSubtitle": "Wybierz do czterech. Zaproponujemy pasujące wyzwania.",
+    "interests": { "bewegung": "Ruch", "kreativ": "Kreatywność", "lernen": "Nauka", "sozial": "Społeczność", "natur": "Natura", "mut": "Odwaga", "musik": "Muzyka", "essen": "Gotowanie" },
+    "dynamicWaitTitle": "Jeszcze jedno krótkie pytanie…", "dynamicHint": "Spersonalizowane dla Ciebie", "dynamicThinking": "AI myśli…",
+    "contextTitle": "Z kim chcesz zacząć?", "contextSubtitle": "Później możesz tworzyć lub dołączać do kolejnych ekip.",
+    "contexts": { "friends": "Znajomi", "school": "Szkoła", "sport": "Klub / sport", "neighborhood": "Sąsiedztwo", "solo": "Na razie sam" }
+  },
+  "profile": { "language": "Język", "legal": "Informacje prawne", "terms": "Regulamin", "imprint": "Impressum", "logout": "Wyloguj się" },
+  "legal": { "termsTitle": "Regulamin", "imprintTitle": "Impressum", "back": "Wstecz" }
+}

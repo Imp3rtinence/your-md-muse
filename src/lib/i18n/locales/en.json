@@ -1,0 +1,80 @@
+{
+  "common": {
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "skip": "Skip",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "loading": "Loading…",
+    "retry": "Try again",
+    "ok": "OK"
+  },
+  "nav": {
+    "home": "Home",
+    "groups": "Crews",
+    "create": "Create",
+    "chats": "Chats",
+    "profile": "Profile"
+  },
+  "auth": {
+    "title": "Welcome to Komma",
+    "subtitle": "Take part instead of just watching.",
+    "email": "Email",
+    "password": "Password",
+    "signin": "Sign in",
+    "signup": "Sign up",
+    "google": "Continue with Google",
+    "or": "or",
+    "legalHint": "By continuing you accept our {{terms}} and acknowledge our {{imprint}}.",
+    "terms": "Terms",
+    "imprint": "Imprint"
+  },
+  "onboarding": {
+    "languageTitle": "Which language do you speak?",
+    "languageSubtitle": "You can change this later in your profile.",
+    "welcomeTitle": "Welcome to <1>Komma</1>,",
+    "welcomeTitleLine2": "glad you're here.",
+    "welcomeText": "Komma is a little break from scrolling — and a nudge to actually do something. Three quick questions and you're in.",
+    "howItWorks": "How it works",
+    "howItWorksDetail": "Start a challenge · post your proof · collect Aura",
+    "go": "Let's go",
+    "interestsTitle": "What are you up for?",
+    "interestsSubtitle": "Pick up to four. We'll suggest matching challenges.",
+    "interests": {
+      "bewegung": "Movement",
+      "kreativ": "Creativity",
+      "lernen": "Learning",
+      "sozial": "Social",
+      "natur": "Nature",
+      "mut": "Courage",
+      "musik": "Music",
+      "essen": "Cooking"
+    },
+    "dynamicWaitTitle": "One quick question…",
+    "dynamicHint": "Personalised for your picks",
+    "dynamicThinking": "AI is thinking…",
+    "contextTitle": "Who do you want to start with?",
+    "contextSubtitle": "You can start or join more crews any time later.",
+    "contexts": {
+      "friends": "Friends",
+      "school": "School",
+      "sport": "Club / sport",
+      "neighborhood": "Neighbourhood",
+      "solo": "Solo for now"
+    }
+  },
+  "profile": {
+    "language": "Language",
+    "legal": "Legal",
+    "terms": "Terms",
+    "imprint": "Imprint",
+    "logout": "Log out"
+  },
+  "legal": {
+    "termsTitle": "Terms of Service",
+    "imprintTitle": "Imprint",
+    "back": "Back"
+  }
+}

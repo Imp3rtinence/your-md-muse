@@ -135,7 +135,15 @@ function AuthPage() {
         >
           {mode === "signup" ? "Schon dabei? Einloggen" : "Neu hier? Profil erstellen"}
         </button>
+
+        <p className="mt-6 text-center text-[11px] leading-relaxed text-muted-foreground">
+          Mit dem Fortfahren akzeptierst du unsere{" "}
+          <a href="/legal/agb" className="text-primary underline-offset-2 hover:underline">AGB</a>
+          {" "}und kennst unser{" "}
+          <a href="/legal/impressum" className="text-primary underline-offset-2 hover:underline">Impressum</a>.
+        </p>
       </div>
+
 
       <style>{`
         .input { width:100%; padding:14px 16px; border-radius:14px; background:var(--surface); color:var(--foreground); border:1px solid var(--border); font-size:16px; outline:none; }

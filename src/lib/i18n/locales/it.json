@@ -1,0 +1,28 @@
+{
+  "common": { "back": "Indietro", "next": "Avanti", "done": "Fatto", "skip": "Salta", "cancel": "Annulla", "save": "Salva", "delete": "Elimina", "loading": "Caricamento…", "retry": "Riprova", "ok": "OK" },
+  "nav": { "home": "Home", "groups": "Crew", "create": "Crea", "chats": "Chat", "profile": "Profilo" },
+  "auth": {
+    "title": "Benvenutə su Komma", "subtitle": "Partecipa invece di guardare.",
+    "email": "Email", "password": "Password",
+    "signin": "Accedi", "signup": "Registrati",
+    "google": "Continua con Google", "or": "oppure",
+    "legalHint": "Continuando accetti i nostri {{terms}} e prendi atto del {{imprint}}.",
+    "terms": "Termini", "imprint": "Note legali"
+  },
+  "onboarding": {
+    "languageTitle": "Che lingua parli?",
+    "languageSubtitle": "Puoi cambiarla in qualsiasi momento dal profilo.",
+    "welcomeTitle": "Benvenutə su <1>Komma</1>,",
+    "welcomeTitleLine2": "che bello averti qui.",
+    "welcomeText": "Komma è una piccola pausa dallo scroll — e una spinta a fare qualcosa davvero. Tre domande veloci e sei dentro.",
+    "howItWorks": "Come funziona", "howItWorksDetail": "Inizia una sfida · pubblica la prova · raccogli Aura",
+    "go": "Via",
+    "interestsTitle": "Cosa ti va di fare?", "interestsSubtitle": "Scegli fino a quattro. Ti suggeriremo sfide adatte.",
+    "interests": { "bewegung": "Movimento", "kreativ": "Creatività", "lernen": "Imparare", "sozial": "Sociale", "natur": "Natura", "mut": "Coraggio", "musik": "Musica", "essen": "Cucinare" },
+    "dynamicWaitTitle": "Un'ultima domanda…", "dynamicHint": "Personalizzata per te", "dynamicThinking": "L'IA sta pensando…",
+    "contextTitle": "Con chi vuoi cominciare?", "contextSubtitle": "Più avanti puoi creare o unirti ad altre crew.",
+    "contexts": { "friends": "Amici", "school": "Scuola", "sport": "Club / sport", "neighborhood": "Quartiere", "solo": "Per ora da solə" }
+  },
+  "profile": { "language": "Lingua", "legal": "Legale", "terms": "Termini", "imprint": "Note legali", "logout": "Esci" },
+  "legal": { "termsTitle": "Termini di servizio", "imprintTitle": "Note legali", "back": "Indietro" }
+}

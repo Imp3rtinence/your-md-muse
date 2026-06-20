@@ -64,16 +64,12 @@ function ChatThread() {
     queryKey: ["dm", me, otherId],
     enabled: !!me,
     queryFn: async () => {
-      const { data, error } = await (supabase as any)
-        .from("direct_messages")
-        .select("id,sender_id,recipient_id,body,created_at,read_at")
-        .or(`and(sender_id.eq.${me},recipient_id.eq.${otherId}),and(sender_id.eq.${otherId},recipient_id.eq.${me})`)
-        .order("created_at", { ascending: true })
-        .limit(500);
+      const { data, error } = await (supabase as any).rpc("get_dm_thread", { _other: otherId, _limit: 500 });
       if (error) throw error;
       return (data ?? []) as Message[];
     },
   });
+
 
   // Realtime
   useEffect(() => {
@@ -126,15 +122,14 @@ function ChatThread() {
     const text = body.trim();
     if (!text || !me || sending) return;
     setSending(true);
-    const { error } = await (supabase as any)
-      .from("direct_messages")
-      .insert({ sender_id: me, recipient_id: otherId, body: text });
+    const { error } = await (supabase as any).rpc("send_dm", { _recipient: otherId, _body: text });
     setSending(false);
     if (error) { toast.error(error.message); return; }
     setBody("");
     qc.invalidateQueries({ queryKey: ["dm", me, otherId] });
     qc.invalidateQueries({ queryKey: ["dm-threads"] });
   };
+
 
   const onKey = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
