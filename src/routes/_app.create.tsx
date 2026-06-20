@@ -10,6 +10,7 @@ import { ShieldAlert, Loader2, Sparkles, Wand2 } from "lucide-react";
 import { suggestChallenge } from "@/lib/ai/smart-create.functions";
 import { generateHeroImage } from "@/lib/ai/hero-image.functions";
 import { embedChallenge } from "@/lib/ai/embeddings.functions";
+import { moderationHint } from "@/lib/ai/moderation.functions";
 
 const searchSchema = z.object({ parent: z.string().optional() });
 
