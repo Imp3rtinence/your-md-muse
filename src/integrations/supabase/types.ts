@@ -78,6 +78,7 @@ export type Database = {
           creator_id: string
           description: string | null
           difficulty: string | null
+          embedding: string | null
           expires_at: string | null
           hero_image_url: string | null
           id: string
@@ -96,6 +97,7 @@ export type Database = {
           creator_id: string
           description?: string | null
           difficulty?: string | null
+          embedding?: string | null
           expires_at?: string | null
           hero_image_url?: string | null
           id?: string
@@ -114,6 +116,7 @@ export type Database = {
           creator_id?: string
           description?: string | null
           difficulty?: string | null
+          embedding?: string | null
           expires_at?: string | null
           hero_image_url?: string | null
           id?: string
@@ -350,6 +353,7 @@ export type Database = {
           created_at: string
           creator_id: string
           description: string | null
+          embedding: string | null
           emoji: string
           id: string
           kind: string
@@ -361,6 +365,7 @@ export type Database = {
           created_at?: string
           creator_id: string
           description?: string | null
+          embedding?: string | null
           emoji?: string
           id?: string
           kind?: string
@@ -372,6 +377,7 @@ export type Database = {
           created_at?: string
           creator_id?: string
           description?: string | null
+          embedding?: string | null
           emoji?: string
           id?: string
           kind?: string
@@ -582,6 +588,7 @@ export type Database = {
       user_ai_profile: {
         Row: {
           created_at: string
+          interest_embedding: string | null
           suggested_challenges: Json
           suggested_crew_kinds: Json
           summary: string | null
@@ -592,6 +599,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          interest_embedding?: string | null
           suggested_challenges?: Json
           suggested_crew_kinds?: Json
           summary?: string | null
@@ -602,6 +610,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          interest_embedding?: string | null
           suggested_challenges?: Json
           suggested_crew_kinds?: Json
           summary?: string | null
@@ -683,6 +692,35 @@ export type Database = {
         }[]
       }
       mark_dm_thread_read: { Args: { _other: string }; Returns: undefined }
+      match_challenges: {
+        Args: {
+          exclude_id?: string
+          match_count?: number
+          query_embedding: string
+        }
+        Returns: {
+          category: Database["public"]["Enums"]["challenge_category"]
+          creator_id: string
+          description: string
+          hero_image_url: string
+          id: string
+          participant_count: number
+          similarity: number
+          title: string
+        }[]
+      }
+      match_crews: {
+        Args: { match_count?: number; query_embedding: string }
+        Returns: {
+          description: string
+          emoji: string
+          id: string
+          kind: string
+          member_count: number
+          name: string
+          similarity: number
+        }[]
+      }
       preview_group_invite: {
         Args: { _token: string }
         Returns: {
