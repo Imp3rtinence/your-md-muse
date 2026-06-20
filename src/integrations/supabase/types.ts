@@ -74,6 +74,7 @@ export type Database = {
         Row: {
           category: Database["public"]["Enums"]["challenge_category"]
           created_at: string
+          created_by_ai: boolean
           creator_id: string
           description: string | null
           expires_at: string | null
@@ -88,6 +89,7 @@ export type Database = {
         Insert: {
           category: Database["public"]["Enums"]["challenge_category"]
           created_at?: string
+          created_by_ai?: boolean
           creator_id: string
           description?: string | null
           expires_at?: string | null
@@ -102,6 +104,7 @@ export type Database = {
         Update: {
           category?: Database["public"]["Enums"]["challenge_category"]
           created_at?: string
+          created_by_ai?: boolean
           creator_id?: string
           description?: string | null
           expires_at?: string | null
