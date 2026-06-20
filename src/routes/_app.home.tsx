@@ -146,8 +146,7 @@ function ForYouRow({ items }: { items: any[] }) {
             </Link>
           );
         })}
-      </div>
-    </section>
+    </div>
   );
 }
 
@@ -177,11 +176,16 @@ function DailyHero({ c }: { c: Challenge }) {
 }
 
 function Section({ title, items }: { title: string; items: Challenge[] }) {
+  const { ref, handlers } = useDragScroll<HTMLDivElement>();
   if (!items.length) return null;
   return (
     <section className="mt-8">
       <h3 className="mb-3 font-display text-lg font-semibold">{title}</h3>
-      <div className="-mx-5 flex gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div
+        ref={ref}
+        {...handlers}
+        className="-mx-5 flex gap-3 overflow-x-auto px-5 pb-2 select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
         {items.map((c) => <ChallengeCard key={c.id} c={c} />)}
       </div>
     </section>
