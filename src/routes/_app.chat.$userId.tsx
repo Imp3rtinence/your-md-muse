@@ -122,15 +122,14 @@ function ChatThread() {
     const text = body.trim();
     if (!text || !me || sending) return;
     setSending(true);
-    const { error } = await (supabase as any)
-      .from("direct_messages")
-      .insert({ sender_id: me, recipient_id: otherId, body: text });
+    const { error } = await (supabase as any).rpc("send_dm", { _recipient: otherId, _body: text });
     setSending(false);
     if (error) { toast.error(error.message); return; }
     setBody("");
     qc.invalidateQueries({ queryKey: ["dm", me, otherId] });
     qc.invalidateQueries({ queryKey: ["dm-threads"] });
   };
+
 
   const onKey = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
