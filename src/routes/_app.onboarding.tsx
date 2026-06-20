@@ -152,7 +152,7 @@ function Onboarding() {
             </div>
             <div className="flex gap-2">
               <button onClick={() => setStep(0)} className="tap flex-1 rounded-2xl bg-surface px-5 py-3.5 font-display font-semibold">Zurück</button>
-              <button onClick={() => setStep(2)} disabled={interests.length === 0}
+              <button onClick={goToDynamic} disabled={interests.length === 0}
                 className="tap flex flex-[2] items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3.5 font-display font-bold text-primary-foreground glow-primary disabled:opacity-50">
                 Weiter <ArrowRight className="size-4" />
               </button>
@@ -161,6 +161,47 @@ function Onboarding() {
         )}
 
         {step === 2 && (
+          <section className="space-y-4">
+            <h1 className="font-display text-2xl font-bold leading-tight">
+              {dynQ?.question ?? "Eine kurze Frage noch…"}
+            </h1>
+            <p className="flex items-center gap-1 text-xs text-muted-foreground">
+              <Sparkles className="size-3 text-accent" /> Personalisiert für deine Auswahl
+            </p>
+            {dynBusy && !dynQ && (
+              <div className="flex items-center gap-2 rounded-2xl border border-border bg-surface p-4 text-sm text-muted-foreground">
+                <Loader2 className="size-4 animate-spin" /> KI denkt nach…
+              </div>
+            )}
+            {dynQ && (
+              <div className="space-y-2">
+                {dynQ.options.map((o) => {
+                  const on = dynAnswer?.answer === o.label;
+                  return (
+                    <button
+                      key={o.id}
+                      onClick={() => setDynAnswer({ question: dynQ.question, answer: o.label })}
+                      className={`tap flex w-full items-center gap-3 rounded-2xl border p-4 text-left transition ${on ? "border-primary bg-primary/10" : "border-border bg-surface"}`}
+                    >
+                      <span className="grid size-10 place-items-center rounded-xl bg-surface-2 text-xl">{o.emoji}</span>
+                      <span className="flex-1 font-display text-sm font-semibold">{o.label}</span>
+                      {on && <Check className="size-4 text-primary" />}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            <div className="flex gap-2">
+              <button onClick={() => setStep(1)} className="tap flex-1 rounded-2xl bg-surface px-5 py-3.5 font-display font-semibold">Zurück</button>
+              <button onClick={() => setStep(3)} disabled={dynBusy}
+                className="tap flex flex-[2] items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3.5 font-display font-bold text-primary-foreground glow-primary disabled:opacity-50">
+                {dynAnswer ? "Weiter" : "Überspringen"} <ArrowRight className="size-4" />
+              </button>
+            </div>
+          </section>
+        )}
+
+        {step === 3 && (
           <section className="space-y-4">
             <h1 className="font-display text-2xl font-bold leading-tight">Mit wem willst du machen?</h1>
             <p className="text-sm text-muted-foreground">Du kannst später jederzeit weitere Crews gründen oder beitreten.</p>
@@ -178,7 +219,7 @@ function Onboarding() {
               })}
             </div>
             <div className="flex gap-2">
-              <button onClick={() => setStep(1)} className="tap flex-1 rounded-2xl bg-surface px-5 py-3.5 font-display font-semibold">Zurück</button>
+              <button onClick={() => setStep(2)} className="tap flex-1 rounded-2xl bg-surface px-5 py-3.5 font-display font-semibold">Zurück</button>
               <button onClick={finish} disabled={busy || !ctx}
                 className="tap flex flex-[2] items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3.5 font-display font-bold text-primary-foreground glow-primary disabled:opacity-60">
                 {busy ? <Loader2 className="size-5 animate-spin" /> : <>Fertig <ArrowRight className="size-4" /></>}
@@ -189,4 +230,5 @@ function Onboarding() {
       </div>
     </div>
   );
+
 }
