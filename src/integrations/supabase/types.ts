@@ -82,6 +82,38 @@ export type Database = {
         }
         Relationships: []
       }
+      challenge_invites: {
+        Row: {
+          challenge_id: string
+          created_at: string
+          id: string
+          invited_by: string
+          invited_user_id: string
+        }
+        Insert: {
+          challenge_id: string
+          created_at?: string
+          id?: string
+          invited_by: string
+          invited_user_id: string
+        }
+        Update: {
+          challenge_id?: string
+          created_at?: string
+          id?: string
+          invited_by?: string
+          invited_user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "challenge_invites_challenge_id_fkey"
+            columns: ["challenge_id"]
+            isOneToOne: false
+            referencedRelation: "challenges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       challenge_translations: {
         Row: {
           challenge_id: string
@@ -127,6 +159,8 @@ export type Database = {
           hero_image_url: string | null
           id: string
           is_daily: boolean
+          lat: number | null
+          lng: number | null
           parent_challenge_id: string | null
           participant_count: number
           region: string | null
@@ -146,6 +180,8 @@ export type Database = {
           hero_image_url?: string | null
           id?: string
           is_daily?: boolean
+          lat?: number | null
+          lng?: number | null
           parent_challenge_id?: string | null
           participant_count?: number
           region?: string | null
@@ -165,6 +201,8 @@ export type Database = {
           hero_image_url?: string | null
           id?: string
           is_daily?: boolean
+          lat?: number | null
+          lng?: number | null
           parent_challenge_id?: string | null
           participant_count?: number
           region?: string | null
@@ -448,7 +486,10 @@ export type Database = {
           is_ai_bot: boolean
           is_private: boolean
           last_active_date: string | null
+          lat: number | null
           league_tier: number
+          lng: number | null
+          location_updated_at: string | null
           onboarded_at: string | null
           streak_days: number
           updated_at: string
@@ -469,7 +510,10 @@ export type Database = {
           is_ai_bot?: boolean
           is_private?: boolean
           last_active_date?: string | null
+          lat?: number | null
           league_tier?: number
+          lng?: number | null
+          location_updated_at?: string | null
           onboarded_at?: string | null
           streak_days?: number
           updated_at?: string
@@ -490,7 +534,10 @@ export type Database = {
           is_ai_bot?: boolean
           is_private?: boolean
           last_active_date?: string | null
+          lat?: number | null
           league_tier?: number
+          lng?: number | null
+          location_updated_at?: string | null
           onboarded_at?: string | null
           streak_days?: number
           updated_at?: string
@@ -771,6 +818,10 @@ export type Database = {
         Args: { _group: string; _user: string }
         Returns: boolean
       }
+      is_invited_to_challenge: {
+        Args: { _challenge: string; _user: string }
+        Returns: boolean
+      }
       join_group_with_token: { Args: { _token: string }; Returns: string }
       list_dm_threads: {
         Args: never
@@ -815,6 +866,24 @@ export type Database = {
           similarity: number
         }[]
       }
+      nearby_challenges: {
+        Args: { _target?: number }
+        Returns: {
+          category: Database["public"]["Enums"]["challenge_category"]
+          created_at: string
+          creator_id: string
+          description: string
+          distance_km: number
+          expires_at: string
+          hero_image_url: string
+          id: string
+          lat: number
+          lng: number
+          participant_count: number
+          title: string
+          visibility: Database["public"]["Enums"]["challenge_visibility"]
+        }[]
+      }
       preview_group_invite: {
         Args: { _token: string }
         Returns: {
@@ -841,6 +910,10 @@ export type Database = {
       }
       send_dm: { Args: { _body: string; _recipient: string }; Returns: string }
       send_friend_request: { Args: { _other: string }; Returns: undefined }
+      update_my_location: {
+        Args: { _lat: number; _lng: number }
+        Returns: undefined
+      }
     }
     Enums: {
       challenge_category:
@@ -849,7 +922,7 @@ export type Database = {
         | "friendly"
         | "skill"
         | "learning"
-      challenge_visibility: "friends" | "group" | "public"
+      challenge_visibility: "friends" | "group" | "public" | "private"
       friendship_status: "pending" | "accepted" | "blocked"
       report_status: "open" | "reviewed" | "dismissed"
     }
@@ -986,7 +1059,7 @@ export const Constants = {
         "skill",
         "learning",
       ],
-      challenge_visibility: ["friends", "group", "public"],
+      challenge_visibility: ["friends", "group", "public", "private"],
       friendship_status: ["pending", "accepted", "blocked"],
       report_status: ["open", "reviewed", "dismissed"],
     },

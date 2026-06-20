@@ -32,7 +32,7 @@ function Create() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<CategoryValue>("creative");
-  const [visibility, setVisibility] = useState<"friends" | "public">("friends");
+  const [visibility, setVisibility] = useState<"friends" | "public" | "private">("friends");
   const [durationH, setDurationH] = useState<number>(24);
   const [tags, setTags] = useState<string[]>([]);
   const [difficulty, setDifficulty] = useState<"leicht" | "mittel" | "mutig" | null>(null);
@@ -216,16 +216,17 @@ function Create() {
 
         <div>
           <label className="lbl">Sichtbarkeit</label>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-3 gap-2">
             {[
-              { v: "friends", t: "Nur Freunde", s: "Sicher & klein" },
-              { v: "public",  t: "Öffentlich",  s: "Alle können mitmachen" },
+              { v: "private", t: "Privat", s: "Nur eingeladene Personen" },
+              { v: "friends", t: "Freunde", s: "Alle deine Freund:innen" },
+              { v: "public",  t: "Öffentlich",  s: "Im Umkreis sichtbar" },
             ].map((o) => {
               const active = visibility === o.v;
               return (
                 <button
                   key={o.v} type="button"
-                  onClick={() => setVisibility(o.v as "friends" | "public")}
+                  onClick={() => setVisibility(o.v as "friends" | "public" | "private")}
                   className={"tap rounded-2xl border p-3 text-left " +
                     (active ? "border-primary bg-primary/15" : "border-border bg-surface")}
                 >
@@ -235,6 +236,11 @@ function Create() {
               );
             })}
           </div>
+          {visibility === "private" && (
+            <p className="mt-2 text-xs text-muted-foreground">
+              Nach dem Erstellen kannst du auf der Challenge-Seite Freund:innen einladen.
+            </p>
+          )}
         </div>
 
         <div>

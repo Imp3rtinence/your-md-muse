@@ -277,6 +277,12 @@ function ChallengeDetail() {
           </div>
         )}
         <HeroImage path={c.hero_image_url} />
+        {c.visibility === "private" && isOwner && <PrivateInvitesPanel challengeId={c.id} />}
+        {c.visibility === "private" && !isOwner && (
+          <div className="mt-3 rounded-2xl border border-border bg-surface px-3 py-2 text-xs text-muted-foreground">
+            🔒 Private Challenge – nur eingeladene Personen
+          </div>
+        )}
 
         {/* KI-Tools: Erklär's mir + Übersetzen */}
         <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -554,6 +560,103 @@ function Comments({ id, comments }: { id: string; comments: any[] }) {
           Senden
         </button>
       </form>
+    </section>
+  );
+}
+
+function PrivateInvitesPanel({ challengeId }: { challengeId: string }) {
+  const { user } = useAuth();
+  const qc = useQueryClient();
+  const [q, setQ] = useState("");
+  const [searchResults, setSearchResults] = useState<Array<{ id: string; username: string; display_name: string | null }>>([]);
+  const [searching, setSearching] = useState(false);
+
+  const { data: invites } = useQuery({
+    queryKey: ["challenge-invites", challengeId],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("challenge_invites")
+        .select("invited_user_id, invited_by, created_at, user:profiles!challenge_invites_invited_user_id_fkey(id,username,display_name,avatar_url)")
+        .eq("challenge_id", challengeId);
+      if (error) {
+        // FK alias may not exist; fall back to manual join
+        const { data: rows } = await (supabase as any)
+          .from("challenge_invites").select("invited_user_id, created_at").eq("challenge_id", challengeId);
+        const ids = (rows ?? []).map((r: any) => r.invited_user_id);
+        if (!ids.length) return [];
+        const { data: profs } = await (supabase as any)
+          .from("profiles").select("id,username,display_name,avatar_url").in("id", ids);
+        const byId = new Map((profs ?? []).map((p: any) => [p.id, p]));
+        return (rows ?? []).map((r: any) => ({ ...r, user: byId.get(r.invited_user_id) }));
+      }
+      return data ?? [];
+    },
+  });
+
+  const runSearch = async (val: string) => {
+    setQ(val);
+    if (val.trim().length < 2) { setSearchResults([]); return; }
+    setSearching(true);
+    try {
+      const { data } = await (supabase as any).rpc("search_users", { _q: val.trim() });
+      setSearchResults((data ?? []) as any);
+    } finally { setSearching(false); }
+  };
+
+  const invite = async (uid: string) => {
+    if (!user) return;
+    const { error } = await (supabase as any).from("challenge_invites").insert({
+      challenge_id: challengeId, invited_user_id: uid, invited_by: user.id,
+    });
+    if (error) { toast.error(error.message); return; }
+    toast.success("Eingeladen ✨");
+    setQ(""); setSearchResults([]);
+    qc.invalidateQueries({ queryKey: ["challenge-invites", challengeId] });
+  };
+
+  const revoke = async (uid: string) => {
+    const { error } = await (supabase as any).from("challenge_invites")
+      .delete().eq("challenge_id", challengeId).eq("invited_user_id", uid);
+    if (error) { toast.error(error.message); return; }
+    qc.invalidateQueries({ queryKey: ["challenge-invites", challengeId] });
+  };
+
+  return (
+    <section className="mt-4 rounded-2xl border border-primary/30 bg-primary/5 p-4">
+      <div className="mb-2 text-sm font-semibold">🔒 Privat – wer darf rein?</div>
+      <div className="relative">
+        <input
+          value={q}
+          onChange={(e) => runSearch(e.target.value)}
+          placeholder="Freund:in suchen (@username)…"
+          className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary"
+        />
+        {searching && <Loader2 className="absolute right-3 top-2.5 size-4 animate-spin text-muted-foreground" />}
+        {searchResults.length > 0 && (
+          <div className="mt-1 space-y-1 rounded-xl border border-border bg-surface p-1">
+            {searchResults.map((r) => (
+              <button key={r.id} type="button" onClick={() => invite(r.id)}
+                      className="tap flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-sm hover:bg-surface-2">
+                <span>@{r.username} <span className="text-xs text-muted-foreground">{r.display_name}</span></span>
+                <span className="text-xs text-primary">Einladen</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="mt-3 space-y-1">
+        {(invites ?? []).length === 0 && (
+          <p className="text-xs text-muted-foreground">Noch niemand eingeladen.</p>
+        )}
+        {(invites ?? []).map((i: any) => (
+          <div key={i.invited_user_id} className="flex items-center justify-between rounded-lg bg-background/40 px-2 py-1.5 text-sm">
+            <span>@{i.user?.username ?? "…"}</span>
+            <button onClick={() => revoke(i.invited_user_id)} className="text-xs text-muted-foreground hover:text-destructive">
+              Entfernen
+            </button>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
