@@ -66,6 +66,12 @@ export function AvatarEditor({
     setSrc(url);
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (f) onFile(f);
+    e.target.value = "";
+  };
+
   // ---------- gesture handling ----------
   const dragRef = useRef<{ kind: "image" | "sticker"; id?: string; startX: number; startY: number; baseX: number; baseY: number } | null>(null);
   const pinchRef = useRef<{ baseDist: number; baseScale: number } | null>(null);
