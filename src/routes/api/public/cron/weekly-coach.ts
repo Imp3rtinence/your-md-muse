@@ -61,8 +61,20 @@ export const Route = createFileRoute("/api/public/cron/weekly-coach")({
         weekStart.setUTCHours(0, 0, 0, 0);
         weekStart.setUTCDate(weekStart.getUTCDate() - weekStart.getUTCDay()); // letzten Sonntag
 
+        const weekStartIso = weekStart.toISOString().slice(0, 10);
+
+        // Idempotenz: bereits existierende Recaps für diese Woche überspringen,
+        // damit ein Re-Run nicht erneut LLM-Tokens verbrennt.
+        const { data: existingRecaps } = await supabase
+          .from("weekly_recaps")
+          .select("user_id")
+          .eq("week_start", weekStartIso)
+          .in("user_id", realUsers.map((p: any) => p.id));
+        const alreadyDone = new Set((existingRecaps ?? []).map((r: any) => r.user_id));
+
         let count = 0;
         for (const p of realUsers as any[]) {
+          if (alreadyDone.has(p.id)) continue;
           const stats = byUser.get(p.id)!;
           try {
             const { output } = await generateText({
