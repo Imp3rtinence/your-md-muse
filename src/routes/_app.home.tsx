@@ -155,19 +155,28 @@ function Section({ title, items }: { title: string; items: Challenge[] }) {
 
 function ChallengeCard({ c }: { c: Challenge }) {
   const cat = categoryMeta(c.category);
+  const heroUrl = useProofUrl(c.hero_image_url);
   return (
     <Link
       to="/challenge/$id" params={{ id: c.id }}
-      className="block w-56 shrink-0 rounded-2xl border border-border gradient-card p-4"
+      className="block w-56 shrink-0 overflow-hidden rounded-2xl border border-border gradient-card"
     >
-      <div className="text-2xl">{cat.icon}</div>
-      <div className="mt-2 line-clamp-2 font-display text-base font-semibold">{c.title}</div>
-      <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-        <span className="flex items-center gap-1">
-          @{c.creator?.username ?? "…"}
-          {c.creator?.is_ai_bot && <BotBadge size="xs" />}
-        </span>
-        <span className="flex items-center gap-1"><UsersIcon className="size-3" />{c.participant_count}</span>
+      {heroUrl ? (
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-surface-2">
+          <img src={heroUrl} alt="" className="size-full object-cover" />
+          <span className="absolute left-2 top-2 rounded-full bg-background/70 px-1.5 py-0.5 text-sm backdrop-blur">{cat.icon}</span>
+        </div>
+      ) : null}
+      <div className="p-4">
+        {!heroUrl && <div className="text-2xl">{cat.icon}</div>}
+        <div className={`${heroUrl ? "" : "mt-2"} line-clamp-2 font-display text-base font-semibold`}>{c.title}</div>
+        <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+          <span className="flex items-center gap-1">
+            @{c.creator?.username ?? "…"}
+            {c.creator?.is_ai_bot && <BotBadge size="xs" />}
+          </span>
+          <span className="flex items-center gap-1"><UsersIcon className="size-3" />{c.participant_count}</span>
+        </div>
       </div>
     </Link>
   );
