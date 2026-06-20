@@ -1,0 +1,13 @@
+# Komma
+
+> Komma ist die Mitmach-App für deine Crew: Challenges starten, Beweise liefern und die Kette weiterreichen – statt nur zu scrollen.
+
+Komma verbindet Freundesgruppen über tägliche und spontane Challenges. Nutzer:innen erstellen Aufgaben, reichen Foto- oder Video-Beweise ein und geben die Challenge an Freunde weiter. Ligen, Aura-Punkte und Badges belohnen kontinuierliche Teilnahme.
+
+## Pages
+
+- [Startseite](/): Was Komma ist und wie die drei Schritte Starten, Beweisen, Weiterreichen funktionieren.
+- [Anmelden](/auth): Profil erstellen oder einloggen, per E-Mail, Google oder Apple.
+- [Challenge-Ideen für Freunde](/ideas/friends-challenges): Kuratierte Liste von Mitmach-Challenges für Gruppen.
+- [AGB](/legal/agb): Allgemeine Geschäftsbedingungen der Komma-App, betrieben von der Gotham Consulting GmbH.
+- [Impressum](/legal/impressum): Anbieterkennzeichnung und Kontakt.
