@@ -16,10 +16,13 @@
 - **G8. Hero-Bilder** — Nano-Banana Coverbilder optional bei Create
 - **G9. Erklär's mir** — Button auf jeder Challenge-Karte
 
-## 🟡 Noch offen (kleinere Polish-Features)
-- **G5 Mehrsprachigkeit** — Übersetzen-Button + Cache-Tabelle
-- **G7 Personalisierte Badges** — KI erfindet seltene Badges aus Mustern
-- **G10 Dynamisches Onboarding-Quiz** — KI-Folgefragen statt fixer Liste
+- **G5 Mehrsprachigkeit** — `challenge_translations` Cache + Sprach-Dropdown auf Challenge-Detail (9 Sprachen)
+- **G7 Personalisierte Badges** — KI erfindet seltene Badges pro Person, Vergabe im Wochen-Coach
+- **G10 Dynamisches Onboarding-Quiz** — KI-Folgefrage zwischen Interessen und Crew-Wahl
+
+## 🟡 Noch offen
+- nichts mehr aus der ursprünglichen Liste
+
 
 ## 🛠 Tech-Backbone
 - Lovable AI Gateway (`gemini-3-flash-preview` Default, `gemini-2.5-flash-image`, `text-embedding-3-small@1536`)
