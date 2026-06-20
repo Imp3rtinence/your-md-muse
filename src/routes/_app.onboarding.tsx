@@ -7,6 +7,7 @@ import { ArrowRight, Check, Loader2, Sparkles } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { analyzeOnboarding } from "@/lib/ai/onboarding.functions";
 import { embedMyProfile } from "@/lib/ai/embeddings.functions";
+import { dynamicOnboardingQuestion } from "@/lib/ai/onboarding-quiz.functions";
 
 export const Route = createFileRoute("/_app/onboarding")({
   head: () => ({ meta: [{ title: "Willkommen – Komma" }] }),
