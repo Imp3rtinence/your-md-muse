@@ -53,14 +53,12 @@ Stil: flach, freundlich, modern, leuchtende Farben, kein Text, kein Logo, quadra
       .upload(path, bytes, { contentType: mime, upsert: true });
     if (upErr) throw upErr;
 
-    const { data: pub } = supabaseAdmin.storage.from("proofs").getPublicUrl(path);
-    const publicUrl = pub.publicUrl;
-
+    // Store storage path; client resolves via signed URL (useProofUrl)
     const { error: updErr } = await (context.supabase as any)
       .from("challenges")
-      .update({ hero_image_url: publicUrl })
+      .update({ hero_image_url: path })
       .eq("id", data.challenge_id);
     if (updErr) throw updErr;
 
-    return { url: publicUrl };
+    return { path };
   });
