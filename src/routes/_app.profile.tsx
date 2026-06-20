@@ -138,7 +138,11 @@ function Profile() {
         )}
       </section>
 
-      <section className="mt-10">
+      <LanguageSection />
+
+      <LegalLinks />
+
+      <section className="mt-6">
         <PillButton
           onClick={handleSignOut}
           tone="rose"
@@ -146,6 +150,7 @@ function Profile() {
           label="Ausloggen"
         />
       </section>
+
 
       {user && (
         <AvatarEditor
