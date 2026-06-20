@@ -77,6 +77,16 @@ function Create() {
     if (!user) return;
     if (title.trim().length < 3) { toast.error("Gib einen Titel ein."); return; }
     setBusy(true);
+
+    // Sanfter KI-Check — blockt nicht, fragt nur nach Bestätigung bei riskanten Inhalten
+    try {
+      const mod = await askMod({ data: { text: `${title}\n${description}` } });
+      if (mod.risk === "risky" && mod.hint) {
+        const ok = window.confirm(`${mod.hint}\n\nTrotzdem posten?`);
+        if (!ok) { setBusy(false); return; }
+      }
+    } catch { /* niemals blocken */ }
+
     const expiresAt = new Date(Date.now() + durationH * 3600 * 1000).toISOString();
     const { data, error } = await (supabase as any).from("challenges").insert({
       creator_id: user.id,
