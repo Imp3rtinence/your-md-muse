@@ -1,68 +1,96 @@
-## Was die niederländische „Join Us" gut macht — und was wir übernehmen sollten
 
-Join Us (join-us.nu) ist eine Stiftung gegen Einsamkeit bei Jugendlichen (12–30). Anders als unsere Challenge-App, aber mit ein paar starken Mechaniken, die zu uns passen:
+# KI-Strategie für Komma
 
-1. **Niedrigschwelliger Einstieg über einen Selbsttest**
-   „Voel jij je soms alleen? Doe de test." — ein 2-Minuten-Check, der sofort einen persönlichen Nutzen liefert, bevor man sich registriert.
-   → Für uns: ein kurzes Onboarding-Quiz („Was willst du diese Woche verändern?") das direkt 2–3 passende Challenges + eine Liga vorschlägt.
+Ziel: Die App lernt aus dem Onboarding und dem Verhalten der Nutzer:innen, erzeugt automatisch passenden Content (Challenges), schlägt persönliche Aktionen vor und hält die Community sicher. Alle KI-Aufrufe laufen serverseitig über das Lovable AI Gateway (kein API-Key nötig). Standardmodell: `google/gemini-3-flash-preview` (schnell, günstig), für seltene anspruchsvolle Aufgaben `google/gemini-2.5-pro`.
 
-2. **Lokale Gruppen + Online-Community parallel**
-   Zweiwöchentliche reale Treffen, dazu eine Online-Community mit Topics, Reaktionen, Nicknames.
-   → Für uns: „Crews" / lokale Gruppen (z. B. Schulklasse, Sportverein) als feste Einheit über der Freundesliste — eigene Mini-Leaderboards, eigene Challenges.
+## 1. Was die KI im Hintergrund lernt
 
-3. **Begleitung durch echte Menschen, nicht nur Gamification**
-   Jugendprofis moderieren Gruppen. Sicheres Gefühl, klare Regeln.
-   → Für uns: Rolle „Crew-Coach" (Lehrer\:in, Trainer\:in, älteres Geschwister) mit eigenen Rechten (Challenges erstellen, moderieren).
+Aus dem Onboarding-Quiz (Interessen + Kontext) und laufendem Verhalten (erstellte/abgeschlossene Challenges, Crews, Kategorien, Tageszeit, Likes) bauen wir ein **User-Profil-Vektor**:
 
-4. **Anonymität als Standard, Identität als Wahl**
-   Pflicht-Nickname statt Klarname, Avatar-Auswahl statt Selfie.
-   → Für uns: Bestätigen, dass Profilbilder optional bleiben und Nicknames first-class sind (für jüngere Nutzer\:innen wichtig).
+- Interessen-Gewichte (Bewegung, Kreativität, Lernen, Soziales, Natur, …)
+- Kontext (Schule, Sport, Nachbarschaft, Familie)
+- Schwierigkeitslevel (anhand abgeschlossener Challenges)
+- Aktivitätsmuster (wann macht die Person mit)
 
-5. **Klares Versprechen in einem Satz auf der Startseite**
-   „Geef je sociale leven een boost." Kein Feature-Dump.
-   → Für uns: ein einziger Claim auf Landing + Auth-Screen, abgeleitet vom neuen Namen.
+Speicherung: neue Tabelle `user_ai_profile` (jsonb `traits`, `embeddings vector(1536)`, `updated_at`). Re-Embedding nach jedem Onboarding-Update und alle ~20 Aktionen.
 
-6. **Forschung & Wirkungsnachweis sichtbar**
-   Sie zeigen offen, dass das Programm evaluiert ist.
-   → Für uns später: simple „Impact"-Seite („X km mit dem Rad statt Auto diese Woche in deiner Crew").
+## 2. Sechs konkrete KI-Bausteine
 
----
+### A. Onboarding-Auswertung (sofort nutzbar)
+Nach dem Quiz ruft ein Server-Function `analyzeOnboarding` Gemini auf:
+- Input: Interessen + Kontext + Alter (falls vorhanden)
+- Output (strukturiert via `Output.object`): `summary`, `top_categories[]`, `suggested_challenges[3]`, `suggested_crew_kinds[]`
+- Ergebnis wird in `user_ai_profile.traits` gespeichert und auf der Home-Seite als „Für dich gestartet" angezeigt.
 
-## Namensvorschläge
+### B. Automatischer Challenge-Generator (Content-Motor)
+Cron-Job (pg_cron) ruft täglich `/api/public/cron/generate-challenges` auf:
+- Erzeugt 5–10 neue öffentliche Challenges pro Kategorie, abgestimmt auf häufigste Interessen der aktiven Nutzer:innen
+- KI liefert: Titel, Beschreibung, Kategorie, Dauer, Schwierigkeit, Beweis-Typ (Foto/Video/Text), Sicherheits-Check
+- Markierung als `created_by_ai = true` (neue Spalte) → transparent für Nutzer:innen
 
-„Join Us" ist belegt — und passt auch inhaltlich nicht perfekt, weil unsere App stärker auf **Challenges, Aura und Crews** setzt als auf reine Mitgliedschaft.
+### C. Personalisierte Vorschläge auf Home
+Server-Function `recommendChallenges` (bei jedem Home-Load):
+- Mischt: trendende Challenges + KI-Vorschläge auf Basis von Profil-Embedding
+- Vector-Search via pgvector (Cosine-Similarity zwischen User- und Challenge-Embedding)
+- Erklärung pro Karte: „weil du Kreativität magst"
 
-### Richtung A — Hildas Spur (Name als Marke)
+### D. Smart-Create-Assistent
+Im „Challenge erstellen"-Flow ein Button **„Mit KI ausarbeiten"**:
+- Nutzer gibt Stichwort ein → KI schlägt Titel, Beschreibung, Hashtags, geeignete Crew vor
+- Verbessert Qualität und Vollständigkeit selbst erstellter Challenges
 
-Hilda kommt aus dem Althochdeutschen *hild* = „Kampf, mutige Tat". Passt erstaunlich gut zu einer Challenge-App.
+### E. Auto-Moderation (Safety)
+Vor jedem Insert in `challenges` und `direct_messages`:
+- KI-Klassifikation (strukturiert: `safe`, `risky`, `block` + Begründung)
+- `block` → Insert wird abgelehnt, Nutzer sieht freundliche Meldung
+- `risky` → wird zur Sichtung gequeued (`moderation_queue` Tabelle)
+- Besonders wichtig wegen junger Zielgruppe (Hilda!)
 
-- **Hilda** — kurz, eigen, merkbar. Claim: *„Trau dich was."*
-- **Hildi** — verspielter, jünger, App-Store-tauglich.
-- **HEYHILDA** / **hey hilda** — Begrüßungsgefühl, gut als Wortmarke.
-- **Hildr** — die altnordische Walküre „Hilda". Edgier, eher Teenager+.
+### F. Wöchentlicher KI-Coach
+Sonntags eine personalisierte Push/E-Mail-Zusammenfassung pro User:
+- „Diese Woche: 3 Challenges, +120 Aura, Liga aufgestiegen"
+- KI-Vorschlag für nächste Woche („Probier mal etwas aus Kategorie Natur")
+- Tonalität jugendlich, motivierend, kein Druck
 
-### Richtung B — Aura (knüpft an bestehende Mechanik an)
+## 3. Reihenfolge der Umsetzung (Phasen)
 
-- **Aura** — direkt am Punktesystem, sehr Gen-Z.
-- **Aurakids** / **Auracrew** — wenn „Aura" allein zu generisch ist.
-- **Auro** — kürzer, eigen.
+**Phase 1 — Onboarding nutzt KI (Baustein A)**
+- Tabelle `user_ai_profile`
+- Server-Function `analyzeOnboarding`
+- Home-Sektion „Für dich gestartet"
 
-### Richtung C — Challenge-/Mut-Wörter
+**Phase 2 — Content-Motor (Baustein B)**
+- Spalte `created_by_ai` auf `challenges`
+- Cron-Endpoint `/api/public/cron/generate-challenges`
+- pg_cron-Job (täglich 06:00)
+- Admin-Übersicht „KI-Challenges der letzten 7 Tage"
 
-- **Trauwas** — deutsch, frech, einprägsam.
-- **Mutig** — ein Wort, klare Haltung.
-- **Dare** — international, kurz, passt zu Challenges.
-- **Tape** — Anlehnung an „beat tape" / „mixtape" der Woche.
+**Phase 3 — Personalisierung & Smart-Create (C + D)**
+- pgvector Extension + Embeddings (Tabelle `challenges.embedding`)
+- `recommendChallenges` Server-Function
+- „Mit KI ausarbeiten"-Button im Create-Flow
 
-### Mein Favorit
-**Hilda** als Hauptname, *Aura* bleibt der Name der Punkte. Ergibt eine kleine Eigenmythologie: „Hol dir Aura bei Hilda."
-Zweitfavorit: **Auro** — falls du etwas Geschlechtsneutraleres und mehr Tech-Vibe willst.
+**Phase 4 — Sicherheit & Coach (E + F)**
+- Moderations-Middleware bei Insert
+- Wöchentlicher Coach-Job
 
----
+## 4. Technische Details
 
-## Frage an dich, bevor ich umsetze
+- **Gateway**: `@ai-sdk/openai-compatible` → `https://ai.gateway.lovable.dev/v1`, Header `Lovable-API-Key: $LOVABLE_API_KEY`
+- **Strukturierte Outputs**: `generateText({ output: Output.object({ schema: z... }) })`
+- **Embeddings**: `google/gemini-embedding-001`, pgvector `vector(3072)` mit HNSW-Index
+- **Server-Boundary**: alle Aufrufe in `createServerFn` (`src/lib/ai/*.functions.ts`) bzw. öffentlichen Routen unter `src/routes/api/public/cron/*` (HMAC-geschützt)
+- **Cron**: pg_cron ruft die `project--<id>.lovable.app`-URL mit Secret-Header auf
+- **Kosten**: Gemini-Flash ist günstig; Content-Generator läuft 1×/Tag, Moderation pro Insert (~ms-Latenz)
 
-1. Welche **Richtung** (A Hilda / B Aura / C Mut-Wörter / eigener Vorschlag)?
-2. Soll ich aus den Join-Us-Learnings **direkt etwas mitbauen** (z. B. Onboarding-Quiz, Crews als feste Gruppen, Coach-Rolle) — oder erstmal nur den Namen + Branding wechseln?
+## 5. Was sich für die Nutzer:innen ändert
 
-Sobald du Richtung + Scope bestätigst, mache ich einen konkreten Umsetzungsplan (Logo/Wortmarke, Texte, ggf. Tabellen für Crews/Coach-Rolle).
+- Nach dem Quiz sofort 3 passende Vorschläge statt leerer Home
+- Täglich neuer, abwechslungsreicher Content — auch wenn die Community klein ist
+- „Mit KI ausarbeiten" hilft, gute Challenges zu formulieren
+- Geschützter Raum durch automatische Moderation
+- Wöchentlicher Rückblick motiviert zum Dranbleiben
+
+## 6. Frage an dich
+
+Soll ich mit **Phase 1 (Onboarding-Auswertung + erste KI-Vorschläge auf Home)** starten? Das ist der schnellste sichtbare Win und legt das Profil-Fundament für alles weitere.

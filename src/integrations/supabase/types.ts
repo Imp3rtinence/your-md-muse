@@ -561,6 +561,39 @@ export type Database = {
           },
         ]
       }
+      user_ai_profile: {
+        Row: {
+          created_at: string
+          suggested_challenges: Json
+          suggested_crew_kinds: Json
+          summary: string | null
+          top_categories: Json
+          traits: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          suggested_challenges?: Json
+          suggested_crew_kinds?: Json
+          summary?: string | null
+          top_categories?: Json
+          traits?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          suggested_challenges?: Json
+          suggested_crew_kinds?: Json
+          summary?: string | null
+          top_categories?: Json
+          traits?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_badges: {
         Row: {
           awarded_at: string
