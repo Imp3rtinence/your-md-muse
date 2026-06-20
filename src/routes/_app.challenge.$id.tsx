@@ -401,6 +401,9 @@ function ChallengeDetail() {
           )}
         </section>
 
+        {/* Ähnliche Challenges */}
+        <SimilarChallenges id={id} />
+
         {/* Comments */}
         <Comments id={id} comments={comments ?? []} />
       </div>
