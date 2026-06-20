@@ -115,6 +115,23 @@ Regeln:
 
         if (insertError) return new Response(insertError.message, { status: 500 });
 
+        // Embeddings für jede frische Challenge nachziehen (best-effort)
+        const insertedIds = (inserted ?? []).map((r: any) => r.id);
+        await Promise.allSettled(insertedIds.map(async (cid, i) => {
+          const src = rows[i];
+          const text = `${src.title} — ${src.description} — ${src.category}`;
+          const er = await fetch("https://ai.gateway.lovable.dev/v1/embeddings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Lovable-API-Key": lovableKey },
+            body: JSON.stringify({ model: "openai/text-embedding-3-small", input: text }),
+          });
+          if (!er.ok) return;
+          const ejson = await er.json();
+          const vec = ejson?.data?.[0]?.embedding;
+          if (!Array.isArray(vec)) return;
+          await supabase.from("challenges").update({ embedding: `[${vec.join(",")}]` as any }).eq("id", cid);
+        }));
+
         return Response.json({ created: inserted?.length ?? 0, weekday });
       },
     },
