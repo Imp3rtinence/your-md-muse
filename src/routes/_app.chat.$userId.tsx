@@ -64,16 +64,12 @@ function ChatThread() {
     queryKey: ["dm", me, otherId],
     enabled: !!me,
     queryFn: async () => {
-      const { data, error } = await (supabase as any)
-        .from("direct_messages")
-        .select("id,sender_id,recipient_id,body,created_at,read_at")
-        .or(`and(sender_id.eq.${me},recipient_id.eq.${otherId}),and(sender_id.eq.${otherId},recipient_id.eq.${me})`)
-        .order("created_at", { ascending: true })
-        .limit(500);
+      const { data, error } = await (supabase as any).rpc("get_dm_thread", { _other: otherId, _limit: 500 });
       if (error) throw error;
       return (data ?? []) as Message[];
     },
   });
+
 
   // Realtime
   useEffect(() => {
