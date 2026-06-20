@@ -136,6 +136,10 @@ function ChallengeDetail() {
       toast.success("Beweis hochgeladen – du bist dran! +20 Aura");
       qc.invalidateQueries({ queryKey: ["submissions", id] });
       qc.invalidateQueries({ queryKey: ["challenge", id] });
+      // Im Hintergrund: ein Bot feuert kurz an
+      cheer({ data: { challenge_id: id } })
+        .then(() => qc.invalidateQueries({ queryKey: ["comments", id] }))
+        .catch(() => {});
     } catch (e: any) { toast.error(e.message ?? "Upload fehlgeschlagen"); }
     finally { setUploading(false); }
   };
