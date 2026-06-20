@@ -187,6 +187,59 @@ function ChallengeCard({ c }: { c: Challenge }) {
   );
 }
 
+function SmartSearch() {
+  const [q, setQ] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [results, setResults] = useState<any[] | null>(null);
+  const search = useServerFn(searchChallenges);
+  const run = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!q.trim()) { setResults(null); return; }
+    setBusy(true);
+    try {
+      const r = await search({ data: { query: q.trim() } });
+      setResults(r as any[]);
+    } catch { setResults([]); }
+    finally { setBusy(false); }
+  };
+  return (
+    <section className="mt-5">
+      <form onSubmit={run} className="flex items-center gap-2 rounded-2xl border border-border bg-surface px-3 py-2">
+        <Search className="size-4 text-muted-foreground" />
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Suche nach Idee, Stimmung oder Stichwort…"
+          className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+        />
+        {q && (
+          <button
+            type="button"
+            onClick={() => { setQ(""); setResults(null); }}
+            className="text-xs text-muted-foreground"
+          >
+            ×
+          </button>
+        )}
+        <button type="submit" disabled={busy || !q.trim()} className="tap rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground disabled:opacity-50">
+          {busy ? <Loader2 className="size-3 animate-spin" /> : "Suchen"}
+        </button>
+      </form>
+      {results && (
+        <div className="mt-2 space-y-1.5">
+          {results.length === 0 && <p className="text-xs text-muted-foreground">Nichts Passendes gefunden.</p>}
+          {results.map((r) => (
+            <Link key={r.id} to="/challenge/$id" params={{ id: r.id }} className="tap flex items-center justify-between rounded-xl border border-border bg-surface px-3 py-2 text-sm">
+              <span className="line-clamp-1">{r.title}</span>
+              <span className="ml-2 shrink-0 text-[10px] text-muted-foreground">{Math.round((r.similarity ?? 0) * 100)}% match</span>
+            </Link>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 function EmptyState() {
   return (
     <div className="mt-8 rounded-3xl border border-dashed border-border bg-surface p-8 text-center">
