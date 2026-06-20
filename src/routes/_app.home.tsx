@@ -54,7 +54,7 @@ function Home() {
         .select("id,username,display_name,avatar_url,is_ai_bot")
         .in("id", ids);
       const byId = new Map((creators ?? []).map((p: any) => [p.id, p]));
-      return list.map((c) => ({ ...c, creator: byId.get(c.creator_id) }));
+      return list.map((c) => ({ ...c, creator: byId.get(c.creator_id) as Challenge["creator"] })) as Challenge[];
     },
   });
 
