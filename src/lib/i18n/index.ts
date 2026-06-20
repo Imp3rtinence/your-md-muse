@@ -63,15 +63,6 @@ export function initI18n() {
     },
   });
 
-  if (isClient) {
-    const apply = (lng: string) => {
-      document.documentElement.lang = lng;
-      document.documentElement.dir = RTL_LOCALES.includes(lng as LocaleCode) ? "rtl" : "ltr";
-    };
-    apply(i18n.language || "de");
-    i18n.on("languageChanged", apply);
-  }
-
   return i18n;
 }
 
