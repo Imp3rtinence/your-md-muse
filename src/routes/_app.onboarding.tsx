@@ -38,6 +38,7 @@ function Onboarding() {
   const nav = useNavigate();
   const { user, refreshProfile } = useAuth();
   const analyze = useServerFn(analyzeOnboarding);
+  const embedMe = useServerFn(embedMyProfile);
   const [step, setStep] = useState(0);
   const [interests, setInterests] = useState<string[]>([]);
   const [ctx, setCtx] = useState<string | null>(null);
