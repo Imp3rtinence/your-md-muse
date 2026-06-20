@@ -10,7 +10,9 @@ import { LeagueBadge } from "@/components/LeagueBadge";
 import { PillButton } from "@/components/ActionTile";
 import { getLeague, msUntilWeekEnd, formatCountdown } from "@/lib/leagues";
 import { toast } from "sonner";
-import { Sparkles, Flame, LogOut, Camera, ChevronRight } from "lucide-react";
+import { Sparkles, Flame, LogOut, Camera, ChevronRight, Languages, FileText, ScrollText } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { SUPPORTED_LOCALES } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_app/profile")({
   head: () => ({ meta: [{ title: "Profil – Komma" }] }),
