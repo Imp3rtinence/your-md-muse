@@ -233,7 +233,20 @@ function ChallengeDetail() {
           </span>
         </div>
         <h1 className="mt-3 font-display text-3xl font-bold leading-tight">{c.title}</h1>
+        {c.difficulty && (
+          <span className="mt-2 inline-block rounded-full bg-surface-2 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+            {c.difficulty}
+          </span>
+        )}
         {c.description && <p className="mt-2 text-sm text-muted-foreground">{c.description}</p>}
+        {Array.isArray(c.tags) && c.tags.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {c.tags.map((t: string) => (
+              <span key={t} className="rounded-full bg-surface-2 px-2 py-0.5 text-[11px] text-muted-foreground">#{t}</span>
+            ))}
+          </div>
+        )}
+        <HeroImage path={c.hero_image_url} />
         {c.creator?.is_ai_bot && (
           <div className="mt-3 flex items-start gap-2 rounded-2xl border border-accent/30 bg-accent/5 px-3 py-2 text-xs text-muted-foreground">
             <BotBadge size="sm" />
