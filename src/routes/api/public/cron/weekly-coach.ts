@@ -13,9 +13,9 @@ export const Route = createFileRoute("/api/public/cron/weekly-coach")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const apikey = request.headers.get("apikey");
-        const expected = process.env.SUPABASE_PUBLISHABLE_KEY;
-        if (!apikey || !expected || apikey !== expected) return new Response("Unauthorized", { status: 401 });
+        const provided = request.headers.get("x-cron-secret");
+        const expected = process.env.CRON_SECRET;
+        if (!expected || !provided || provided !== expected) return new Response("Unauthorized", { status: 401 });
 
         const lovableKey = process.env.LOVABLE_API_KEY;
         if (!lovableKey) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
