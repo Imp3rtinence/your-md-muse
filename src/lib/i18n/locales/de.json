@@ -77,88 +77,126 @@
     "agb": {
       "title": "Allgemeine Geschäftsbedingungen",
       "updated": "Stand: Juni 2026 · gültig für die App „Komma\"",
+      "intro": "Willkommen bei Komma. Diese Nutzungsbedingungen regeln deine Nutzung der App und der dazugehörigen Dienste der Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Deutschland (nachfolgend „wir\", „uns\" oder „Anbieter\"). Mit deiner Registrierung oder Nutzung von Komma erklärst du dich mit diesen Bedingungen einverstanden.",
       "sections": [
         {
-          "title": "1. Geltungsbereich und Anbieter",
+          "title": "1. Die Dienste, die wir bereitstellen",
           "body": [
-            "Diese Allgemeinen Geschäftsbedingungen („AGB\") gelten für die Nutzung der App „Komma\" der Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich (nachfolgend „Anbieter\"). Mit der Registrierung erklärst du dich mit diesen AGB einverstanden."
-          ]
-        },
-        {
-          "title": "2. Leistungsbeschreibung",
-          "body": [
-            "Komma ist eine soziale Mitmach-Plattform, auf der Nutzer:innen Challenges erstellen, daran teilnehmen, Beweise hochladen und Crews bilden können. Teile der Inhalte werden durch KI erzeugt und sind als solche gekennzeichnet."
-          ]
-        },
-        {
-          "title": "3. Registrierung und Mindestalter",
-          "body": [
-            "Zur Nutzung ist ein kostenloses Konto erforderlich. Die Nutzung ist ab dem vollendeten 14. Lebensjahr gestattet. Bei Minderjährigen wird die Zustimmung der Erziehungsberechtigten vorausgesetzt."
-          ]
-        },
-        {
-          "title": "4. Nutzerinhalte und Rechteeinräumung",
-          "body": [
-            "Du bleibst Urheber:in deiner Inhalte und räumst dem Anbieter ein einfaches, weltweites, unentgeltliches Nutzungsrecht zur Speicherung und Anzeige innerhalb der App ein. Du sicherst zu, keine Rechte Dritter zu verletzen."
-          ]
-        },
-        {
-          "title": "5. Verhaltensregeln",
-          "body": [
-            "Verboten ist das Hochladen oder Verbreiten von Inhalten, die"
+            "Unser Auftrag ist es, Menschen die Möglichkeit zu geben, im echten Leben aktiv zu werden, sich gegenseitig zu inspirieren und gemeinsam Challenges zu meistern. Um diesen Auftrag zu erfüllen, stellen wir dir die nachfolgend beschriebenen Dienste („Dienste\") zur Verfügung:"
           ],
           "list": [
-            "gegen geltendes Recht verstoßen,",
-            "Rechte Dritter verletzen,",
-            "gewaltverherrlichend, diskriminierend, pornografisch oder jugendgefährdend sind,",
-            "andere belästigen, bedrohen oder zu Straftaten anleiten,",
-            "Schadsoftware enthalten oder die Sicherheit beeinträchtigen."
+            "Eine personalisierte Erfahrung: Wir schlagen dir Challenges, Crews und Inhalte vor, die zu deinen Interessen und Aktivitäten passen.",
+            "Verbindungen mit Menschen und Crews, die dir wichtig sind, einschließlich Direktnachrichten, Crew-Chats und gemeinsamen Aktivitäten.",
+            "Werkzeuge zum Selbstausdruck und zur Kommunikation: Beweise, Beiträge, Reaktionen, Profile, Badges und KI-gestützte Funktionen.",
+            "Sichere, integre und zuverlässige Dienste: Wir bekämpfen Missbrauch, schützen Konten und entfernen Inhalte, die gegen diese Bedingungen oder unsere Gemeinschaftsstandards verstoßen.",
+            "Forschung und Innovation: Wir nutzen aggregierte und anonymisierte Daten, um unsere Dienste laufend zu verbessern."
           ]
         },
         {
-          "title": "6. Direktnachrichten und Verschlüsselung",
+          "title": "2. Wie unsere Dienste finanziert werden",
           "body": [
-            "Direktnachrichten werden serverseitig verschlüsselt gespeichert (at rest). Eine Ende-zu-Ende-Verschlüsselung erfolgt nicht; der Anbieter kann Nachrichten zur Erfüllung gesetzlicher Pflichten in begründeten Einzelfällen entschlüsseln."
+            "Die Nutzung von Komma ist für dich kostenlos. Wir behalten uns vor, künftig kostenpflichtige Funktionen, Abonnements oder Werbung einzuführen. Solche Angebote werden klar gekennzeichnet und vor der Buchung gesondert ausgewiesen. Personenbezogene Daten verkaufen wir nicht."
           ]
         },
         {
-          "title": "7. KI-generierte Inhalte",
+          "title": "3. Deine Verpflichtungen gegenüber Komma und unserer Community",
           "body": [
-            "Challenges, Vorschläge, Übersetzungen, Coverbilder und Badges können ganz oder teilweise durch KI erstellt sein. Sie können Fehler enthalten und ersetzen keine fachliche oder rechtliche Beratung."
+            "Damit unsere Community ein sicherer Ort bleibt, gehst du beim Erstellen eines Kontos und bei der Nutzung der Dienste die folgenden Verpflichtungen ein."
           ]
         },
         {
-          "title": "8. Verfügbarkeit",
+          "title": "3.1 Wer Komma nutzen darf",
           "body": [
-            "Der Anbieter ist um hohe Verfügbarkeit bemüht, schuldet diese aber nicht. Wartung, Störungen Dritter oder höhere Gewalt können zu Einschränkungen führen."
+            "Du musst mindestens 14 Jahre alt sein. Liegt das gesetzliche Mindestalter in deinem Land höher, gilt dieses. Personen unter 18 Jahren benötigen die Zustimmung der Erziehungsberechtigten.",
+            "Du musst denselben Namen verwenden, den du auch im Alltag verwendest. Pro Person ist nur ein persönliches Konto zulässig. Du darfst dein Konto nicht ohne unsere Zustimmung an Dritte weitergeben.",
+            "Wir können den Zugang verweigern, wenn dein Konto zuvor wegen Verstößen entfernt wurde, du verurteilter Sexualstraftäter bist oder uns die Aussetzung des Kontos zum Schutz unserer Community geboten erscheint."
           ]
         },
         {
-          "title": "9. Haftung",
+          "title": "3.2 Was du teilen und tun darfst",
           "body": [
-            "Der Anbieter haftet uneingeschränkt für Vorsatz und grobe Fahrlässigkeit sowie nach dem ProdHaftG. Für leichte Fahrlässigkeit nur bei Verletzung wesentlicher Vertragspflichten und begrenzt auf den typischerweise vorhersehbaren Schaden."
+            "Wir möchten, dass Menschen sich auf Komma frei ausdrücken können — innerhalb der gesetzlichen Grenzen und unter Achtung der Rechte anderer. Du darfst die Dienste nicht für Folgendes verwenden:"
+          ],
+          "list": [
+            "Inhalte oder Verhalten, die rechtswidrig, irreführend, diskriminierend oder betrügerisch sind.",
+            "Inhalte, die Rechte Dritter verletzen, einschließlich Urheber-, Marken- oder Persönlichkeitsrechten.",
+            "Hassrede, Aufrufe zu Gewalt, Bedrohungen, Belästigung oder Mobbing.",
+            "Sexuelle Inhalte mit Minderjährigen, jugendgefährdende oder pornografische Inhalte.",
+            "Spam, betrügerische Schemata, Schadsoftware oder Versuche, unsere Systeme zu manipulieren, auszulesen (Scraping) oder zu umgehen.",
+            "Inhalte, die die Sicherheit, Integrität oder Verfügbarkeit der Dienste beeinträchtigen."
           ]
         },
         {
-          "title": "10. Kündigung",
+          "title": "3.3 Die Erlaubnisse, die du uns erteilst",
           "body": [
-            "Du kannst dein Konto jederzeit in den Profil-Einstellungen löschen. Der Anbieter darf bei schweren Verstößen außerordentlich kündigen."
+            "Damit wir dir die Dienste bereitstellen können, benötigen wir bestimmte Erlaubnisse von dir:"
+          ],
+          "list": [
+            "Erlaubnis zur Nutzung deiner Inhalte: Du behältst alle Rechte an den von dir erstellten Inhalten und räumst uns ein nicht-exklusives, übertragbares, unterlizenzierbares, weltweites und unentgeltliches Nutzungsrecht ein, deine Inhalte im Rahmen der Bereitstellung und Bewerbung der Dienste zu hosten, zu nutzen, zu verbreiten, zu modifizieren, zu betreiben, zu kopieren, öffentlich vorzuführen, anzuzeigen, zu übersetzen und davon abgeleitete Werke zu erstellen. Diese Lizenz endet, wenn du deine Inhalte oder dein Konto löschst, sofern sie nicht mit anderen geteilt wurden, die sie nicht gelöscht haben.",
+            "Erlaubnis zur Nutzung deines Namens, Profilbilds und deiner Aktivitäten in Verbindung mit kommerziellen, gesponserten oder verwandten Inhalten — ohne dass dir dafür eine Vergütung zusteht.",
+            "Erlaubnis, dein Konto zu aktualisieren: Wir dürfen Software, die du heruntergeladen hast, aktualisieren, um neue Versionen, Sicherheits- und Funktionsverbesserungen bereitzustellen."
           ]
         },
         {
-          "title": "11. Änderungen der AGB",
+          "title": "4. Zusätzliche Bestimmungen",
           "body": [
-            "Änderungen werden in der App angezeigt. Widersprichst du nicht innerhalb von vier Wochen, gelten sie als angenommen."
+            "Die folgenden Regelungen gelten ergänzend zu deinen Verpflichtungen und unseren Diensten."
           ]
         },
         {
-          "title": "12. Schlussbestimmungen",
+          "title": "4.1 Aktualisierung dieser Bedingungen",
           "body": [
-            "Es gilt deutsches Recht unter Ausschluss des UN-Kaufrechts. Sollte eine Bestimmung unwirksam sein, bleibt die Wirksamkeit der übrigen unberührt. Gerichtsstand ist, soweit zulässig, der Sitz des Anbieters."
+            "Wir entwickeln unsere Dienste stetig weiter und können diese Bedingungen anpassen, etwa um neue Funktionen abzubilden oder gesetzlichen Anforderungen zu entsprechen. Änderungen kündigen wir in der App mindestens 30 Tage im Voraus an. Widersprichst du nicht innerhalb von vier Wochen ab Zugang der Mitteilung, gelten die geänderten Bedingungen als angenommen. Im Widerspruchsfall kannst du die Dienste bis zum Ablauf der nächsten Kündigungsfrist weiternutzen."
+          ]
+        },
+        {
+          "title": "4.2 Sperrung oder Beendigung deines Kontos",
+          "body": [
+            "Du kannst dein Konto jederzeit löschen oder die Dienste kündigen. Wir können dein Konto oder einzelne Funktionen sperren oder beenden, wenn du diese Bedingungen oder unsere Gemeinschaftsstandards wiederholt oder schwerwiegend verletzt, wenn wir gesetzlich dazu verpflichtet sind oder wenn dein Verhalten ein Risiko oder eine rechtliche Verantwortung für uns, andere Nutzer:innen oder Dritte schafft. Wir informieren dich, wenn dies möglich und zulässig ist, und nennen dir den Grund."
+          ]
+        },
+        {
+          "title": "4.3 Beschränkung unserer Haftung",
+          "body": [
+            "Wir haften unbeschränkt für Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit, für Vorsatz und grobe Fahrlässigkeit, nach dem Produkthaftungsgesetz sowie im Rahmen abgegebener Garantien. Für leichte Fahrlässigkeit haften wir nur bei Verletzung wesentlicher Vertragspflichten (Kardinalpflichten), und zwar begrenzt auf den bei Vertragsschluss vorhersehbaren, vertragstypischen Schaden. Eine darüber hinausgehende Haftung ist ausgeschlossen.",
+            "Wir gewährleisten nicht, dass die Dienste stets fehlerfrei, sicher oder verfügbar sind. Du nutzt sie auf eigenes Risiko und im Rahmen der gesetzlichen Möglichkeiten."
+          ]
+        },
+        {
+          "title": "4.4 Streitbeilegung, anwendbares Recht und Gerichtsstand",
+          "body": [
+            "Diese Bedingungen und alle Ansprüche zwischen dir und uns unterliegen deutschem Recht unter Ausschluss des UN-Kaufrechts. Zwingende verbraucherschutzrechtliche Bestimmungen deines Wohnsitzstaates bleiben unberührt.",
+            "Gerichtsstand für Kaufleute, juristische Personen des öffentlichen Rechts und öffentlich-rechtliche Sondervermögen ist der Sitz des Anbieters. Für Verbraucher:innen gilt der gesetzliche Gerichtsstand.",
+            "Die EU-Kommission stellt eine Plattform zur Online-Streitbeilegung bereit: https://ec.europa.eu/consumers/odr/. Wir sind weder verpflichtet noch bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
+          ]
+        },
+        {
+          "title": "4.5 Direktnachrichten und Verschlüsselung",
+          "body": [
+            "Direktnachrichten und Crew-Chats werden serverseitig verschlüsselt gespeichert (Encryption at Rest). Eine Ende-zu-Ende-Verschlüsselung erfolgt nicht. Wir können Nachrichten zur Erfüllung gesetzlicher Pflichten oder zur Durchsetzung dieser Bedingungen in begründeten Einzelfällen entschlüsseln und einsehen."
+          ]
+        },
+        {
+          "title": "4.6 KI-generierte Inhalte",
+          "body": [
+            "Teile unserer Dienste — etwa Challenge-Vorschläge, Übersetzungen, Coverbilder, Badges oder Coaching-Hinweise — werden ganz oder teilweise durch künstliche Intelligenz erstellt. Solche Inhalte können fehlerhaft, unvollständig oder unangemessen sein und ersetzen keine fachliche, medizinische oder rechtliche Beratung."
+          ]
+        },
+        {
+          "title": "4.7 Sonstige Bestimmungen",
+          "body": [
+            "Sollte eine Bestimmung dieser Bedingungen unwirksam oder undurchsetzbar sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt. Wir dürfen unsere Rechte und Pflichten aus diesen Bedingungen im Rahmen einer Fusion, Übernahme oder eines Unternehmensverkaufs auf einen Dritten übertragen; du darfst deine Rechte und Pflichten nur mit unserer schriftlichen Zustimmung übertragen.",
+            "Verzichten wir auf die Durchsetzung einer Bestimmung, gilt dies nicht als Verzicht für die Zukunft."
+          ]
+        },
+        {
+          "title": "5. Kontakt",
+          "body": [
+            "Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Deutschland. E-Mail: hallo@komma.app"
           ]
         }
       ],
-      "contact": "Bei Fragen zu diesen AGB wende dich bitte an die im {{imprint}} genannten Kontaktdaten."
+      "contact": "Bei Fragen zu diesen Bedingungen wende dich bitte an die im {{imprint}} genannten Kontaktdaten."
     },
     "impressum": {
       "title": "Impressum",

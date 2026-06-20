@@ -76,90 +76,128 @@
     "back": "Geri",
     "agb": {
       "title": "Kullanım Koşulları",
-      "updated": "Haziran 2026 itibarıyla · \"Komma\" uygulaması için geçerlidir",
-      "authoritative": "Bu koşulların bağlayıcı sürümü Almancadır. Bu çeviri yalnızca bilgi amaçlıdır.",
+      "updated": "Son güncelleme: Haziran 2026 · Komma uygulaması için geçerlidir",
+      "intro": "Komma'ya hoş geldin. Bu koşullar, Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Almanya (\"biz\" veya \"Sağlayıcı\") tarafından sunulan Komma uygulamasını ve ilgili hizmetleri kullanımını düzenler. Hesap oluşturarak veya Komma'yı kullanarak bu koşulları kabul etmiş olursun. Alman hukuku geçerlidir; bu koşulların Almanca sürümü hukuki açıdan bağlayıcıdır.",
       "sections": [
         {
-          "title": "1. Kapsam ve sağlayıcı",
+          "title": "1. Sunduğumuz hizmetler",
           "body": [
-            "Bu Kullanım Koşulları, Gotham Consulting GmbH (Rosenweg 4, 99820 Hörselberg-Hainich, Almanya) tarafından işletilen \"Komma\" uygulamasının kullanımı için geçerlidir. Kayıt olarak bu koşulları kabul etmiş sayılırsın."
-          ]
-        },
-        {
-          "title": "2. Hizmet tanımı",
-          "body": [
-            "Komma; kullanıcıların challenge oluşturup katıldığı, kanıt yüklediği ve crew kurduğu sosyal bir katılım platformudur. Bazı içerikler yapay zekâ tarafından üretilir ve bu şekilde işaretlenir."
-          ]
-        },
-        {
-          "title": "3. Kayıt ve yaş sınırı",
-          "body": [
-            "Kullanım için ücretsiz bir hesap gereklidir. 14 yaşından itibaren kullanılabilir. Reşit olmayanlar için veli onayı gereklidir."
-          ]
-        },
-        {
-          "title": "4. Kullanıcı içeriği ve haklar",
-          "body": [
-            "İçeriklerinin sahibi sen kalırsın ve sağlayıcıya uygulama içinde saklama ve gösterme için münhasır olmayan, dünya çapında, ücretsiz bir kullanım hakkı tanırsın. Üçüncü kişilerin haklarını ihlal etmeyeceğini beyan edersin."
-          ]
-        },
-        {
-          "title": "5. Davranış kuralları",
-          "body": [
-            "Aşağıdaki içeriklerin yüklenmesi yasaktır:"
+            "Misyonumuz; insanlara gerçek hayatta aktif olma, birbirlerine ilham verme ve birlikte challenge'lar tamamlama gücünü vermektir. Bu misyon kapsamında sana aşağıdaki hizmetleri (\"Hizmetler\") sunarız:"
           ],
           "list": [
-            "yürürlükteki yasalara aykırı içerikler,",
-            "üçüncü kişilerin haklarını ihlal eden içerikler,",
-            "şiddeti yücelten, ayrımcı, pornografik veya gençler için zararlı içerikler,",
-            "başkalarını taciz eden, tehdit eden veya suça teşvik eden içerikler,",
-            "zararlı yazılım içeren veya güvenliği tehlikeye atan içerikler."
+            "Kişiselleştirilmiş deneyim: ilgi alanlarına uygun challenge, crew ve içerikler öneririz.",
+            "Senin için önemli kişiler ve crew'larla bağlantılar (DM'ler, crew sohbetleri, ortak etkinlikler).",
+            "Kendini ifade ve iletişim araçları: kanıtlar, gönderiler, tepkiler, profiller, rozetler ve yapay zeka destekli özellikler.",
+            "Güvenli, güvenilir ve istikrarlı hizmetler: kötüye kullanımla mücadele eder, hesapları koruruz.",
+            "Araştırma ve inovasyon: hizmetlerimizi geliştirmek için toplu ve anonimleştirilmiş verileri kullanırız."
           ]
         },
         {
-          "title": "6. Direkt mesajlar ve şifreleme",
+          "title": "2. Hizmetlerimiz nasıl finanse edilir",
           "body": [
-            "Direkt mesajlar sunucuda şifreli olarak saklanır (at rest). Uçtan uca şifreleme yoktur; sağlayıcı, yasal yükümlülükleri yerine getirmek üzere haklı durumlarda mesajları çözebilir."
+            "Komma kullanımı senin için ücretsizdir. İleride ücretli özellikler, abonelikler veya reklamlar sunma hakkımızı saklı tutarız. Bu tür teklifler satın alma öncesinde açıkça belirtilir. Kişisel verilerini satmayız."
           ]
         },
         {
-          "title": "7. Yapay zekâ içeriği",
+          "title": "3. Komma ve topluluğumuza karşı yükümlülüklerin",
           "body": [
-            "Challenge, öneri, çeviri, kapak görseli ve rozetler kısmen veya tamamen YZ tarafından üretilmiş olabilir. Hatalı olabilir; uzman veya hukuki tavsiyenin yerini tutmaz."
+            "Topluluğumuzun güvenli kalması için hesap oluştururken ve Hizmetleri kullanırken aşağıdaki yükümlülükleri kabul edersin."
           ]
         },
         {
-          "title": "8. Erişilebilirlik",
+          "title": "3.1 Komma'yı kim kullanabilir",
           "body": [
-            "Sağlayıcı yüksek erişilebilirlik hedefler ancak garanti etmez. Bakım, üçüncü taraf arızaları veya mücbir sebepler kesintilere yol açabilir."
+            "En az 14 yaşında olmalısın. Ülkendeki yasal asgari yaş daha yüksekse o yaş geçerlidir. 18 yaş altı için ebeveyn onayı gerekir.",
+            "Günlük hayatta kullandığın ismi kullanmalısın. Her kişi için yalnızca bir kişisel hesap olabilir. Hesabını onayımız olmadan üçüncü kişilerle paylaşamazsın.",
+            "Hesabın daha önce ihlaller nedeniyle kapatıldıysa, hüküm giymiş cinsel suçluysan veya topluluğumuzu korumak için askıya alma gerekliyse erişimi reddedebiliriz."
           ]
         },
         {
-          "title": "9. Sorumluluk",
+          "title": "3.2 Neleri paylaşabilir ve yapabilirsin",
           "body": [
-            "Sağlayıcı kasıt ve ağır kusurdan sınırsız sorumludur. Hafif ihmalde yalnızca temel sözleşmesel yükümlülüklerin ihlalinde ve öngörülebilir zararla sınırlı sorumluluk vardır."
+            "İnsanların Komma'da yasalar ve başkalarının hakları çerçevesinde özgürce kendini ifade etmesini istiyoruz. Hizmetleri şunlar için kullanamazsın:"
+          ],
+          "list": [
+            "Hukuka aykırı, yanıltıcı, ayrımcı veya dolandırıcılık içeren içerik veya davranış.",
+            "Telif, marka veya kişilik hakları dahil üçüncü kişi haklarının ihlali.",
+            "Nefret söylemi, şiddete teşvik, tehdit, taciz veya zorbalık.",
+            "Çocukları içeren cinsel içerik, pornografik veya çocuklar için zararlı içerik.",
+            "Spam, dolandırıcılık şemaları, kötü amaçlı yazılım veya sistemlerimizi manipüle etme, kazıma (scraping) ya da atlatma girişimleri.",
+            "Hizmetlerin güvenliğini, bütünlüğünü veya erişilebilirliğini bozma."
           ]
         },
         {
-          "title": "10. Fesih",
+          "title": "3.3 Bize verdiğin izinler",
           "body": [
-            "Hesabını profil ayarlarından istediğin zaman silebilirsin. Sağlayıcı ağır ihlallerde sözleşmeyi olağanüstü feshedebilir."
+            "Hizmetleri sağlayabilmemiz için belirli izinlere ihtiyacımız var:"
+          ],
+          "list": [
+            "İçeriğini kullanma izni: oluşturduğun içeriğin sahibi sensin ve bize Hizmetleri işletmek ve tanıtmak amacıyla içeriğini barındırma, kullanma, dağıtma, değiştirme, çalıştırma, kopyalama, kamuya sunma, gösterme, çevirme ve türev eserler oluşturma için münhasır olmayan, devredilebilir, alt lisans verilebilir, dünya çapında telifsiz bir lisans verirsin. Bu lisans, içeriğini veya hesabını sildiğinde sona erer; içeriğin silmemiş başkalarıyla paylaşıldığı haller hariç.",
+            "Adının, profil fotoğrafının ve eylemlerine ilişkin bilgilerin ticari, sponsorlu veya ilgili içeriklerle bağlantılı olarak — sana herhangi bir ödeme yapılmaksızın — kullanılması izni.",
+            "İndirdiğin yazılımı yeni sürümler, güvenlik güncellemeleri ve özellik iyileştirmeleri sağlamak üzere güncelleme izni."
           ]
         },
         {
-          "title": "11. Koşulların değişmesi",
+          "title": "4. Ek hükümler",
           "body": [
-            "Değişiklikler uygulamada gösterilir. Dört hafta içinde itiraz etmezsen kabul edilmiş sayılır."
+            "Aşağıdaki hükümler yükümlülüklerine ve Hizmetlerimize ek olarak uygulanır."
           ]
         },
         {
-          "title": "12. Son hükümler",
+          "title": "4.1 Bu koşulların güncellenmesi",
           "body": [
-            "Alman hukuku geçerlidir; CISG uygulanmaz. Bir hüküm geçersiz olursa diğerleri geçerli kalır. Yetkili mahkeme, izin verildiği ölçüde, sağlayıcının merkezidir."
+            "Hizmetlerimizi sürekli geliştiriyoruz ve bu koşulları — yeni özellikleri yansıtmak veya yasal gereklilikleri karşılamak için — değiştirebiliriz. Değişiklikleri en az 30 gün önceden uygulamada bildiririz. Bildirim tarihinden itibaren dört hafta içinde itiraz etmezsen, değişiklikler kabul edilmiş sayılır."
+          ]
+        },
+        {
+          "title": "4.2 Hesabın askıya alınması veya sonlandırılması",
+          "body": [
+            "Hesabını veya Hizmetleri istediğin zaman silebilirsin. Bu koşulları tekrar tekrar veya ağır biçimde ihlal edersen, yasalar gerektirirse veya davranışın bizim için, diğer kullanıcılar veya üçüncü kişiler için risk yaratıyorsa hesabını askıya alabilir veya sonlandırabiliriz. Mümkün ve yasal olduğunda seni bilgilendirir ve gerekçesini belirtiriz."
+          ]
+        },
+        {
+          "title": "4.3 Sorumluluğumuzun sınırlandırılması",
+          "body": [
+            "Yaşam, beden veya sağlığın ihlali, kasıt ve ağır ihmal, Alman Ürün Sorumluluğu Yasası ve verilen garantiler çerçevesinde sınırsız sorumluyuz. Hafif ihmalde yalnızca esaslı sözleşmesel yükümlülüklerin (kardinal görevler) ihlalinde, sözleşme türü için tipik ve öngörülebilir zararla sınırlı olarak sorumluyuz.",
+            "Hizmetlerin her zaman hatasız, güvenli veya erişilebilir olacağını garanti etmeyiz. Hizmetleri kendi sorumluluğunda ve yasal sınırlar çerçevesinde kullanırsın."
+          ]
+        },
+        {
+          "title": "4.4 Uyuşmazlıklar, geçerli hukuk ve yargı yeri",
+          "body": [
+            "Bu koşullar ve aramızdaki tüm talepler, BM Satım Sözleşmesi hariç olmak üzere Alman hukukuna tabidir. Ülkendeki zorunlu tüketici koruma kuralları saklıdır.",
+            "Tacirler ve kamu hukuku tüzel kişileri için yargı yeri Sağlayıcının merkezidir. Tüketiciler yasal yargı yerinde dava açabilir.",
+            "AB Komisyonu çevrimiçi uyuşmazlık çözüm platformu sağlar: https://ec.europa.eu/consumers/odr/. Bir tüketici tahkim kurulu önündeki uyuşmazlık çözümüne katılma yükümlülüğümüz veya isteğimiz yoktur."
+          ]
+        },
+        {
+          "title": "4.5 Direkt mesajlar ve şifreleme",
+          "body": [
+            "Direkt mesajlar ve crew sohbetleri sunucularımızda şifrelenmiş olarak saklanır (at-rest). Uçtan uca şifreleme yoktur. Yasal yükümlülükleri yerine getirmek veya bu koşulları uygulamak için gerekçeli bireysel durumlarda mesajları şifre çözüp inceleyebiliriz."
+          ]
+        },
+        {
+          "title": "4.6 Yapay zeka tarafından oluşturulan içerik",
+          "body": [
+            "Challenge önerileri, çeviriler, kapak görselleri, rozetler veya koçluk ipuçları gibi Hizmetlerimizin bazı bölümleri tamamen veya kısmen yapay zeka tarafından üretilir. Bu içerik hatalı, eksik veya uygunsuz olabilir ve profesyonel, tıbbi ya da hukuki danışmanlığın yerini almaz."
+          ]
+        },
+        {
+          "title": "4.7 Diğer hükümler",
+          "body": [
+            "Bu koşulların herhangi bir hükmü geçersiz veya uygulanamaz hale gelirse, diğer hükümlerin geçerliliği etkilenmez. Bir birleşme, devralma veya işletme satışı kapsamında bu koşullardan doğan hak ve yükümlülüklerimizi üçüncü bir kişiye devredebiliriz; sen ise hak ve yükümlülüklerini ancak yazılı onayımızla devredebilirsin.",
+            "Bir hükmü uygulamamamız, gelecekte uygulama hakkımızdan feragat ettiğimiz anlamına gelmez."
+          ]
+        },
+        {
+          "title": "5. İletişim",
+          "body": [
+            "Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Almanya. E-posta: hallo@komma.app"
           ]
         }
       ],
-      "contact": "Bu koşullarla ilgili sorular için lütfen {{imprint}} sayfasındaki iletişim bilgilerini kullan."
+      "authoritative": "Bu koşulların Almanca sürümü hukuki açıdan bağlayıcıdır. Bu çeviri yalnızca kolaylık sağlamak amacıyla sunulmuştur.",
+      "contact": "Bu koşullar hakkındaki sorular için lütfen {{imprint}}'de belirtilen iletişim bilgilerini kullan."
     },
     "impressum": {
       "title": "Künye",

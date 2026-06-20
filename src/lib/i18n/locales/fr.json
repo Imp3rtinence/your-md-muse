@@ -75,91 +75,129 @@
   "legal": {
     "back": "Retour",
     "agb": {
-      "title": "Conditions générales d'utilisation",
-      "updated": "Mise à jour : juin 2026 · valable pour l'application « Komma »",
-      "authoritative": "La version contraignante de ces conditions est l'allemande. Cette traduction est fournie à titre informatif uniquement.",
+      "title": "Conditions d'utilisation",
+      "updated": "Dernière mise à jour : juin 2026 · applicable à l'application Komma",
+      "intro": "Bienvenue sur Komma. Les présentes conditions régissent votre utilisation de l'application Komma et des services associés, fournis par Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Allemagne (« nous » ou le « Fournisseur »). En créant un compte ou en utilisant Komma, vous acceptez ces conditions. Le droit allemand s'applique ; la version allemande des présentes conditions fait juridiquement foi.",
       "sections": [
         {
-          "title": "1. Champ d'application et fournisseur",
+          "title": "1. Les services que nous fournissons",
           "body": [
-            "Les présentes CGU régissent l'utilisation de l'application « Komma » exploitée par Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Allemagne (« Fournisseur »). En t'inscrivant, tu acceptes ces CGU."
-          ]
-        },
-        {
-          "title": "2. Description du service",
-          "body": [
-            "Komma est une plateforme sociale participative où les utilisateur·rice·s créent et rejoignent des challenges, téléversent des preuves et forment des crews. Certains contenus sont générés par IA et signalés comme tels."
-          ]
-        },
-        {
-          "title": "3. Inscription et âge minimal",
-          "body": [
-            "Un compte gratuit est requis. L'utilisation est autorisée à partir de 14 ans. Pour les mineurs, l'accord parental est requis."
-          ]
-        },
-        {
-          "title": "4. Contenus utilisateurs et droits",
-          "body": [
-            "Tu restes l'auteur·rice de tes contenus et accordes au Fournisseur une licence non exclusive, mondiale et gratuite pour les stocker et les afficher dans l'application. Tu garantis ne pas violer les droits de tiers."
-          ]
-        },
-        {
-          "title": "5. Règles de conduite",
-          "body": [
-            "Il est interdit de publier des contenus qui :"
+            "Notre mission est de donner aux personnes les moyens de passer à l'action dans la vraie vie, de s'inspirer mutuellement et de relever des challenges ensemble. À cette fin, nous mettons à votre disposition les services suivants (« Services ») :"
           ],
           "list": [
-            "violent le droit applicable,",
-            "violent les droits de tiers,",
-            "glorifient la violence, sont discriminatoires, pornographiques ou nuisibles aux mineurs,",
-            "harcèlent, menacent ou incitent à des infractions,",
-            "contiennent des malwares ou compromettent la sécurité."
+            "Une expérience personnalisée : challenges, crews et contenus adaptés à vos centres d'intérêt.",
+            "Des connexions avec les personnes et crews qui comptent pour vous (messages directs, discussions de crew, activités partagées).",
+            "Des outils d'expression et de communication : preuves, publications, réactions, profils, badges et fonctionnalités assistées par IA.",
+            "Des services sûrs, fiables et intègres : lutte contre les abus, protection des comptes, retrait des contenus contraires aux présentes conditions.",
+            "Recherche et innovation : utilisation de données agrégées et anonymisées pour améliorer nos Services."
           ]
         },
         {
-          "title": "6. Messages directs et chiffrement",
+          "title": "2. Comment nos services sont financés",
           "body": [
-            "Les messages directs sont stockés chiffrés au repos sur le serveur. Il n'y a pas de chiffrement de bout en bout ; le Fournisseur peut déchiffrer les messages dans des cas justifiés pour respecter des obligations légales."
+            "L'utilisation de Komma est gratuite. Nous nous réservons le droit d'introduire à l'avenir des fonctionnalités payantes, des abonnements ou de la publicité. Ces offres seront clairement identifiées avant tout achat. Nous ne vendons pas vos données personnelles."
           ]
         },
         {
-          "title": "7. Contenus générés par IA",
+          "title": "3. Vos engagements envers Komma et notre communauté",
           "body": [
-            "Challenges, suggestions, traductions, images de couverture et badges peuvent être générés en tout ou partie par IA. Ils peuvent contenir des erreurs et ne remplacent pas un conseil professionnel ou juridique."
+            "Pour préserver la sécurité de la communauté, vous prenez les engagements suivants lors de la création de votre compte et de l'utilisation des Services."
           ]
         },
         {
-          "title": "8. Disponibilité",
+          "title": "3.1 Qui peut utiliser Komma",
           "body": [
-            "Le Fournisseur vise une haute disponibilité mais ne la garantit pas. Maintenance, pannes tierces ou force majeure peuvent occasionner des limitations."
+            "Vous devez avoir au moins 14 ans. Si l'âge minimum légal dans votre pays est supérieur, c'est celui-ci qui s'applique. Les personnes de moins de 18 ans doivent obtenir le consentement parental.",
+            "Vous devez utiliser le nom que vous utilisez dans la vie quotidienne. Une seule personne ne peut détenir qu'un seul compte personnel. Vous ne pouvez pas partager votre compte avec des tiers sans notre accord.",
+            "Nous pouvons refuser l'accès si votre compte a été précédemment supprimé pour infractions, si vous êtes une personne condamnée pour infraction sexuelle ou si la suspension est nécessaire pour protéger la communauté."
           ]
         },
         {
-          "title": "9. Responsabilité",
+          "title": "3.2 Ce que vous pouvez partager et faire",
           "body": [
-            "Le Fournisseur est responsable sans limitation en cas de dol et faute lourde ainsi qu'au titre de la loi allemande sur la responsabilité du fait des produits. Pour faute légère uniquement en cas de manquement aux obligations contractuelles essentielles et dans la limite des dommages typiquement prévisibles."
+            "Nous souhaitons que chacun puisse s'exprimer librement sur Komma, dans le respect de la loi et des droits d'autrui. Vous ne pouvez pas utiliser les Services pour :"
+          ],
+          "list": [
+            "Partager ou faire quoi que ce soit d'illégal, trompeur, discriminatoire ou frauduleux.",
+            "Porter atteinte aux droits de tiers, y compris les droits d'auteur, les marques ou les droits de la personnalité.",
+            "Tenir des propos haineux, inciter à la violence, menacer, harceler ou intimider.",
+            "Partager des contenus à caractère sexuel impliquant des mineurs, pornographiques ou nuisibles aux mineurs.",
+            "Diffuser du spam, des arnaques, des logiciels malveillants ou tenter de manipuler, extraire (scraping) ou contourner nos systèmes.",
+            "Porter atteinte à la sécurité, l'intégrité ou la disponibilité des Services."
           ]
         },
         {
-          "title": "10. Résiliation",
+          "title": "3.3 Les autorisations que vous nous accordez",
           "body": [
-            "Tu peux supprimer ton compte à tout moment dans les paramètres du profil. Le Fournisseur peut résilier pour motif grave en cas de violations sérieuses."
+            "Pour fournir les Services, certaines autorisations de votre part sont nécessaires :"
+          ],
+          "list": [
+            "Autorisation d'utiliser votre contenu : vous restez titulaire de vos contenus et nous accordez une licence non exclusive, transférable, sous-licenciable, mondiale et gratuite pour héberger, utiliser, distribuer, modifier, exécuter, copier, représenter, afficher, traduire et créer des œuvres dérivées de vos contenus dans le cadre de l'exploitation et de la promotion des Services. Cette licence prend fin lorsque vous supprimez votre contenu ou votre compte, sauf s'il a été partagé avec d'autres personnes qui ne l'ont pas supprimé.",
+            "Autorisation d'utiliser votre nom, votre photo de profil et des informations sur vos actions en lien avec des contenus commerciaux, sponsorisés ou apparentés — sans contrepartie financière.",
+            "Autorisation de mettre à jour les logiciels que vous avez téléchargés afin de fournir de nouvelles versions, des correctifs de sécurité et des améliorations."
           ]
         },
         {
-          "title": "11. Modification des CGU",
+          "title": "4. Dispositions additionnelles",
           "body": [
-            "Les modifications sont affichées dans l'application. À défaut d'opposition dans les quatre semaines, elles sont réputées acceptées."
+            "Les dispositions suivantes s'appliquent en complément de vos engagements et de nos Services."
           ]
         },
         {
-          "title": "12. Dispositions finales",
+          "title": "4.1 Mise à jour des présentes conditions",
           "body": [
-            "Le droit allemand s'applique, à l'exclusion de la CVIM. Si une clause est invalide, les autres restent en vigueur. Le for est, dans la mesure permise, le siège du Fournisseur."
+            "Nous faisons évoluer en permanence nos Services et pouvons modifier les présentes conditions, notamment pour refléter de nouvelles fonctionnalités ou répondre à des exigences légales. Les modifications vous sont annoncées dans l'application au moins 30 jours à l'avance. À défaut d'opposition dans un délai de quatre semaines après la notification, les conditions modifiées sont réputées acceptées."
+          ]
+        },
+        {
+          "title": "4.2 Suspension ou résiliation de votre compte",
+          "body": [
+            "Vous pouvez supprimer votre compte ou résilier les Services à tout moment. Nous pouvons suspendre ou résilier votre compte ou certaines fonctionnalités en cas de violation répétée ou grave des présentes conditions, lorsque la loi l'impose ou si votre comportement crée un risque ou une responsabilité juridique pour nous, d'autres utilisateurs ou des tiers. Nous vous en informerons lorsque cela est possible et autorisé."
+          ]
+        },
+        {
+          "title": "4.3 Limitation de notre responsabilité",
+          "body": [
+            "Nous sommes responsables sans limitation des dommages résultant d'atteintes à la vie, à l'intégrité physique ou à la santé, de la faute intentionnelle et de la négligence grave, ainsi qu'au titre de la loi allemande sur la responsabilité du fait des produits et des garanties données. En cas de négligence légère, notre responsabilité est limitée à la violation d'obligations contractuelles essentielles (obligations cardinales) et au dommage prévisible typique de ce type de contrat.",
+            "Nous ne garantissons pas que les Services seront toujours exempts d'erreurs, sécurisés ou disponibles. Vous les utilisez à vos propres risques et dans les limites prévues par la loi."
+          ]
+        },
+        {
+          "title": "4.4 Litiges, droit applicable et juridiction",
+          "body": [
+            "Les présentes conditions et tout litige entre vous et nous sont régis par le droit allemand, à l'exclusion de la Convention des Nations Unies sur les contrats de vente internationale de marchandises. Les règles impératives de protection des consommateurs de votre pays de résidence demeurent applicables.",
+            "Pour les commerçants et les personnes morales de droit public, le tribunal compétent est celui du siège du Fournisseur. Les consommateurs peuvent saisir leur juridiction légale.",
+            "La Commission européenne met à disposition une plateforme de règlement en ligne des litiges : https://ec.europa.eu/consumers/odr/. Nous ne sommes ni tenus ni disposés à participer à une procédure de règlement des litiges devant un organe d'arbitrage de la consommation."
+          ]
+        },
+        {
+          "title": "4.5 Messages directs et chiffrement",
+          "body": [
+            "Les messages directs et les discussions de crew sont stockés chiffrés sur nos serveurs (chiffrement au repos). Il n'y a pas de chiffrement de bout en bout. Nous pouvons déchiffrer et consulter les messages dans des cas individuels justifiés afin de respecter des obligations légales ou d'appliquer les présentes conditions."
+          ]
+        },
+        {
+          "title": "4.6 Contenus générés par l'IA",
+          "body": [
+            "Certaines parties de nos Services — suggestions de challenges, traductions, images de couverture, badges ou conseils de coaching — sont créées en tout ou en partie par une intelligence artificielle. Ces contenus peuvent être erronés, incomplets ou inappropriés et ne remplacent pas un conseil professionnel, médical ou juridique."
+          ]
+        },
+        {
+          "title": "4.7 Dispositions diverses",
+          "body": [
+            "Si une disposition des présentes conditions est nulle ou inapplicable, les autres dispositions restent en vigueur. Nous pouvons transférer nos droits et obligations à un tiers dans le cadre d'une fusion, acquisition ou cession d'activité ; vous ne pouvez transférer vos droits et obligations qu'avec notre accord écrit.",
+            "Le fait de ne pas faire valoir une disposition ne vaut pas renonciation à s'en prévaloir ultérieurement."
+          ]
+        },
+        {
+          "title": "5. Contact",
+          "body": [
+            "Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Allemagne. E-mail : hallo@komma.app"
           ]
         }
       ],
-      "contact": "Pour toute question sur ces CGU, utilise les coordonnées des {{imprint}}."
+      "authoritative": "La version allemande des présentes conditions fait juridiquement foi. Cette traduction est fournie uniquement à titre de commodité.",
+      "contact": "Pour toute question concernant ces conditions, veuillez utiliser les coordonnées indiquées dans les {{imprint}}."
     },
     "impressum": {
       "title": "Mentions légales",

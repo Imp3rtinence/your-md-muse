@@ -75,91 +75,129 @@
   "legal": {
     "back": "Atrás",
     "agb": {
-      "title": "Términos y Condiciones",
-      "updated": "A junio de 2026 · aplicable a la app «Komma»",
-      "authoritative": "La versión vinculante de estos términos es la alemana. Esta traducción es solo informativa.",
+      "title": "Condiciones de uso",
+      "updated": "Última actualización: junio de 2026 · aplicable a la app Komma",
+      "intro": "Bienvenido a Komma. Estas condiciones regulan tu uso de la app Komma y los servicios relacionados prestados por Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Alemania (\"nosotros\" o el \"Proveedor\"). Al crear una cuenta o usar Komma aceptas estas condiciones. Se aplica el Derecho alemán; la versión alemana de estas condiciones es la jurídicamente vinculante.",
       "sections": [
         {
-          "title": "1. Ámbito y proveedor",
+          "title": "1. Los servicios que prestamos",
           "body": [
-            "Estos términos regulan el uso de la app «Komma» operada por Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Alemania («Proveedor»). Al registrarte aceptas estos términos."
-          ]
-        },
-        {
-          "title": "2. Descripción del servicio",
-          "body": [
-            "Komma es una plataforma social participativa donde las personas crean y participan en challenges, suben pruebas y forman crews. Algunos contenidos se generan con IA y se etiquetan como tales."
-          ]
-        },
-        {
-          "title": "3. Registro y edad mínima",
-          "body": [
-            "Se requiere una cuenta gratuita. El uso está permitido a partir de los 14 años. Los menores requieren el consentimiento de un tutor."
-          ]
-        },
-        {
-          "title": "4. Contenido del usuario y licencia",
-          "body": [
-            "Sigues siendo el autor/a de tu contenido y concedes al Proveedor una licencia no exclusiva, mundial y gratuita para almacenarlo y mostrarlo en la app. Garantizas no infringir derechos de terceros."
-          ]
-        },
-        {
-          "title": "5. Normas de conducta",
-          "body": [
-            "Está prohibido publicar contenido que:"
+            "Nuestra misión es dar a las personas el poder de activarse en la vida real, inspirarse mutuamente y completar challenges juntas. Para ello te ofrecemos los siguientes servicios (\"Servicios\"):"
           ],
           "list": [
-            "vulnere la ley vigente,",
-            "vulnere derechos de terceros,",
-            "glorifique la violencia, sea discriminatorio, pornográfico o dañino para menores,",
-            "acose, amenace o incite a delitos,",
-            "contenga malware o comprometa la seguridad."
+            "Una experiencia personalizada: challenges, crews y contenidos según tus intereses.",
+            "Conexiones con personas y crews que te importan (mensajes directos, chats de crew, actividades compartidas).",
+            "Herramientas de autoexpresión y comunicación: pruebas, publicaciones, reacciones, perfiles, insignias y funciones con IA.",
+            "Servicios seguros, íntegros y fiables: combatimos los abusos y protegemos las cuentas.",
+            "Investigación e innovación: usamos datos agregados y anonimizados para mejorar los Servicios."
           ]
         },
         {
-          "title": "6. Mensajes directos y cifrado",
+          "title": "2. Cómo se financian nuestros servicios",
           "body": [
-            "Los mensajes directos se almacenan cifrados en reposo en el servidor. No hay cifrado de extremo a extremo; el Proveedor puede descifrar mensajes en casos justificados para cumplir obligaciones legales."
+            "Usar Komma es gratuito. Nos reservamos el derecho de introducir en el futuro funciones de pago, suscripciones o publicidad, que serán claramente identificadas antes de cualquier compra. No vendemos tus datos personales."
           ]
         },
         {
-          "title": "7. Contenido generado por IA",
+          "title": "3. Tus compromisos con Komma y nuestra comunidad",
           "body": [
-            "Challenges, sugerencias, traducciones, portadas y badges pueden estar total o parcialmente generados por IA. Pueden contener errores y no sustituyen el asesoramiento profesional o legal."
+            "Para mantener segura nuestra comunidad, al crear tu cuenta y usar los Servicios asumes los siguientes compromisos."
           ]
         },
         {
-          "title": "8. Disponibilidad",
+          "title": "3.1 Quién puede usar Komma",
           "body": [
-            "El Proveedor procura una alta disponibilidad pero no la garantiza. Mantenimiento, fallos de terceros o fuerza mayor pueden causar limitaciones."
+            "Debes tener al menos 14 años. Si la edad mínima legal en tu país es superior, se aplicará esa edad. Las personas menores de 18 años necesitan el consentimiento parental.",
+            "Debes usar el mismo nombre que utilizas en la vida cotidiana. Cada persona solo puede tener una cuenta personal. No puedes compartirla con terceros sin nuestro consentimiento.",
+            "Podemos denegar el acceso si tu cuenta fue previamente eliminada por infracciones, si has sido condenado por delitos sexuales o si la suspensión es necesaria para proteger la comunidad."
           ]
         },
         {
-          "title": "9. Responsabilidad",
+          "title": "3.2 Lo que puedes compartir y hacer",
           "body": [
-            "El Proveedor responde sin límite por dolo y culpa grave y conforme a la ley alemana de responsabilidad por productos. Por culpa leve solo por incumplimiento de obligaciones contractuales esenciales y limitado a daños típicamente previsibles."
+            "Queremos que las personas se expresen libremente en Komma, dentro de los límites de la ley y respetando los derechos de las demás. No puedes usar los Servicios para:"
+          ],
+          "list": [
+            "Compartir o hacer algo ilegal, engañoso, discriminatorio o fraudulento.",
+            "Infringir derechos de terceros, incluidos derechos de autor, marcas o derechos de la personalidad.",
+            "Discurso de odio, incitación a la violencia, amenazas, acoso o intimidación.",
+            "Compartir contenido sexual con menores, pornográfico o perjudicial para menores.",
+            "Difundir spam, esquemas fraudulentos, malware o intentar manipular, extraer (scraping) o eludir nuestros sistemas.",
+            "Afectar la seguridad, integridad o disponibilidad de los Servicios."
           ]
         },
         {
-          "title": "10. Resolución",
+          "title": "3.3 Las autorizaciones que nos otorgas",
           "body": [
-            "Puedes eliminar tu cuenta en cualquier momento desde la configuración. El Proveedor puede rescindir por causa grave."
+            "Para prestar los Servicios necesitamos ciertas autorizaciones tuyas:"
+          ],
+          "list": [
+            "Autorización para usar tu contenido: conservas la titularidad de tu contenido y nos otorgas una licencia no exclusiva, transferible, sublicenciable, mundial y gratuita para alojarlo, usarlo, distribuirlo, modificarlo, ejecutarlo, copiarlo, mostrarlo públicamente, traducirlo y crear obras derivadas en relación con la operación y promoción de los Servicios. Esta licencia finaliza cuando eliminas tu contenido o tu cuenta, salvo cuando se haya compartido con otras personas que no lo hayan eliminado.",
+            "Autorización para usar tu nombre, foto de perfil e información sobre tus acciones en relación con contenidos comerciales, patrocinados o relacionados, sin compensación para ti.",
+            "Autorización para actualizar el software que hayas descargado, con nuevas versiones, actualizaciones de seguridad y mejoras."
           ]
         },
         {
-          "title": "11. Cambios en los términos",
+          "title": "4. Disposiciones adicionales",
           "body": [
-            "Los cambios se muestran en la app. Si no te opones en cuatro semanas, se entienden aceptados."
+            "Las siguientes disposiciones se aplican además de tus compromisos y de nuestros Servicios."
           ]
         },
         {
-          "title": "12. Disposiciones finales",
+          "title": "4.1 Actualización de estas condiciones",
           "body": [
-            "Se aplica el derecho alemán con exclusión de la CISG. Si una cláusula es nula, las demás siguen vigentes. El fuero, donde sea admisible, es la sede del Proveedor."
+            "Evolucionamos los Servicios constantemente y podemos modificar estas condiciones, por ejemplo para reflejar nuevas funciones o cumplir requisitos legales. Te notificaremos los cambios en la app con al menos 30 días de antelación. Si no te opones en un plazo de cuatro semanas desde la notificación, las condiciones modificadas se considerarán aceptadas."
+          ]
+        },
+        {
+          "title": "4.2 Suspensión o cancelación de tu cuenta",
+          "body": [
+            "Puedes eliminar tu cuenta o cancelar los Servicios en cualquier momento. Podemos suspender o cancelar tu cuenta o ciertas funciones si infringes estas condiciones de forma repetida o grave, si la ley lo exige o si tu conducta crea un riesgo o responsabilidad legal para nosotros, otros usuarios o terceros. Te informaremos cuando sea posible y permitido."
+          ]
+        },
+        {
+          "title": "4.3 Limitación de nuestra responsabilidad",
+          "body": [
+            "Respondemos sin limitación por daños a la vida, la integridad física o la salud, por dolo y culpa grave, conforme a la Ley alemana de Responsabilidad por Productos y en el ámbito de las garantías otorgadas. Por culpa leve solo respondemos por incumplimiento de obligaciones contractuales esenciales (obligaciones cardinales), limitada al daño previsible típico de este tipo de contrato.",
+            "No garantizamos que los Servicios estén siempre libres de errores, seguros o disponibles. Los usas bajo tu propio riesgo y dentro de los límites legales."
+          ]
+        },
+        {
+          "title": "4.4 Disputas, ley aplicable y jurisdicción",
+          "body": [
+            "Estas condiciones y cualquier reclamación entre tú y nosotros se rigen por el Derecho alemán, excluyendo la Convención de la ONU sobre Compraventa Internacional de Mercaderías. Las normas imperativas de protección al consumidor de tu país de residencia siguen siendo aplicables.",
+            "Para comerciantes y personas jurídicas de Derecho público, la jurisdicción es la del domicilio del Proveedor. Los consumidores pueden demandar en su foro legal.",
+            "La Comisión Europea ofrece una plataforma de resolución de litigios en línea: https://ec.europa.eu/consumers/odr/. No estamos obligados ni dispuestos a participar en procedimientos ante una junta arbitral de consumo."
+          ]
+        },
+        {
+          "title": "4.5 Mensajes directos y cifrado",
+          "body": [
+            "Los mensajes directos y los chats de crew se almacenan cifrados en nuestros servidores (cifrado en reposo). No hay cifrado de extremo a extremo. Podemos descifrar y consultar los mensajes en casos individuales justificados para cumplir obligaciones legales o hacer cumplir estas condiciones."
+          ]
+        },
+        {
+          "title": "4.6 Contenido generado por IA",
+          "body": [
+            "Algunas partes de nuestros Servicios — como sugerencias de challenges, traducciones, imágenes de portada, insignias o consejos de coaching — se crean total o parcialmente mediante inteligencia artificial. Dicho contenido puede contener errores, ser incompleto o inadecuado y no sustituye el asesoramiento profesional, médico o jurídico."
+          ]
+        },
+        {
+          "title": "4.7 Disposiciones varias",
+          "body": [
+            "Si alguna disposición de estas condiciones es nula o inaplicable, las demás conservan su validez. Podemos transferir nuestros derechos y obligaciones a un tercero en el marco de una fusión, adquisición o venta de la empresa; tú solo puedes transferirlos con nuestro consentimiento por escrito.",
+            "El hecho de no exigir el cumplimiento de una disposición no implica renuncia a hacerlo en el futuro."
+          ]
+        },
+        {
+          "title": "5. Contacto",
+          "body": [
+            "Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Alemania. Correo: hallo@komma.app"
           ]
         }
       ],
-      "contact": "Para preguntas sobre estos términos usa los datos de contacto del {{imprint}}."
+      "authoritative": "La versión alemana de estas condiciones es la jurídicamente vinculante. Esta traducción se ofrece únicamente como cortesía.",
+      "contact": "Para preguntas sobre estas condiciones, utiliza los datos de contacto indicados en el {{imprint}}."
     },
     "impressum": {
       "title": "Aviso legal",
