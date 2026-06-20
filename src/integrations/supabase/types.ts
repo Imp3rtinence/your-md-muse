@@ -77,12 +77,15 @@ export type Database = {
           created_by_ai: boolean
           creator_id: string
           description: string | null
+          difficulty: string | null
           expires_at: string | null
+          hero_image_url: string | null
           id: string
           is_daily: boolean
           parent_challenge_id: string | null
           participant_count: number
           region: string | null
+          tags: string[]
           title: string
           visibility: Database["public"]["Enums"]["challenge_visibility"]
         }
@@ -92,12 +95,15 @@ export type Database = {
           created_by_ai?: boolean
           creator_id: string
           description?: string | null
+          difficulty?: string | null
           expires_at?: string | null
+          hero_image_url?: string | null
           id?: string
           is_daily?: boolean
           parent_challenge_id?: string | null
           participant_count?: number
           region?: string | null
+          tags?: string[]
           title: string
           visibility?: Database["public"]["Enums"]["challenge_visibility"]
         }
@@ -107,12 +113,15 @@ export type Database = {
           created_by_ai?: boolean
           creator_id?: string
           description?: string | null
+          difficulty?: string | null
           expires_at?: string | null
+          hero_image_url?: string | null
           id?: string
           is_daily?: boolean
           parent_challenge_id?: string | null
           participant_count?: number
           region?: string | null
+          tags?: string[]
           title?: string
           visibility?: Database["public"]["Enums"]["challenge_visibility"]
         }
