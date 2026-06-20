@@ -13,6 +13,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
+import { Route as AppOnboardingRouteImport } from './routes/_app.onboarding'
 import { Route as AppLeagueRouteImport } from './routes/_app.league'
 import { Route as AppHomeRouteImport } from './routes/_app.home'
 import { Route as AppGroupsRouteImport } from './routes/_app.groups'
@@ -42,6 +43,11 @@ const IndexRoute = IndexRouteImport.update({
 const AppProfileRoute = AppProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOnboardingRoute = AppOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
   getParentRoute: () => AppRoute,
 } as any)
 const AppLeagueRoute = AppLeagueRouteImport.update({
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/groups': typeof AppGroupsRouteWithChildren
   '/home': typeof AppHomeRoute
   '/league': typeof AppLeagueRoute
+  '/onboarding': typeof AppOnboardingRoute
   '/profile': typeof AppProfileRoute
   '/challenge/$id': typeof AppChallengeIdRoute
   '/chat/$userId': typeof AppChatUserIdRoute
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/create': typeof AppCreateRoute
   '/home': typeof AppHomeRoute
   '/league': typeof AppLeagueRoute
+  '/onboarding': typeof AppOnboardingRoute
   '/profile': typeof AppProfileRoute
   '/challenge/$id': typeof AppChallengeIdRoute
   '/chat/$userId': typeof AppChatUserIdRoute
@@ -142,6 +150,7 @@ export interface FileRoutesById {
   '/_app/groups': typeof AppGroupsRouteWithChildren
   '/_app/home': typeof AppHomeRoute
   '/_app/league': typeof AppLeagueRoute
+  '/_app/onboarding': typeof AppOnboardingRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/challenge/$id': typeof AppChallengeIdRoute
   '/_app/chat/$userId': typeof AppChatUserIdRoute
@@ -160,6 +169,7 @@ export interface FileRouteTypes {
     | '/groups'
     | '/home'
     | '/league'
+    | '/onboarding'
     | '/profile'
     | '/challenge/$id'
     | '/chat/$userId'
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/create'
     | '/home'
     | '/league'
+    | '/onboarding'
     | '/profile'
     | '/challenge/$id'
     | '/chat/$userId'
@@ -192,6 +203,7 @@ export interface FileRouteTypes {
     | '/_app/groups'
     | '/_app/home'
     | '/_app/league'
+    | '/_app/onboarding'
     | '/_app/profile'
     | '/_app/challenge/$id'
     | '/_app/chat/$userId'
@@ -234,6 +246,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/onboarding': {
+      id: '/_app/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof AppOnboardingRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/league': {
@@ -337,6 +356,7 @@ interface AppRouteChildren {
   AppGroupsRoute: typeof AppGroupsRouteWithChildren
   AppHomeRoute: typeof AppHomeRoute
   AppLeagueRoute: typeof AppLeagueRoute
+  AppOnboardingRoute: typeof AppOnboardingRoute
   AppProfileRoute: typeof AppProfileRoute
   AppChallengeIdRoute: typeof AppChallengeIdRoute
   AppChatUserIdRoute: typeof AppChatUserIdRoute
@@ -350,6 +370,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppGroupsRoute: AppGroupsRouteWithChildren,
   AppHomeRoute: AppHomeRoute,
   AppLeagueRoute: AppLeagueRoute,
+  AppOnboardingRoute: AppOnboardingRoute,
   AppProfileRoute: AppProfileRoute,
   AppChallengeIdRoute: AppChallengeIdRoute,
   AppChatUserIdRoute: AppChatUserIdRoute,

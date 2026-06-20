@@ -9,9 +9,15 @@ export const Route = createFileRoute("/_app")({
 });
 
 function AppShell() {
-  const { session, loading } = useAuth();
+  const { session, profile, loading } = useAuth();
   const nav = useNavigate();
+  const path = useRouterState({ select: (s) => s.location.pathname });
   useEffect(() => { if (!loading && !session) nav({ to: "/auth" }); }, [loading, session, nav]);
+  useEffect(() => {
+    if (!loading && session && profile && !profile.onboarded_at && path !== "/onboarding") {
+      nav({ to: "/onboarding" });
+    }
+  }, [loading, session, profile, path, nav]);
 
   if (loading || !session) {
     return <div className="flex min-h-screen items-center justify-center bg-background text-muted-foreground">…</div>;
