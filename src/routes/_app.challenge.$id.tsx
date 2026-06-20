@@ -368,6 +368,16 @@ function ChallengeDetail() {
   );
 }
 
+function HeroImage({ path }: { path?: string | null }) {
+  const url = useProofUrl(path);
+  if (!url) return null;
+  return (
+    <div className="mt-4 overflow-hidden rounded-2xl border border-border bg-surface-2">
+      <img src={url} alt="" className="aspect-[16/10] w-full object-cover" />
+    </div>
+  );
+}
+
 function ChainDot({ username, current, to }: { username?: string; current?: boolean; to?: string }) {
   const dot = (
     <div className={"flex size-9 items-center justify-center rounded-full text-[10px] font-semibold " +
