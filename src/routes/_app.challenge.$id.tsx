@@ -21,6 +21,7 @@ import { Languages } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sparkles } from "lucide-react";
 import { similarChallenges } from "@/lib/ai/embeddings.functions";
+import { AdSlot, AD_SLOTS } from "@/components/AdSlot";
 
 function ProofMedia({ path, type, username }: { path: string; type: string; username?: string }) {
   const url = useProofUrl(path);
@@ -454,6 +455,8 @@ function ChallengeDetail() {
 
         {/* Comments */}
         <Comments id={id} comments={comments ?? []} />
+
+        <AdSlot slot={AD_SLOTS.challenge} variant="banner" className="mt-8" />
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/auth";
 import { useAvatarUrl } from "@/lib/avatar-url";
 import { toast } from "sonner";
 import { MessageCircle, Search, UserPlus, Check, X, Loader2 } from "lucide-react";
+import { AdSlot, AD_SLOTS } from "@/components/AdSlot";
 
 export const Route = createFileRoute("/_app/chats")({
   head: () => ({ meta: [{ title: "Chats – Komma" }] }),
@@ -158,7 +159,16 @@ function ChatsTab({ threads, loading, onPickFriend }: { threads: Thread[]; loadi
   }
   return (
     <ul className="mt-4 space-y-1.5">
-      {threads.map((t) => <ThreadRow key={t.other_id} t={t} />)}
+      {threads.map((t, i) => (
+        <>
+          <ThreadRow key={t.other_id} t={t} />
+          {(i + 1) % 10 === 0 && i < threads.length - 1 && (
+            <li key={`ad-${i}`} className="list-none">
+              <AdSlot slot={AD_SLOTS.chats} variant="inline" />
+            </li>
+          )}
+        </>
+      ))}
     </ul>
   );
 }
