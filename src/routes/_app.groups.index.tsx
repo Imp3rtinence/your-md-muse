@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { Plus, Users, ChevronRight, X, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/_app/groups/")({
-  head: () => ({ meta: [{ title: "Gruppen – JoinUs" }] }),
+  head: () => ({ meta: [{ title: "Gruppen – Komma" }] }),
   component: Groups,
 });
 

@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { MessageCircle, Search, UserPlus, Check, X, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/_app/chats")({
-  head: () => ({ meta: [{ title: "Chats – JoinUs" }] }),
+  head: () => ({ meta: [{ title: "Chats – Komma" }] }),
   component: Chats,
 });
 

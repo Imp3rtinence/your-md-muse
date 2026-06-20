@@ -32,7 +32,7 @@ function AvatarBubble({ path, username, ring }: { path?: string | null; username
 }
 
 export const Route = createFileRoute("/_app/challenge/$id")({
-  head: () => ({ meta: [{ title: "Challenge – JoinUs" }] }),
+  head: () => ({ meta: [{ title: "Challenge – Komma" }] }),
   component: ChallengeDetail,
 });
 

@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { Users, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/_app/join/$token")({
-  head: () => ({ meta: [{ title: "Gruppe beitreten – JoinUs" }] }),
+  head: () => ({ meta: [{ title: "Gruppe beitreten – Komma" }] }),
   component: JoinPage,
 });
 

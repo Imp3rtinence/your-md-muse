@@ -9,7 +9,7 @@ import { ChevronLeft, ArrowUp, ArrowDown, Minus, Trophy, Sparkles } from "lucide
 import { LeagueBadge } from "@/components/LeagueBadge";
 
 export const Route = createFileRoute("/_app/league")({
-  head: () => ({ meta: [{ title: "Liga – JoinUs" }] }),
+  head: () => ({ meta: [{ title: "Liga – Komma" }] }),
   component: LeaguePage,
 });
 

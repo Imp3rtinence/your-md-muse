@@ -4,7 +4,7 @@ import { Zap, Users, Link2, ArrowRight, Flag, Camera, Send } from "lucide-react"
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "JoinUs – Machen statt scrollen" },
+      { title: "Komma – Machen statt scrollen" },
       { name: "description", content: "Herausforderungen annehmen, Beweise liefern und die Kette am Leben halten." },
     ],
   }),
@@ -27,7 +27,7 @@ function Landing() {
         {/* Header */}
         <header className="flex items-center justify-between">
           <div className="font-display text-2xl font-bold tracking-tighter">
-            Join<span className="text-primary">Us</span>
+            Komma<span className="text-primary">,</span>
           </div>
           <Link to="/auth" className="tap text-sm font-medium text-foreground/70 transition-opacity hover:text-foreground">
             Anmelden

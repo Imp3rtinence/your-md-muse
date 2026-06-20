@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/_app/groups/$id")({
-  head: () => ({ meta: [{ title: `Gruppe – JoinUs` }] }),
+  head: () => ({ meta: [{ title: `Gruppe – Komma` }] }),
   component: GroupDetail,
   errorComponent: ({ error }) => (
     <div className="px-5 py-10 text-center text-sm text-muted-foreground">
@@ -411,9 +411,9 @@ function LinkAndContacts({ ensureLink, link, groupName, genBusy }: { ensureLink:
 
   const shareLink = async () => {
     const url = await ensureLink(); if (!url) return;
-    const text = `Komm in unsere JoinUs-Gruppe „${groupName}":`;
+    const text = `Komm in unsere Komma-Gruppe „${groupName}":`;
     if (navigator.share) {
-      try { await navigator.share({ title: `JoinUs – ${groupName}`, text, url }); } catch {}
+      try { await navigator.share({ title: `Komma – ${groupName}`, text, url }); } catch {}
     } else {
       await navigator.clipboard.writeText(`${text} ${url}`);
       toast.success("Einladung kopiert");
@@ -430,7 +430,7 @@ function LinkAndContacts({ ensureLink, link, groupName, genBusy }: { ensureLink:
       for (const c of contacts) {
         const phone = c.tel?.[0]?.replace(/\s+/g, "");
         const firstName = (c.name?.[0] ?? "").split(" ")[0] || "";
-        const body = `Hey${firstName ? " " + firstName : ""}! Komm in unsere JoinUs-Gruppe „${groupName}": ${url}`;
+        const body = `Hey${firstName ? " " + firstName : ""}! Komm in unsere Komma-Gruppe „${groupName}": ${url}`;
         if (phone) {
           const sms = `sms:${phone}${/iPhone|iPad|iPod/i.test(navigator.userAgent) ? "&" : "?"}body=${encodeURIComponent(body)}`;
           window.location.href = sms;

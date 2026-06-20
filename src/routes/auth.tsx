@@ -9,8 +9,8 @@ import { Loader2 } from "lucide-react";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Anmelden – JoinUs" },
-      { name: "description", content: "Melde dich an oder erstelle dein JoinUs Profil." },
+      { title: "Anmelden – Komma" },
+      { name: "description", content: "Melde dich an oder erstelle dein Komma Profil." },
     ],
   }),
   component: AuthPage,
@@ -59,7 +59,7 @@ function AuthPage() {
       <div className="pointer-events-none absolute -left-20 top-10 size-72 rounded-full blur-3xl opacity-50" style={{ background: "var(--primary)" }} />
       <div className="relative mx-auto max-w-md">
         <Link to="/" className="font-display text-xl font-bold">
-          Join<span className="text-primary">Us</span>
+          Komma<span className="text-primary">,</span>
         </Link>
 
         <h1 className="mt-10 font-display text-3xl font-bold tracking-tight">
