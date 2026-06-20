@@ -82,6 +82,13 @@ function Home() {
 
       <WeeklyRecap />
 
+      {challenges.length > 0 && maxDist > 0 && (
+        <div className="mt-5 flex items-center gap-1.5 text-xs text-muted-foreground">
+          <MapPin className="size-3.5" />
+          <span>Die {challenges.length} nächsten Challenges um dich – Umkreis ~{Math.ceil(maxDist)} km</span>
+        </div>
+      )}
+
       {isLoading ? (
         <div className="mt-8 h-56 animate-pulse rounded-3xl bg-surface" />
       ) : daily ? (
