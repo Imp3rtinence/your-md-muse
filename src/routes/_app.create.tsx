@@ -92,6 +92,8 @@ function Create() {
       askHero({ data: { challenge_id: data.id, title: title.trim(), description: description.trim() || null } })
         .catch((e) => console.warn("Hero image failed", e));
     }
+    // Embedding für Empfehlungen
+    askEmbed({ data: { challenge_id: data.id } }).catch(() => {});
     setBusy(false);
     toast.success("Challenge ist live ⚡");
     nav({ to: "/challenge/$id", params: { id: data.id } });
