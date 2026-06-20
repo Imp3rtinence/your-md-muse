@@ -8,12 +8,13 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "@/lib/auth";
 import { Toaster } from "@/components/ui/sonner";
-import "@/lib/i18n";
+import { RTL_LOCALES, type LocaleCode } from "@/lib/i18n";
 
 function NotFoundComponent() {
   return (
@@ -109,6 +110,22 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    const applyLanguageAttrs = (lng: string) => {
+      document.documentElement.lang = lng;
+      document.documentElement.dir = RTL_LOCALES.includes(lng as LocaleCode) ? "rtl" : "ltr";
+    };
+
+    applyLanguageAttrs(i18n.language || "de");
+    i18n.on("languageChanged", applyLanguageAttrs);
+
+    return () => {
+      i18n.off("languageChanged", applyLanguageAttrs);
+    };
+  }, [i18n]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
