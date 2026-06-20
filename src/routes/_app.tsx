@@ -31,7 +31,7 @@ function BottomNav() {
   const path = useRouterState({ select: (s) => s.location.pathname });
   const items: Array<{ to: "/home" | "/groups/" | "/create" | "/chats" | "/profile"; icon: typeof Home; label: string; primary?: boolean }> = [
     { to: "/home", icon: Home, label: "Home" },
-    { to: "/groups/", icon: Users, label: "Gruppen" },
+    { to: "/groups/", icon: Users, label: "Crews" },
     { to: "/create", icon: Plus, label: "Neu", primary: true },
     { to: "/chats", icon: MessageCircle, label: "Chats" },
     { to: "/profile", icon: User, label: "Profil" },
