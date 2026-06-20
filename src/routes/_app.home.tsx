@@ -160,7 +160,10 @@ function ChallengeCard({ c }: { c: Challenge }) {
       <div className="text-2xl">{cat.icon}</div>
       <div className="mt-2 line-clamp-2 font-display text-base font-semibold">{c.title}</div>
       <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-        <span>@{c.creator?.username ?? "…"}</span>
+        <span className="flex items-center gap-1">
+          @{c.creator?.username ?? "…"}
+          {c.creator?.is_ai_bot && <BotBadge size="xs" />}
+        </span>
         <span className="flex items-center gap-1"><UsersIcon className="size-3" />{c.participant_count}</span>
       </div>
     </Link>
