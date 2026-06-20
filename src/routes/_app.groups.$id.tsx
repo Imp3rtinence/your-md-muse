@@ -12,16 +12,16 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/_app/groups/$id")({
-  head: () => ({ meta: [{ title: `Gruppe – Komma` }] }),
+  head: () => ({ meta: [{ title: `Crew – Komma` }] }),
   component: GroupDetail,
   errorComponent: ({ error }) => (
     <div className="px-5 py-10 text-center text-sm text-muted-foreground">
-      Konnte Gruppe nicht laden.<br />{error.message}
+      Konnte Crew nicht laden.<br />{error.message}
     </div>
   ),
   notFoundComponent: () => (
     <div className="px-5 py-10 text-center text-sm text-muted-foreground">
-      Diese Gruppe existiert nicht (mehr).
+      Diese Crew existiert nicht (mehr).
       <div className="mt-4"><Link to="/groups" className="text-primary">Zurück zu Gruppen</Link></div>
     </div>
   ),
@@ -86,10 +86,10 @@ function GroupDetail() {
 
   const leave = async () => {
     if (!user) return;
-    if (!confirm("Gruppe wirklich verlassen?")) return;
+    if (!confirm("Crew wirklich verlassen?")) return;
     const { error } = await (supabase as any).from("group_members").delete().eq("group_id", id).eq("user_id", user.id);
     if (error) return toast.error(error.message);
-    toast.success("Gruppe verlassen");
+    toast.success("Crew verlassen");
     qc.invalidateQueries({ queryKey: ["groups"] });
     nav({ to: "/groups" });
   };
@@ -411,7 +411,7 @@ function LinkAndContacts({ ensureLink, link, groupName, genBusy }: { ensureLink:
 
   const shareLink = async () => {
     const url = await ensureLink(); if (!url) return;
-    const text = `Komm in unsere Komma-Gruppe „${groupName}":`;
+    const text = `Komm in unsere Komma-Crew „${groupName}":`;
     if (navigator.share) {
       try { await navigator.share({ title: `Komma – ${groupName}`, text, url }); } catch {}
     } else {
@@ -430,7 +430,7 @@ function LinkAndContacts({ ensureLink, link, groupName, genBusy }: { ensureLink:
       for (const c of contacts) {
         const phone = c.tel?.[0]?.replace(/\s+/g, "");
         const firstName = (c.name?.[0] ?? "").split(" ")[0] || "";
-        const body = `Hey${firstName ? " " + firstName : ""}! Komm in unsere Komma-Gruppe „${groupName}": ${url}`;
+        const body = `Hey${firstName ? " " + firstName : ""}! Komm in unsere Komma-Crew „${groupName}": ${url}`;
         if (phone) {
           const sms = `sms:${phone}${/iPhone|iPad|iPod/i.test(navigator.userAgent) ? "&" : "?"}body=${encodeURIComponent(body)}`;
           window.location.href = sms;
