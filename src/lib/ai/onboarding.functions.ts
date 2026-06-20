@@ -37,10 +37,18 @@ Verfügbare Kategorien: creative, active, friendly, skill, learning.
 Crew-Arten: friends, school, sport, neighborhood, other.
 Antwort NUR als JSON nach dem geforderten Schema.`;
 
-    const schemaJson = JSON.stringify(z.toJSONSchema(Output));
     const { text } = await generateText({
       model: gateway("google/gemini-3-flash-preview"),
-      prompt: `${prompt}\n\nJSON-Schema:\n${schemaJson}\n\nNur valides JSON ausgeben.`,
+      prompt: `${prompt}\n\nAntworte ausschliesslich mit einem JSON-Objekt in dieser Form (keine Markdown-Codeblöcke):
+{
+  "summary": "...",
+  "top_categories": ["creative" | "active" | "friendly" | "skill" | "learning", ...],
+  "suggested_challenges": [
+    { "title": "...", "description": "...", "category": "creative|active|friendly|skill|learning", "duration_minutes": 15 },
+    ... (genau 3)
+  ],
+  "suggested_crew_kinds": ["friends"|"school"|"sport"|"neighborhood"|"other", ...]
+}`,
     });
 
     const cleaned = text.replace(/^```json\s*|\s*```$/g, "").trim();
