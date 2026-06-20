@@ -97,7 +97,6 @@ function ForYouSection({ ai }: { ai: any }) {
             <Link
               key={i}
               to="/create"
-              search={{ title: s.title, description: s.description, category: s.category } as any}
               className="block w-64 shrink-0 rounded-2xl border border-primary/30 bg-primary/5 p-4"
             >
               <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary">
