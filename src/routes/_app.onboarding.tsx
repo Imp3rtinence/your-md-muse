@@ -40,13 +40,32 @@ function Onboarding() {
   const { user, refreshProfile } = useAuth();
   const analyze = useServerFn(analyzeOnboarding);
   const embedMe = useServerFn(embedMyProfile);
+  const askDynamic = useServerFn(dynamicOnboardingQuestion);
   const [step, setStep] = useState(0);
   const [interests, setInterests] = useState<string[]>([]);
   const [ctx, setCtx] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [dynQ, setDynQ] = useState<null | { question: string; options: { id: string; label: string; emoji: string }[] }>(null);
+  const [dynBusy, setDynBusy] = useState(false);
+  const [dynAnswer, setDynAnswer] = useState<{ question: string; answer: string } | null>(null);
 
   const toggle = (id: string) =>
     setInterests((s) => (s.includes(id) ? s.filter((x) => x !== id) : s.length >= 4 ? s : [...s, id]));
+
+  const goToDynamic = async () => {
+    setDynBusy(true);
+    setStep(2);
+    try {
+      const q = await askDynamic({ data: { interests } });
+      setDynQ(q);
+    } catch {
+      setDynQ(null);
+      setStep(3); // skip wenn KI offline
+    } finally {
+      setDynBusy(false);
+    }
+  };
+
 
   const finish = async () => {
     if (!user) return;
