@@ -51,24 +51,68 @@ export type Database = {
       }
       badges: {
         Row: {
+          ai_reason: string | null
+          created_at: string
           description: string | null
           icon: string | null
+          is_personal: boolean
           name: string
+          owner_user_id: string | null
           slug: string
         }
         Insert: {
+          ai_reason?: string | null
+          created_at?: string
           description?: string | null
           icon?: string | null
+          is_personal?: boolean
           name: string
+          owner_user_id?: string | null
           slug: string
         }
         Update: {
+          ai_reason?: string | null
+          created_at?: string
           description?: string | null
           icon?: string | null
+          is_personal?: boolean
           name?: string
+          owner_user_id?: string | null
           slug?: string
         }
         Relationships: []
+      }
+      challenge_translations: {
+        Row: {
+          challenge_id: string
+          created_at: string
+          description: string
+          lang: string
+          title: string
+        }
+        Insert: {
+          challenge_id: string
+          created_at?: string
+          description: string
+          lang: string
+          title: string
+        }
+        Update: {
+          challenge_id?: string
+          created_at?: string
+          description?: string
+          lang?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "challenge_translations_challenge_id_fkey"
+            columns: ["challenge_id"]
+            isOneToOne: false
+            referencedRelation: "challenges"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       challenges: {
         Row: {

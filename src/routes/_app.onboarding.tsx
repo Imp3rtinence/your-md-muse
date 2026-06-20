@@ -7,6 +7,7 @@ import { ArrowRight, Check, Loader2, Sparkles } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { analyzeOnboarding } from "@/lib/ai/onboarding.functions";
 import { embedMyProfile } from "@/lib/ai/embeddings.functions";
+import { dynamicOnboardingQuestion } from "@/lib/ai/onboarding-quiz.functions";
 
 export const Route = createFileRoute("/_app/onboarding")({
   head: () => ({ meta: [{ title: "Willkommen – Komma" }] }),
@@ -39,13 +40,32 @@ function Onboarding() {
   const { user, refreshProfile } = useAuth();
   const analyze = useServerFn(analyzeOnboarding);
   const embedMe = useServerFn(embedMyProfile);
+  const askDynamic = useServerFn(dynamicOnboardingQuestion);
   const [step, setStep] = useState(0);
   const [interests, setInterests] = useState<string[]>([]);
   const [ctx, setCtx] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [dynQ, setDynQ] = useState<null | { question: string; options: { id: string; label: string; emoji: string }[] }>(null);
+  const [dynBusy, setDynBusy] = useState(false);
+  const [dynAnswer, setDynAnswer] = useState<{ question: string; answer: string } | null>(null);
 
   const toggle = (id: string) =>
     setInterests((s) => (s.includes(id) ? s.filter((x) => x !== id) : s.length >= 4 ? s : [...s, id]));
+
+  const goToDynamic = async () => {
+    setDynBusy(true);
+    setStep(2);
+    try {
+      const q = await askDynamic({ data: { interests } });
+      setDynQ(q);
+    } catch {
+      setDynQ(null);
+      setStep(3); // skip wenn KI offline
+    } finally {
+      setDynBusy(false);
+    }
+  };
+
 
   const finish = async () => {
     if (!user) return;
@@ -57,7 +77,12 @@ function Onboarding() {
         .eq("id", user.id);
       if (error) throw error;
       // KI-Analyse im Hintergrund → danach Profil-Embedding
-      analyze({ data: { interests, context: ctx } })
+      analyze({
+        data: {
+          interests,
+          context: ctx + (dynAnswer ? ` | ${dynAnswer.question} → ${dynAnswer.answer}` : ""),
+        },
+      })
         .then(() => embedMe())
         .catch((e) => console.warn("AI analyze failed", e));
       await refreshProfile();
@@ -75,10 +100,11 @@ function Onboarding() {
       <div className="relative mx-auto flex max-w-md flex-col gap-6">
         {/* Progress */}
         <div className="flex gap-1.5">
-          {[0, 1, 2].map((i) => (
+          {[0, 1, 2, 3].map((i) => (
             <div key={i} className={`h-1 flex-1 rounded-full ${i <= step ? "bg-primary" : "bg-surface-2"}`} />
           ))}
         </div>
+
 
         {step === 0 && (
           <section className="space-y-4">
@@ -126,7 +152,7 @@ function Onboarding() {
             </div>
             <div className="flex gap-2">
               <button onClick={() => setStep(0)} className="tap flex-1 rounded-2xl bg-surface px-5 py-3.5 font-display font-semibold">Zurück</button>
-              <button onClick={() => setStep(2)} disabled={interests.length === 0}
+              <button onClick={goToDynamic} disabled={interests.length === 0}
                 className="tap flex flex-[2] items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3.5 font-display font-bold text-primary-foreground glow-primary disabled:opacity-50">
                 Weiter <ArrowRight className="size-4" />
               </button>
@@ -135,6 +161,47 @@ function Onboarding() {
         )}
 
         {step === 2 && (
+          <section className="space-y-4">
+            <h1 className="font-display text-2xl font-bold leading-tight">
+              {dynQ?.question ?? "Eine kurze Frage noch…"}
+            </h1>
+            <p className="flex items-center gap-1 text-xs text-muted-foreground">
+              <Sparkles className="size-3 text-accent" /> Personalisiert für deine Auswahl
+            </p>
+            {dynBusy && !dynQ && (
+              <div className="flex items-center gap-2 rounded-2xl border border-border bg-surface p-4 text-sm text-muted-foreground">
+                <Loader2 className="size-4 animate-spin" /> KI denkt nach…
+              </div>
+            )}
+            {dynQ && (
+              <div className="space-y-2">
+                {dynQ.options.map((o) => {
+                  const on = dynAnswer?.answer === o.label;
+                  return (
+                    <button
+                      key={o.id}
+                      onClick={() => setDynAnswer({ question: dynQ.question, answer: o.label })}
+                      className={`tap flex w-full items-center gap-3 rounded-2xl border p-4 text-left transition ${on ? "border-primary bg-primary/10" : "border-border bg-surface"}`}
+                    >
+                      <span className="grid size-10 place-items-center rounded-xl bg-surface-2 text-xl">{o.emoji}</span>
+                      <span className="flex-1 font-display text-sm font-semibold">{o.label}</span>
+                      {on && <Check className="size-4 text-primary" />}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            <div className="flex gap-2">
+              <button onClick={() => setStep(1)} className="tap flex-1 rounded-2xl bg-surface px-5 py-3.5 font-display font-semibold">Zurück</button>
+              <button onClick={() => setStep(3)} disabled={dynBusy}
+                className="tap flex flex-[2] items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3.5 font-display font-bold text-primary-foreground glow-primary disabled:opacity-50">
+                {dynAnswer ? "Weiter" : "Überspringen"} <ArrowRight className="size-4" />
+              </button>
+            </div>
+          </section>
+        )}
+
+        {step === 3 && (
           <section className="space-y-4">
             <h1 className="font-display text-2xl font-bold leading-tight">Mit wem willst du machen?</h1>
             <p className="text-sm text-muted-foreground">Du kannst später jederzeit weitere Crews gründen oder beitreten.</p>
@@ -152,7 +219,7 @@ function Onboarding() {
               })}
             </div>
             <div className="flex gap-2">
-              <button onClick={() => setStep(1)} className="tap flex-1 rounded-2xl bg-surface px-5 py-3.5 font-display font-semibold">Zurück</button>
+              <button onClick={() => setStep(2)} className="tap flex-1 rounded-2xl bg-surface px-5 py-3.5 font-display font-semibold">Zurück</button>
               <button onClick={finish} disabled={busy || !ctx}
                 className="tap flex flex-[2] items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3.5 font-display font-bold text-primary-foreground glow-primary disabled:opacity-60">
                 {busy ? <Loader2 className="size-5 animate-spin" /> : <>Fertig <ArrowRight className="size-4" /></>}
@@ -163,4 +230,5 @@ function Onboarding() {
       </div>
     </div>
   );
+
 }

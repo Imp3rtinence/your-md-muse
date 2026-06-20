@@ -16,6 +16,9 @@ import { BotBadge } from "@/components/BotBadge";
 import { useServerFn } from "@tanstack/react-start";
 import { botCheerSubmission } from "@/lib/ai/bot-cheer.functions";
 import { explainChallenge } from "@/lib/ai/explain.functions";
+import { translateChallenge, SUPPORTED_LANGS, type Lang } from "@/lib/ai/translate.functions";
+import { Languages } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sparkles } from "lucide-react";
 import { similarChallenges } from "@/lib/ai/embeddings.functions";
 
@@ -57,8 +60,11 @@ function ChallengeDetail() {
   const [deleting, setDeleting] = useState(false);
   const cheer = useServerFn(botCheerSubmission);
   const askExplain = useServerFn(explainChallenge);
+  const translate = useServerFn(translateChallenge);
   const [explanation, setExplanation] = useState<string | null>(null);
   const [explainBusy, setExplainBusy] = useState(false);
+  const [translation, setTranslation] = useState<{ title: string; description: string; lang: Lang } | null>(null);
+  const [transBusy, setTransBusy] = useState<Lang | null>(null);
 
   const { data: c } = useQuery({
     queryKey: ["challenge", id],
@@ -245,13 +251,23 @@ function ChallengeDetail() {
             {c.creator?.is_ai_bot && <BotBadge size="xs" />}
           </span>
         </div>
-        <h1 className="mt-3 font-display text-3xl font-bold leading-tight">{c.title}</h1>
+        <h1 className="mt-3 font-display text-3xl font-bold leading-tight">{translation?.title ?? c.title}</h1>
         {c.difficulty && (
           <span className="mt-2 inline-block rounded-full bg-surface-2 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
             {c.difficulty}
           </span>
         )}
-        {c.description && <p className="mt-2 text-sm text-muted-foreground">{c.description}</p>}
+        {(translation?.description ?? c.description) && (
+          <p className="mt-2 text-sm text-muted-foreground">{translation?.description ?? c.description}</p>
+        )}
+        {translation && (
+          <button
+            onClick={() => setTranslation(null)}
+            className="mt-1 text-[11px] text-primary underline-offset-2 hover:underline"
+          >
+            Original anzeigen
+          </button>
+        )}
         {Array.isArray(c.tags) && c.tags.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-1.5">
             {c.tags.map((t: string) => (
@@ -261,10 +277,10 @@ function ChallengeDetail() {
         )}
         <HeroImage path={c.hero_image_url} />
 
-        {/* Erklär's mir */}
-        <div className="mt-3">
+        {/* KI-Tools: Erklär's mir + Übersetzen */}
+        <div className="mt-3 flex flex-wrap items-center gap-2">
           {explanation ? (
-            <div className="rounded-2xl border border-accent/30 bg-accent/5 px-3 py-2 text-sm text-foreground">
+            <div className="w-full rounded-2xl border border-accent/30 bg-accent/5 px-3 py-2 text-sm text-foreground">
               <div className="mb-1 flex items-center gap-1 text-[10px] uppercase tracking-wider text-accent"><Sparkles className="size-3" /> Erklärung</div>
               {explanation}
             </div>
@@ -286,7 +302,38 @@ function ChallengeDetail() {
               Erklär's mir
             </button>
           )}
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                disabled={!!transBusy}
+                className="tap inline-flex items-center gap-1 rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground disabled:opacity-50"
+              >
+                {transBusy ? <Loader2 className="size-3 animate-spin" /> : <Languages className="size-3 text-primary" />}
+                Übersetzen
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              {SUPPORTED_LANGS.map((l) => (
+                <DropdownMenuItem
+                  key={l.code}
+                  onClick={async () => {
+                    setTransBusy(l.code);
+                    try {
+                      const r = await translate({ data: { challenge_id: id, lang: l.code } });
+                      setTranslation({ ...r, lang: l.code });
+                    } catch { toast.error("Übersetzung gerade nicht möglich."); }
+                    finally { setTransBusy(null); }
+                  }}
+                >
+                  <span className="mr-2">{l.flag}</span> {l.label}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
+
 
         {c.creator?.is_ai_bot && (
           <div className="mt-3 flex items-start gap-2 rounded-2xl border border-accent/30 bg-accent/5 px-3 py-2 text-xs text-muted-foreground">

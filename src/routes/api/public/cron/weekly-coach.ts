@@ -83,9 +83,77 @@ Interessen: ${(p.interests ?? []).join(", ") || "(unbekannt)"}.
               stats: { aura: stats.aura, events: stats.events, league_tier: p.league_tier },
             });
             count += 1;
+
+            // G7: seltenes persönliches Badge versuchen
+            if (stats.events >= 3) {
+              try {
+                await maybeAwardPersonalBadge(supabase, gateway, p);
+              } catch {
+                // optional
+              }
+            }
           } catch {
             // skip einzelne Fehler
           }
+        }
+
+        async function maybeAwardPersonalBadge(
+          db: typeof supabase,
+          gw: ReturnType<typeof createLovableAiGatewayProvider>,
+          person: any,
+        ) {
+          const monthAgo = new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString();
+          // schon ein personal badge diese Woche?
+          const { data: existing } = await db
+            .from("badges")
+            .select("slug")
+            .eq("is_personal", true)
+            .eq("owner_user_id", person.id)
+            .gte("created_at", weekAgo);
+          if ((existing ?? []).length > 0) return;
+
+          const { data: subs } = await db
+            .from("submissions")
+            .select("challenge_id, challenges(category, tags, difficulty)")
+            .eq("user_id", person.id)
+            .gte("created_at", monthAgo);
+          if (!subs || subs.length < 3) return;
+
+          const cats = subs.map((s: any) => s.challenges?.category).filter(Boolean);
+          const tags = subs.flatMap((s: any) => s.challenges?.tags ?? []);
+          const diffs = subs.map((s: any) => s.challenges?.difficulty).filter(Boolean);
+
+          const { output: b } = await generateText({
+            model: gw("google/gemini-3-flash-preview"),
+            output: Output.object({
+              schema: z.object({
+                name: z.string(),
+                description: z.string(),
+                icon: z.string(),
+                reason: z.string(),
+              }),
+            }),
+            prompt: `Erfinde ein persönliches Badge für @${person.username}.
+Aktivität (30 Tage): ${subs.length} Beweise, Kategorien ${cats.join(", ")}, Tags ${tags.slice(0, 15).join(", ")}, Schwierigkeiten ${diffs.join(", ")}.
+Interessen: ${(person.interests ?? []).join(", ")}.
+
+- name: max 4 Wörter, deutsch, poetisch (kein Standard-Streak)
+- description: 1 Satz, was die Person besonders macht
+- icon: genau 1 Emoji
+- reason: 1 Satz, warum die KI das Badge erfunden hat`,
+          });
+
+          const slug = `personal-${person.id.slice(0, 8)}-${Date.now()}`;
+          await db.from("badges").insert({
+            slug,
+            name: b.name,
+            description: b.description,
+            icon: b.icon,
+            is_personal: true,
+            owner_user_id: person.id,
+            ai_reason: b.reason,
+          });
+          await db.from("user_badges").insert({ user_id: person.id, badge_slug: slug });
         }
 
         return Response.json({ recaps: count });
