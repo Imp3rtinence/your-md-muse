@@ -1,14 +1,35 @@
 {
-  "common": { "back": "Geri", "next": "İleri", "done": "Tamam", "skip": "Atla", "cancel": "İptal", "save": "Kaydet", "delete": "Sil", "loading": "Yükleniyor…", "retry": "Tekrar dene", "ok": "Tamam" },
-  "nav": { "home": "Anasayfa", "groups": "Ekipler", "create": "Oluştur", "chats": "Sohbetler", "profile": "Profil" },
+  "common": {
+    "back": "Geri",
+    "next": "İleri",
+    "done": "Tamam",
+    "skip": "Atla",
+    "cancel": "İptal",
+    "save": "Kaydet",
+    "delete": "Sil",
+    "loading": "Yükleniyor…",
+    "retry": "Tekrar dene",
+    "ok": "Tamam"
+  },
+  "nav": {
+    "home": "Anasayfa",
+    "groups": "Ekipler",
+    "create": "Oluştur",
+    "chats": "Sohbetler",
+    "profile": "Profil"
+  },
   "auth": {
     "title": "Komma'ya hoş geldin",
     "subtitle": "İzlemek yerine katıl.",
-    "email": "E-posta", "password": "Şifre",
-    "signin": "Giriş yap", "signup": "Kayıt ol",
-    "google": "Google ile devam et", "or": "veya",
+    "email": "E-posta",
+    "password": "Şifre",
+    "signin": "Giriş yap",
+    "signup": "Kayıt ol",
+    "google": "Google ile devam et",
+    "or": "veya",
     "legalHint": "Devam ederek {{terms}} kabul eder ve {{imprint}} bilgilerini tanırsın.",
-    "terms": "Kullanım Şartları", "imprint": "Künye"
+    "terms": "Kullanım Şartları",
+    "imprint": "Künye"
   },
   "onboarding": {
     "languageTitle": "Hangi dili konuşuyorsun?",
@@ -16,14 +37,193 @@
     "welcomeTitle": "<1>Komma</1>'ya hoş geldin,",
     "welcomeTitleLine2": "burada olmana sevindik.",
     "welcomeText": "Komma kaydırmaktan kısa bir mola — ve gerçekten bir şey yapman için küçük bir dürtü. Üç kısa soru, sonra içeridesin.",
-    "howItWorks": "Nasıl çalışır", "howItWorksDetail": "Görev başlat · kanıt paylaş · Aura topla",
+    "howItWorks": "Nasıl çalışır",
+    "howItWorksDetail": "Görev başlat · kanıt paylaş · Aura topla",
     "go": "Başla",
-    "interestsTitle": "Ne yapmak istersin?", "interestsSubtitle": "En fazla dört seç. Sana uygun görevler önereceğiz.",
-    "interests": { "bewegung": "Hareket", "kreativ": "Yaratıcılık", "lernen": "Öğrenmek", "sozial": "Sosyal", "natur": "Doğa", "mut": "Cesaret", "musik": "Müzik", "essen": "Yemek" },
-    "dynamicWaitTitle": "Bir kısa soru daha…", "dynamicHint": "Senin seçimlerine özel", "dynamicThinking": "Yapay zekâ düşünüyor…",
-    "contextTitle": "Kiminle başlamak istersin?", "contextSubtitle": "Daha sonra istediğin zaman yeni ekip kurabilir veya katılabilirsin.",
-    "contexts": { "friends": "Arkadaşlar", "school": "Okul", "sport": "Kulüp / spor", "neighborhood": "Mahalle", "solo": "Şimdilik yalnız" }
+    "interestsTitle": "Ne yapmak istersin?",
+    "interestsSubtitle": "En fazla dört seç. Sana uygun görevler önereceğiz.",
+    "interests": {
+      "bewegung": "Hareket",
+      "kreativ": "Yaratıcılık",
+      "lernen": "Öğrenmek",
+      "sozial": "Sosyal",
+      "natur": "Doğa",
+      "mut": "Cesaret",
+      "musik": "Müzik",
+      "essen": "Yemek"
+    },
+    "dynamicWaitTitle": "Bir kısa soru daha…",
+    "dynamicHint": "Senin seçimlerine özel",
+    "dynamicThinking": "Yapay zekâ düşünüyor…",
+    "contextTitle": "Kiminle başlamak istersin?",
+    "contextSubtitle": "Daha sonra istediğin zaman yeni ekip kurabilir veya katılabilirsin.",
+    "contexts": {
+      "friends": "Arkadaşlar",
+      "school": "Okul",
+      "sport": "Kulüp / spor",
+      "neighborhood": "Mahalle",
+      "solo": "Şimdilik yalnız"
+    }
   },
-  "profile": { "language": "Dil", "legal": "Yasal", "terms": "Kullanım Şartları", "imprint": "Künye", "logout": "Çıkış" },
-  "legal": { "termsTitle": "Kullanım Şartları", "imprintTitle": "Künye", "back": "Geri" }
+  "profile": {
+    "language": "Dil",
+    "legal": "Yasal",
+    "terms": "Kullanım Şartları",
+    "imprint": "Künye",
+    "logout": "Çıkış"
+  },
+  "legal": {
+    "back": "Geri",
+    "agb": {
+      "title": "Kullanım Koşulları",
+      "updated": "Haziran 2026 itibarıyla · \"Komma\" uygulaması için geçerlidir",
+      "authoritative": "Bu koşulların bağlayıcı sürümü Almancadır. Bu çeviri yalnızca bilgi amaçlıdır.",
+      "sections": [
+        {
+          "title": "1. Kapsam ve sağlayıcı",
+          "body": [
+            "Bu Kullanım Koşulları, Gotham Consulting GmbH (Rosenweg 4, 99820 Hörselberg-Hainich, Almanya) tarafından işletilen \"Komma\" uygulamasının kullanımı için geçerlidir. Kayıt olarak bu koşulları kabul etmiş sayılırsın."
+          ]
+        },
+        {
+          "title": "2. Hizmet tanımı",
+          "body": [
+            "Komma; kullanıcıların challenge oluşturup katıldığı, kanıt yüklediği ve crew kurduğu sosyal bir katılım platformudur. Bazı içerikler yapay zekâ tarafından üretilir ve bu şekilde işaretlenir."
+          ]
+        },
+        {
+          "title": "3. Kayıt ve yaş sınırı",
+          "body": [
+            "Kullanım için ücretsiz bir hesap gereklidir. 14 yaşından itibaren kullanılabilir. Reşit olmayanlar için veli onayı gereklidir."
+          ]
+        },
+        {
+          "title": "4. Kullanıcı içeriği ve haklar",
+          "body": [
+            "İçeriklerinin sahibi sen kalırsın ve sağlayıcıya uygulama içinde saklama ve gösterme için münhasır olmayan, dünya çapında, ücretsiz bir kullanım hakkı tanırsın. Üçüncü kişilerin haklarını ihlal etmeyeceğini beyan edersin."
+          ]
+        },
+        {
+          "title": "5. Davranış kuralları",
+          "body": [
+            "Aşağıdaki içeriklerin yüklenmesi yasaktır:"
+          ],
+          "list": [
+            "yürürlükteki yasalara aykırı içerikler,",
+            "üçüncü kişilerin haklarını ihlal eden içerikler,",
+            "şiddeti yücelten, ayrımcı, pornografik veya gençler için zararlı içerikler,",
+            "başkalarını taciz eden, tehdit eden veya suça teşvik eden içerikler,",
+            "zararlı yazılım içeren veya güvenliği tehlikeye atan içerikler."
+          ]
+        },
+        {
+          "title": "6. Direkt mesajlar ve şifreleme",
+          "body": [
+            "Direkt mesajlar sunucuda şifreli olarak saklanır (at rest). Uçtan uca şifreleme yoktur; sağlayıcı, yasal yükümlülükleri yerine getirmek üzere haklı durumlarda mesajları çözebilir."
+          ]
+        },
+        {
+          "title": "7. Yapay zekâ içeriği",
+          "body": [
+            "Challenge, öneri, çeviri, kapak görseli ve rozetler kısmen veya tamamen YZ tarafından üretilmiş olabilir. Hatalı olabilir; uzman veya hukuki tavsiyenin yerini tutmaz."
+          ]
+        },
+        {
+          "title": "8. Erişilebilirlik",
+          "body": [
+            "Sağlayıcı yüksek erişilebilirlik hedefler ancak garanti etmez. Bakım, üçüncü taraf arızaları veya mücbir sebepler kesintilere yol açabilir."
+          ]
+        },
+        {
+          "title": "9. Sorumluluk",
+          "body": [
+            "Sağlayıcı kasıt ve ağır kusurdan sınırsız sorumludur. Hafif ihmalde yalnızca temel sözleşmesel yükümlülüklerin ihlalinde ve öngörülebilir zararla sınırlı sorumluluk vardır."
+          ]
+        },
+        {
+          "title": "10. Fesih",
+          "body": [
+            "Hesabını profil ayarlarından istediğin zaman silebilirsin. Sağlayıcı ağır ihlallerde sözleşmeyi olağanüstü feshedebilir."
+          ]
+        },
+        {
+          "title": "11. Koşulların değişmesi",
+          "body": [
+            "Değişiklikler uygulamada gösterilir. Dört hafta içinde itiraz etmezsen kabul edilmiş sayılır."
+          ]
+        },
+        {
+          "title": "12. Son hükümler",
+          "body": [
+            "Alman hukuku geçerlidir; CISG uygulanmaz. Bir hüküm geçersiz olursa diğerleri geçerli kalır. Yetkili mahkeme, izin verildiği ölçüde, sağlayıcının merkezidir."
+          ]
+        }
+      ],
+      "contact": "Bu koşullarla ilgili sorular için lütfen {{imprint}} sayfasındaki iletişim bilgilerini kullan."
+    },
+    "impressum": {
+      "title": "Künye",
+      "subtitle": "§ 5 DDG ve § 18 MStV uyarınca bilgiler",
+      "sections": [
+        {
+          "title": "Sağlayıcı",
+          "body": [
+            "Gotham Consulting GmbH",
+            "Rosenweg 4",
+            "99820 Hörselberg-Hainich",
+            "Almanya"
+          ]
+        },
+        {
+          "title": "Temsilciler",
+          "body": [
+            "Gotham Consulting GmbH yönetimi tarafından temsil edilmektedir."
+          ]
+        },
+        {
+          "title": "İletişim",
+          "body": [
+            "E-posta: hallo@komma.app"
+          ]
+        },
+        {
+          "title": "Ticaret sicili",
+          "body": [
+            "Yetkili sulh hukuk mahkemesi nezdindeki ticaret siciline kayıtlıdır. Tescil numarası talep üzerine verilir."
+          ]
+        },
+        {
+          "title": "§ 18 (2) MStV uyarınca içerikten sorumlu",
+          "body": [
+            "Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich"
+          ]
+        },
+        {
+          "title": "AB uyuşmazlık çözümü",
+          "body": [
+            "AB Komisyonu çevrimiçi uyuşmazlık çözüm platformu sunmaktadır: https://ec.europa.eu/consumers/odr/. Uyuşmazlık çözüm prosedürlerine katılmak zorunda değiliz."
+          ]
+        },
+        {
+          "title": "İçerik sorumluluğu",
+          "body": [
+            "Hizmet sağlayıcı olarak § 7 (1) DDG uyarınca kendi içeriklerimizden sorumluyuz. §§ 8–10 DDG uyarınca üçüncü taraf bilgilerini izleme yükümlülüğümüz yoktur."
+          ]
+        },
+        {
+          "title": "Bağlantı sorumluluğu",
+          "body": [
+            "Teklifimiz, içeriği üzerinde etkimizin olmadığı harici sitelere bağlantılar içerir. Sorumluluk her zaman ilgili sağlayıcıya aittir."
+          ]
+        },
+        {
+          "title": "Telif hakkı",
+          "body": [
+            "Site işletmecileri tarafından oluşturulan içerikler Alman telif hakkı yasasına tabidir. Kullanıcı tarafından oluşturulan içerikler ilgili yazarlarda kalır."
+          ]
+        }
+      ],
+      "seeAlso": "Ayrıca {{terms}} sayfamıza bakın."
+    }
+  }
 }

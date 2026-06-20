@@ -1,13 +1,35 @@
 {
-  "common": { "back": "Indietro", "next": "Avanti", "done": "Fatto", "skip": "Salta", "cancel": "Annulla", "save": "Salva", "delete": "Elimina", "loading": "Caricamento…", "retry": "Riprova", "ok": "OK" },
-  "nav": { "home": "Home", "groups": "Crew", "create": "Crea", "chats": "Chat", "profile": "Profilo" },
+  "common": {
+    "back": "Indietro",
+    "next": "Avanti",
+    "done": "Fatto",
+    "skip": "Salta",
+    "cancel": "Annulla",
+    "save": "Salva",
+    "delete": "Elimina",
+    "loading": "Caricamento…",
+    "retry": "Riprova",
+    "ok": "OK"
+  },
+  "nav": {
+    "home": "Home",
+    "groups": "Crew",
+    "create": "Crea",
+    "chats": "Chat",
+    "profile": "Profilo"
+  },
   "auth": {
-    "title": "Benvenutə su Komma", "subtitle": "Partecipa invece di guardare.",
-    "email": "Email", "password": "Password",
-    "signin": "Accedi", "signup": "Registrati",
-    "google": "Continua con Google", "or": "oppure",
+    "title": "Benvenutə su Komma",
+    "subtitle": "Partecipa invece di guardare.",
+    "email": "Email",
+    "password": "Password",
+    "signin": "Accedi",
+    "signup": "Registrati",
+    "google": "Continua con Google",
+    "or": "oppure",
     "legalHint": "Continuando accetti i nostri {{terms}} e prendi atto del {{imprint}}.",
-    "terms": "Termini", "imprint": "Note legali"
+    "terms": "Termini",
+    "imprint": "Note legali"
   },
   "onboarding": {
     "languageTitle": "Che lingua parli?",
@@ -15,14 +37,193 @@
     "welcomeTitle": "Benvenutə su <1>Komma</1>,",
     "welcomeTitleLine2": "che bello averti qui.",
     "welcomeText": "Komma è una piccola pausa dallo scroll — e una spinta a fare qualcosa davvero. Tre domande veloci e sei dentro.",
-    "howItWorks": "Come funziona", "howItWorksDetail": "Inizia una sfida · pubblica la prova · raccogli Aura",
+    "howItWorks": "Come funziona",
+    "howItWorksDetail": "Inizia una sfida · pubblica la prova · raccogli Aura",
     "go": "Via",
-    "interestsTitle": "Cosa ti va di fare?", "interestsSubtitle": "Scegli fino a quattro. Ti suggeriremo sfide adatte.",
-    "interests": { "bewegung": "Movimento", "kreativ": "Creatività", "lernen": "Imparare", "sozial": "Sociale", "natur": "Natura", "mut": "Coraggio", "musik": "Musica", "essen": "Cucinare" },
-    "dynamicWaitTitle": "Un'ultima domanda…", "dynamicHint": "Personalizzata per te", "dynamicThinking": "L'IA sta pensando…",
-    "contextTitle": "Con chi vuoi cominciare?", "contextSubtitle": "Più avanti puoi creare o unirti ad altre crew.",
-    "contexts": { "friends": "Amici", "school": "Scuola", "sport": "Club / sport", "neighborhood": "Quartiere", "solo": "Per ora da solə" }
+    "interestsTitle": "Cosa ti va di fare?",
+    "interestsSubtitle": "Scegli fino a quattro. Ti suggeriremo sfide adatte.",
+    "interests": {
+      "bewegung": "Movimento",
+      "kreativ": "Creatività",
+      "lernen": "Imparare",
+      "sozial": "Sociale",
+      "natur": "Natura",
+      "mut": "Coraggio",
+      "musik": "Musica",
+      "essen": "Cucinare"
+    },
+    "dynamicWaitTitle": "Un'ultima domanda…",
+    "dynamicHint": "Personalizzata per te",
+    "dynamicThinking": "L'IA sta pensando…",
+    "contextTitle": "Con chi vuoi cominciare?",
+    "contextSubtitle": "Più avanti puoi creare o unirti ad altre crew.",
+    "contexts": {
+      "friends": "Amici",
+      "school": "Scuola",
+      "sport": "Club / sport",
+      "neighborhood": "Quartiere",
+      "solo": "Per ora da solə"
+    }
   },
-  "profile": { "language": "Lingua", "legal": "Legale", "terms": "Termini", "imprint": "Note legali", "logout": "Esci" },
-  "legal": { "termsTitle": "Termini di servizio", "imprintTitle": "Note legali", "back": "Indietro" }
+  "profile": {
+    "language": "Lingua",
+    "legal": "Legale",
+    "terms": "Termini",
+    "imprint": "Note legali",
+    "logout": "Esci"
+  },
+  "legal": {
+    "back": "Indietro",
+    "agb": {
+      "title": "Termini e Condizioni",
+      "updated": "Aggiornamento: giugno 2026 · valido per l'app «Komma»",
+      "authoritative": "La versione vincolante di questi termini è quella tedesca. Questa traduzione è solo informativa.",
+      "sections": [
+        {
+          "title": "1. Ambito e fornitore",
+          "body": [
+            "Questi termini regolano l'uso dell'app «Komma» gestita da Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Germania («Fornitore»). Con la registrazione accetti questi termini."
+          ]
+        },
+        {
+          "title": "2. Descrizione del servizio",
+          "body": [
+            "Komma è una piattaforma social partecipativa dove gli utenti creano e partecipano a challenge, caricano prove e formano crew. Alcuni contenuti sono generati da IA e segnalati come tali."
+          ]
+        },
+        {
+          "title": "3. Registrazione ed età minima",
+          "body": [
+            "È necessario un account gratuito. L'uso è consentito dai 14 anni. Per i minori serve il consenso dei genitori."
+          ]
+        },
+        {
+          "title": "4. Contenuti utente e licenza",
+          "body": [
+            "Rimani l'autore dei tuoi contenuti e concedi al Fornitore una licenza non esclusiva, mondiale e gratuita per memorizzarli e mostrarli nell'app. Garantisci di non violare diritti di terzi."
+          ]
+        },
+        {
+          "title": "5. Regole di condotta",
+          "body": [
+            "È vietato pubblicare contenuti che:"
+          ],
+          "list": [
+            "violino la legge applicabile,",
+            "violino diritti di terzi,",
+            "glorifichino la violenza, siano discriminatori, pornografici o dannosi per i minori,",
+            "molestino, minaccino o incitino a reati,",
+            "contengano malware o compromettano la sicurezza."
+          ]
+        },
+        {
+          "title": "6. Messaggi diretti e crittografia",
+          "body": [
+            "I messaggi diretti sono memorizzati cifrati a riposo sul server. Non c'è crittografia end-to-end; il Fornitore può decifrare i messaggi in casi motivati per obblighi di legge."
+          ]
+        },
+        {
+          "title": "7. Contenuti generati da IA",
+          "body": [
+            "Challenge, suggerimenti, traduzioni, copertine e badge possono essere generati in tutto o in parte da IA. Possono contenere errori e non sostituiscono consulenza professionale o legale."
+          ]
+        },
+        {
+          "title": "8. Disponibilità",
+          "body": [
+            "Il Fornitore mira ad un'elevata disponibilità ma non la garantisce. Manutenzione, guasti di terzi o forza maggiore possono comportare limitazioni."
+          ]
+        },
+        {
+          "title": "9. Responsabilità",
+          "body": [
+            "Il Fornitore risponde illimitatamente per dolo e colpa grave e ai sensi della legge tedesca sulla responsabilità da prodotto. Per colpa lieve solo per violazione di obblighi contrattuali essenziali e nei limiti dei danni tipicamente prevedibili."
+          ]
+        },
+        {
+          "title": "10. Recesso",
+          "body": [
+            "Puoi cancellare l'account in qualsiasi momento dalle impostazioni del profilo. Il Fornitore può recedere per giusta causa in caso di gravi violazioni."
+          ]
+        },
+        {
+          "title": "11. Modifiche ai termini",
+          "body": [
+            "Le modifiche sono mostrate nell'app. Se non ti opponi entro quattro settimane si considerano accettate."
+          ]
+        },
+        {
+          "title": "12. Disposizioni finali",
+          "body": [
+            "Si applica il diritto tedesco con esclusione della CISG. Se una clausola è invalida, le altre restano efficaci. Foro competente, ove ammissibile, la sede del Fornitore."
+          ]
+        }
+      ],
+      "contact": "Per domande su questi termini usa i contatti riportati nel {{imprint}}."
+    },
+    "impressum": {
+      "title": "Note legali",
+      "subtitle": "Informazioni ai sensi del § 5 DDG e § 18 MStV",
+      "sections": [
+        {
+          "title": "Fornitore",
+          "body": [
+            "Gotham Consulting GmbH",
+            "Rosenweg 4",
+            "99820 Hörselberg-Hainich",
+            "Germania"
+          ]
+        },
+        {
+          "title": "Rappresentanti",
+          "body": [
+            "Rappresentata dalla direzione di Gotham Consulting GmbH."
+          ]
+        },
+        {
+          "title": "Contatto",
+          "body": [
+            "Email: hallo@komma.app"
+          ]
+        },
+        {
+          "title": "Registro delle imprese",
+          "body": [
+            "Iscrizione al registro delle imprese del tribunale competente. Il numero esatto è disponibile su richiesta."
+          ]
+        },
+        {
+          "title": "Responsabile dei contenuti ai sensi del § 18 (2) MStV",
+          "body": [
+            "Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich"
+          ]
+        },
+        {
+          "title": "Risoluzione controversie UE",
+          "body": [
+            "La Commissione UE mette a disposizione una piattaforma ODR: https://ec.europa.eu/consumers/odr/. Non siamo obbligati a partecipare a procedure di risoluzione."
+          ]
+        },
+        {
+          "title": "Responsabilità per i contenuti",
+          "body": [
+            "Come fornitore di servizi siamo responsabili dei contenuti propri ai sensi del § 7 (1) DDG. Ai sensi dei §§ 8–10 DDG non siamo tenuti a monitorare informazioni di terzi."
+          ]
+        },
+        {
+          "title": "Responsabilità per i link",
+          "body": [
+            "La nostra offerta contiene link a siti esterni il cui contenuto non controlliamo. La responsabilità è sempre del rispettivo fornitore."
+          ]
+        },
+        {
+          "title": "Diritto d'autore",
+          "body": [
+            "I contenuti creati dai gestori del sito sono soggetti al diritto d'autore tedesco. I contenuti generati dagli utenti restano dei rispettivi autori."
+          ]
+        }
+      ],
+      "seeAlso": "Vedi anche i nostri {{terms}}."
+    }
+  }
 }
