@@ -1,11 +1,13 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, lazy, Suspense } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { useAvatarUrl } from "@/lib/avatar-url";
 import { toast } from "sonner";
-import { ChevronLeft, Send, Loader2 } from "lucide-react";
+import { ChevronLeft, Send, Loader2, ImagePlus, Smile, X, Camera } from "lucide-react";
+
+const EmojiPicker = lazy(() => import("emoji-picker-react"));
 
 export const Route = createFileRoute("/_app/chat/$userId")({
   head: () => ({ meta: [{ title: "Chat – Komma" }] }),
@@ -17,6 +19,7 @@ type Message = {
   sender_id: string;
   recipient_id: string;
   body: string;
+  image_url: string | null;
   created_at: string;
   read_at: string | null;
 };
@@ -36,7 +39,6 @@ function ChatThread() {
 
   const me = user?.id;
 
-  // Friendship guard
   const friendQ = useQuery({
     queryKey: ["friend-check", me, otherId],
     enabled: !!me,
@@ -72,7 +74,6 @@ function ChatThread() {
     },
   });
 
-  // Mark thread read on view + when new messages arrive
   useEffect(() => {
     if (!me || !messagesQ.data) return;
     const hasUnread = messagesQ.data.some(m => m.recipient_id === me && !m.read_at);
@@ -83,7 +84,6 @@ function ChatThread() {
     })();
   }, [me, otherId, messagesQ.data, qc]);
 
-  // Scroll to bottom on new messages
   const listRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     const el = listRef.current;
@@ -94,10 +94,13 @@ function ChatThread() {
   const otherAvatar = useAvatarUrl(otherQ.data?.avatar_url);
   const [body, setBody] = useState("");
   const [sending, setSending] = useState(false);
+  const [showEmoji, setShowEmoji] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const camRef = useRef<HTMLInputElement>(null);
 
   const canSend = friendQ.data?.status === "accepted";
 
-  const send = async () => {
+  const sendText = async () => {
     const text = body.trim();
     if (!text || !me || sending) return;
     setSending(true);
@@ -105,15 +108,48 @@ function ChatThread() {
     setSending(false);
     if (error) { toast.error(error.message); return; }
     setBody("");
+    setShowEmoji(false);
     qc.invalidateQueries({ queryKey: ["dm", me, otherId] });
     qc.invalidateQueries({ queryKey: ["dm-threads"] });
   };
 
+  const sendImage = async (file: File) => {
+    if (!me || sending) return;
+    if (!file.type.startsWith("image/")) { toast.error("Nur Bilder erlaubt"); return; }
+    if (file.size > 10 * 1024 * 1024) { toast.error("Bild zu groß (max 10 MB)"); return; }
+    setSending(true);
+    try {
+      const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+      const path = `${me}/${crypto.randomUUID()}.${ext}`;
+      const { error: upErr } = await supabase.storage.from("chat-media").upload(path, file, {
+        contentType: file.type, upsert: false,
+      });
+      if (upErr) throw upErr;
+      const { error } = await (supabase as any).rpc("send_dm", {
+        _recipient: otherId, _body: body.trim() || "", _image_url: path,
+      });
+      if (error) throw error;
+      setBody("");
+      setShowEmoji(false);
+      qc.invalidateQueries({ queryKey: ["dm", me, otherId] });
+      qc.invalidateQueries({ queryKey: ["dm-threads"] });
+    } catch (e: any) {
+      toast.error(e?.message ?? "Upload fehlgeschlagen");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    e.target.value = "";
+    if (f) sendImage(f);
+  };
 
   const onKey = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      send();
+      sendText();
     }
   };
 
@@ -121,7 +157,6 @@ function ChatThread() {
 
   return (
     <div className="flex h-[calc(100vh-6rem)] flex-col">
-      {/* Header */}
       <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-border bg-background/90 px-4 py-3 backdrop-blur">
         <button onClick={() => nav({ to: "/chats" })} className="tap -ml-1 p-1 text-muted-foreground">
           <ChevronLeft className="size-5" />
@@ -140,43 +175,95 @@ function ChatThread() {
         </div>
       </header>
 
-      {/* Messages */}
       <div ref={listRef} className="flex-1 overflow-y-auto px-4 py-4">
         {messagesQ.isLoading ? (
           <div className="flex justify-center text-muted-foreground"><Loader2 className="size-5 animate-spin" /></div>
         ) : !canSend ? (
           <FriendGate status={friendQ.data?.status} />
         ) : (messagesQ.data?.length ?? 0) === 0 ? (
-          <div className="mt-10 text-center text-sm text-muted-foreground">
-            Sag Hi 👋
-          </div>
+          <div className="mt-10 text-center text-sm text-muted-foreground">Sag Hi 👋</div>
         ) : (
           <MessageList messages={messagesQ.data!} meId={me!} />
         )}
       </div>
 
-      {/* Composer */}
       {canSend && (
-        <div className="border-t border-border bg-background px-3 py-2"
+        <div className="border-t border-border bg-background"
              style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}>
-          <div className="flex items-end gap-2 rounded-2xl border border-border bg-surface px-3 py-2">
-            <textarea
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              onKeyDown={onKey}
-              placeholder="Nachricht…"
-              rows={1}
-              maxLength={2000}
-              className="max-h-32 flex-1 resize-none bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-            />
-            <button
-              onClick={send}
-              disabled={sending || !body.trim()}
-              className="tap grid size-9 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground disabled:opacity-40"
-            >
-              {sending ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
-            </button>
+          {showEmoji && (
+            <div className="relative border-b border-border">
+              <button
+                onClick={() => setShowEmoji(false)}
+                className="absolute right-2 top-2 z-10 grid size-7 place-items-center rounded-full bg-background/80"
+                aria-label="Schließen"
+              >
+                <X className="size-4" />
+              </button>
+              <Suspense fallback={<div className="h-72 grid place-items-center text-muted-foreground"><Loader2 className="size-5 animate-spin" /></div>}>
+                <EmojiPicker
+                  onEmojiClick={(e) => setBody((b) => b + e.emoji)}
+                  width="100%"
+                  height={320}
+                  theme={"auto" as any}
+                  skinTonesDisabled
+                  searchPlaceHolder="Suche…"
+                  previewConfig={{ showPreview: false }}
+                />
+              </Suspense>
+            </div>
+          )}
+          <div className="flex items-end gap-2 px-3 py-2">
+            <div className="flex items-end gap-1">
+              <button
+                type="button"
+                onClick={() => fileRef.current?.click()}
+                disabled={sending}
+                className="tap grid size-9 shrink-0 place-items-center rounded-full text-muted-foreground hover:text-foreground disabled:opacity-40"
+                aria-label="Bild oder GIF senden"
+              >
+                <ImagePlus className="size-5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => camRef.current?.click()}
+                disabled={sending}
+                className="tap grid size-9 shrink-0 place-items-center rounded-full text-muted-foreground hover:text-foreground disabled:opacity-40"
+                aria-label="Foto aufnehmen"
+              >
+                <Camera className="size-5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowEmoji(v => !v)}
+                className={`tap grid size-9 shrink-0 place-items-center rounded-full hover:text-foreground ${showEmoji ? "text-primary" : "text-muted-foreground"}`}
+                aria-label="Emoji"
+              >
+                <Smile className="size-5" />
+              </button>
+            </div>
+            <div className="flex flex-1 items-end gap-2 rounded-2xl border border-border bg-surface px-3 py-2">
+              <textarea
+                value={body}
+                onChange={(e) => setBody(e.target.value)}
+                onKeyDown={onKey}
+                onFocus={() => setShowEmoji(false)}
+                placeholder="Nachricht…"
+                rows={1}
+                maxLength={2000}
+                className="max-h-32 flex-1 resize-none bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+              />
+              <button
+                onClick={sendText}
+                disabled={sending || !body.trim()}
+                className="tap grid size-8 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground disabled:opacity-40"
+                aria-label="Senden"
+              >
+                {sending ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
+              </button>
+            </div>
           </div>
+          <input ref={fileRef} type="file" accept="image/*,image/gif" className="hidden" onChange={onFile} />
+          <input ref={camRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={onFile} />
         </div>
       )}
     </div>
@@ -184,7 +271,6 @@ function ChatThread() {
 }
 
 function MessageList({ messages, meId }: { messages: Message[]; meId: string }) {
-  // group by day
   const groups: Array<{ day: string; items: Message[] }> = [];
   for (const m of messages) {
     const day = new Date(m.created_at).toDateString();
@@ -203,17 +289,19 @@ function MessageList({ messages, meId }: { messages: Message[]; meId: string }) 
             const mine = m.sender_id === meId;
             const prev = g.items[i - 1];
             const grouped = prev && prev.sender_id === m.sender_id && (+new Date(m.created_at) - +new Date(prev.created_at) < 5 * 60 * 1000);
+            const hasText = m.body && m.body.trim().length > 0;
             return (
               <div key={m.id} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
                 <div
-                  className={`max-w-[78%] whitespace-pre-wrap break-words rounded-2xl px-3.5 py-2 text-sm ${
+                  className={`max-w-[78%] overflow-hidden whitespace-pre-wrap break-words rounded-2xl text-sm ${
                     mine
                       ? "rounded-br-md bg-primary text-primary-foreground"
                       : "rounded-bl-md border border-border bg-surface text-foreground"
-                  } ${grouped ? "mt-0.5" : ""}`}
+                  } ${grouped ? "mt-0.5" : ""} ${m.image_url && !hasText ? "p-1" : "px-3.5 py-2"}`}
                 >
-                  {m.body}
-                  <div className={`mt-0.5 text-right text-[10px] ${mine ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                  {m.image_url && <ChatImage path={m.image_url} />}
+                  {hasText && <div className={m.image_url ? "px-2 pt-2" : ""}>{m.body}</div>}
+                  <div className={`mt-0.5 text-right text-[10px] ${m.image_url && !hasText ? "px-2 pb-1" : ""} ${mine ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
                     {new Date(m.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                   </div>
                 </div>
@@ -223,6 +311,26 @@ function MessageList({ messages, meId }: { messages: Message[]; meId: string }) 
         </div>
       ))}
     </div>
+  );
+}
+
+function ChatImage({ path }: { path: string }) {
+  const q = useQuery({
+    queryKey: ["chat-media-url", path],
+    staleTime: 50 * 60 * 1000,
+    queryFn: async () => {
+      const { data, error } = await supabase.storage.from("chat-media").createSignedUrl(path, 60 * 60);
+      if (error) throw error;
+      return data.signedUrl;
+    },
+  });
+  if (!q.data) {
+    return <div className="grid h-48 w-64 place-items-center bg-muted/40"><Loader2 className="size-5 animate-spin opacity-60" /></div>;
+  }
+  return (
+    <a href={q.data} target="_blank" rel="noreferrer" className="block">
+      <img src={q.data} alt="" className="max-h-80 w-auto rounded-xl object-cover" loading="lazy" />
+    </a>
   );
 }
 
