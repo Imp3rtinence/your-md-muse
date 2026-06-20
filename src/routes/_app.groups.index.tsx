@@ -97,6 +97,9 @@ function Groups() {
         </ul>
       )}
 
+      <CrewBuddy />
+
+
       {createOpen && (
         <CreateGroupModal
           onClose={() => setCreateOpen(false)}
