@@ -1,96 +1,123 @@
 
-# KI-Strategie für Komma
+# Komma KI-Ausbau — Gesamtplan
 
-Ziel: Die App lernt aus dem Onboarding und dem Verhalten der Nutzer:innen, erzeugt automatisch passenden Content (Challenges), schlägt persönliche Aktionen vor und hält die Community sicher. Alle KI-Aufrufe laufen serverseitig über das Lovable AI Gateway (kein API-Key nötig). Standardmodell: `google/gemini-3-flash-preview` (schnell, günstig), für seltene anspruchsvolle Aufgaben `google/gemini-2.5-pro`.
+Phase 1 (Onboarding-Analyse) läuft. Hier alles weitere in Reihenfolge. Free Speech bleibt — Moderation nur als sanfter Hinweis, kein Blockieren.
 
-## 1. Was die KI im Hintergrund lernt
+---
 
-Aus dem Onboarding-Quiz (Interessen + Kontext) und laufendem Verhalten (erstellte/abgeschlossene Challenges, Crews, Kategorien, Tageszeit, Likes) bauen wir ein **User-Profil-Vektor**:
+## A. KI-Bots als echte Community-Mitglieder ⭐ Grundlage
 
-- Interessen-Gewichte (Bewegung, Kreativität, Lernen, Soziales, Natur, …)
-- Kontext (Schule, Sport, Nachbarschaft, Familie)
-- Schwierigkeitslevel (anhand abgeschlossener Challenges)
-- Aktivitätsmuster (wann macht die Person mit)
+KI-Challenges werden nicht von „System" gepostet, sondern von echten Bot-Profilen mit eigenem Charakter. So fühlt sich die App lebendig an — auch wenn noch wenig Leute da sind.
 
-Speicherung: neue Tabelle `user_ai_profile` (jsonb `traits`, `embeddings vector(1536)`, `updated_at`). Re-Embedding nach jedem Onboarding-Update und alle ~20 Aktionen.
+**Naming-Convention (verspielt, jugendlich, einprägsam):**
+Doppelbuchstaben + Naturwesen / Alltagsding. Beispiele:
+`Lumi`, `Nuvo`, `Pippa`, `Kuro`, `Mossi`, `Echo`, `Vesper`, `Onyx`, `Tilda`, `Fenn`, `Wilbur`, `Solé`, `Brix`, `Yuna`, `Rooki`
 
-## 2. Sechs konkrete KI-Bausteine
+Jeder Bot bekommt:
+- Username & Display-Name aus dem Pool (keine Nummer hinten dran)
+- Eigenes Avatar-Emoji + Farbe
+- Kurze Bio („Mag Sonnenuntergänge und mutige Ideen 🌅")
+- **Eigene „Spezialität"** — z. B. Lumi macht Kreativ-Challenges, Brix Sport, Mossi Natur. Dadurch entstehen wiedererkennbare Persönlichkeiten.
+- Auf dem Profil deutlich sichtbar: Badge **„🤖 Community-Bot"** + Hinweistext „Ich bin ein KI-Mitglied von Komma und helfe, Ideen zu streuen."
+- In Feeds / Karten **kein** „Bot"-Label am Namen — nur das Avatar-Badge. Wer drauf klickt sieht die volle Info.
 
-### A. Onboarding-Auswertung (sofort nutzbar)
-Nach dem Quiz ruft ein Server-Function `analyzeOnboarding` Gemini auf:
-- Input: Interessen + Kontext + Alter (falls vorhanden)
-- Output (strukturiert via `Output.object`): `summary`, `top_categories[]`, `suggested_challenges[3]`, `suggested_crew_kinds[]`
-- Ergebnis wird in `user_ai_profile.traits` gespeichert und auf der Home-Seite als „Für dich gestartet" angezeigt.
+**Technisch:** neue Spalte `profiles.is_ai_bot boolean`, `profiles.bot_persona jsonb`. Bots werden per Migration gesät (8–12 Stück mit echten auth-Usern, damit FKs sauber bleiben).
 
-### B. Automatischer Challenge-Generator (Content-Motor)
-Cron-Job (pg_cron) ruft täglich `/api/public/cron/generate-challenges` auf:
-- Erzeugt 5–10 neue öffentliche Challenges pro Kategorie, abgestimmt auf häufigste Interessen der aktiven Nutzer:innen
-- KI liefert: Titel, Beschreibung, Kategorie, Dauer, Schwierigkeit, Beweis-Typ (Foto/Video/Text), Sicherheits-Check
-- Markierung als `created_by_ai = true` (neue Spalte) → transparent für Nutzer:innen
+---
 
-### C. Personalisierte Vorschläge auf Home
-Server-Function `recommendChallenges` (bei jedem Home-Load):
-- Mischt: trendende Challenges + KI-Vorschläge auf Basis von Profil-Embedding
-- Vector-Search via pgvector (Cosine-Similarity zwischen User- und Challenge-Embedding)
-- Erklärung pro Karte: „weil du Kreativität magst"
+## B. Content-Motor (täglich neue Challenges)
 
-### D. Smart-Create-Assistent
-Im „Challenge erstellen"-Flow ein Button **„Mit KI ausarbeiten"**:
-- Nutzer gibt Stichwort ein → KI schlägt Titel, Beschreibung, Hashtags, geeignete Crew vor
-- Verbessert Qualität und Vollständigkeit selbst erstellter Challenges
+- `/api/public/cron/generate-challenges` (HMAC + apikey)
+- `pg_cron` jeden Morgen 06:00
+- Pro Tag 5–10 Challenges, ein zufälliger Bot ist `creator_id` — passend zu seiner Spezialität
+- KI bekommt: häufigste Interessen aus user_ai_profile, Wochentag, Jahreszeit
+- Spalte `challenges.created_by_ai = true` (für interne Statistik, optional sichtbar)
+- Mini-Admin-Dashboard für dich: Anzahl heute / Woche, Toggle „pausieren"
 
-### E. Auto-Moderation (Safety)
-Vor jedem Insert in `challenges` und `direct_messages`:
-- KI-Klassifikation (strukturiert: `safe`, `risky`, `block` + Begründung)
-- `block` → Insert wird abgelehnt, Nutzer sieht freundliche Meldung
-- `risky` → wird zur Sichtung gequeued (`moderation_queue` Tabelle)
-- Besonders wichtig wegen junger Zielgruppe (Hilda!)
+---
 
-### F. Wöchentlicher KI-Coach
-Sonntags eine personalisierte Push/E-Mail-Zusammenfassung pro User:
-- „Diese Woche: 3 Challenges, +120 Aura, Liga aufgestiegen"
-- KI-Vorschlag für nächste Woche („Probier mal etwas aus Kategorie Natur")
-- Tonalität jugendlich, motivierend, kein Druck
+## C. Smart-Create-Assistent
 
-## 3. Reihenfolge der Umsetzung (Phasen)
+Im Create-Flow neuer Button **„✨ Mit KI ausarbeiten"**:
+- User tippt Stichwort
+- KI schlägt Titel, Beschreibung, Kategorie, Dauer, Beweistyp vor
+- User kann übernehmen / ändern / verwerfen — nichts auto-gespeichert
+- Zweiter Button **„✨ Verbessern"** auf vorhandenem Entwurf
 
-**Phase 1 — Onboarding nutzt KI (Baustein A)**
-- Tabelle `user_ai_profile`
-- Server-Function `analyzeOnboarding`
-- Home-Sektion „Für dich gestartet"
+---
 
-**Phase 2 — Content-Motor (Baustein B)**
-- Spalte `created_by_ai` auf `challenges`
-- Cron-Endpoint `/api/public/cron/generate-challenges`
-- pg_cron-Job (täglich 06:00)
-- Admin-Übersicht „KI-Challenges der letzten 7 Tage"
+## D. Hinweis-Moderation (kein Block, kein Queue)
 
-**Phase 3 — Personalisierung & Smart-Create (C + D)**
-- pgvector Extension + Embeddings (Tabelle `challenges.embedding`)
-- `recommendChallenges` Server-Function
-- „Mit KI ausarbeiten"-Button im Create-Flow
+Free Speech. Beim Erstellen einer Challenge / DM läuft ein leichter KI-Check im Hintergrund. Wenn potenziell heikel:
+- **Sanfter Hinweis** als Toast / Banner: „Klingt nach einer mutigen Idee — bitte denk an deine Sicherheit. Trotzdem posten?"
+- User entscheidet, nichts wird blockiert oder gequeued
+- Reports bleiben das einzige harte Eingriffs-Mittel (durch dich/Moderator:innen)
+- Trotzdem im Hintergrund Flag `challenges.ai_risk_level` für später, falls du doch mal filtern willst
 
-**Phase 4 — Sicherheit & Coach (E + F)**
-- Moderations-Middleware bei Insert
-- Wöchentlicher Coach-Job
+---
 
-## 4. Technische Details
+## E. Personalisierung mit Embeddings
 
-- **Gateway**: `@ai-sdk/openai-compatible` → `https://ai.gateway.lovable.dev/v1`, Header `Lovable-API-Key: $LOVABLE_API_KEY`
-- **Strukturierte Outputs**: `generateText({ output: Output.object({ schema: z... }) })`
-- **Embeddings**: `google/gemini-embedding-001`, pgvector `vector(3072)` mit HNSW-Index
-- **Server-Boundary**: alle Aufrufe in `createServerFn` (`src/lib/ai/*.functions.ts`) bzw. öffentlichen Routen unter `src/routes/api/public/cron/*` (HMAC-geschützt)
-- **Cron**: pg_cron ruft die `project--<id>.lovable.app`-URL mit Secret-Header auf
-- **Kosten**: Gemini-Flash ist günstig; Content-Generator läuft 1×/Tag, Moderation pro Insert (~ms-Latenz)
+- `pgvector` aktivieren
+- `challenges.embedding vector(3072)` + HNSW-Index
+- `user_ai_profile.interest_embedding vector(3072)` (aus Onboarding-Antworten)
+- Beim Embedding nach Insert: serverseitig Gemini-Embedding API
+- Home: „Für dich" mixt Trending + Top-Vector-Match
+- Challenge-Detail: „Ähnliche Challenges"
+- Erklärungs-Chip: „passt zu Kreativität"
 
-## 5. Was sich für die Nutzer:innen ändert
+---
 
-- Nach dem Quiz sofort 3 passende Vorschläge statt leerer Home
-- Täglich neuer, abwechslungsreicher Content — auch wenn die Community klein ist
-- „Mit KI ausarbeiten" hilft, gute Challenges zu formulieren
-- Geschützter Raum durch automatische Moderation
-- Wöchentlicher Rückblick motiviert zum Dranbleiben
+## F. Wöchentlicher KI-Coach (Sonntag)
 
-## 6. Frage an dich
+- Pro User: kleine Wochen-Zusammenfassung als In-App-Karte auf Home
+- „Diese Woche: 3 Challenges, +120 Aura, in Ember-Liga gehalten"
+- KI-Vorschlag für nächste Woche („Probier mal etwas in der Natur")
+- Tonalität: jugendlich, motivierend, kein Druck
+- Cron Sonntag 18:00, schreibt in neue Tabelle `weekly_recaps`
 
-Soll ich mit **Phase 1 (Onboarding-Auswertung + erste KI-Vorschläge auf Home)** starten? Das ist der schnellste sichtbare Win und legt das Profil-Fundament für alles weitere.
+---
+
+## G. Kleinere KI-Bausteine (alle umgesetzt)
+
+1. **KI-Crew-Buddy** — wer keine Crew hat, sieht „Diese öffentlichen Crews passen zu dir" (vector-Match auf Crew-Beschreibung)
+2. **Beweis-Feedback** — nach Upload kommt von einem zufälligen Bot ein netter Kommentar („Cool, dass du draussen warst! 🌿")
+3. **Auto-Tags für Challenges** — KI ergänzt Hashtags beim Erstellen (sichtbar bevor User speichert)
+4. **Semantische Suche** — „Challenges für Regentage" sucht via Embedding, nicht nur Keyword
+5. **Mehrsprachigkeit on the fly** — Challenge-Texte werden per KI in Sprache des Users übersetzt (gecached pro Sprache)
+6. **Schwierigkeits-Schätzung** — KI labelt Challenges automatisch als „leicht / mittel / mutig"
+7. **Personalisierte Badges** — KI erfindet wöchentlich seltene Badges aus echten Mustern („🌅 Frühaufsteher", „🧲 Crew-Builder") und vergibt sie
+8. **Hero-Bild pro Challenge** — bei Bot-Challenges und optional bei User-Challenges generiert Nano Banana ein Cover-Bild
+9. **„Erklär's mir"-Button** — auf jeder Challenge-Karte; KI erklärt nochmal kindgerecht
+10. **Dynamisches Onboarding-Quiz** — statt fixer Fragen erzeugt KI Folgefrage je nach Antwort
+
+---
+
+## Tech-Backbone
+
+- **Gateway:** Lovable AI Gateway (`createLovableAiGatewayProvider`)
+- **Modelle:** `gemini-3-flash-preview` Default, `gemini-2.5-flash-image` für Cover, `gemini-embedding-001` für Vektoren, `gemini-2.5-pro` nur für seltene komplexe Tasks
+- **Boundary:** alles in `createServerFn` (`src/lib/ai/*.functions.ts`) oder `src/routes/api/public/cron/*`
+- **Cron:** `pg_cron` → stabile `project--<id>.lovable.app` URL, Auth via `apikey`-Header (Anon-Key)
+- **DB-Erweiterungen:** `pgvector`, `pg_cron`, `pg_net`
+- **Neue Tabellen:** `weekly_recaps`, `challenge_translations`, `moderation_flags` (nur als Hinweis-Log)
+- **Neue Spalten:** `profiles.is_ai_bot`, `profiles.bot_persona`, `challenges.created_by_ai`, `challenges.embedding`, `challenges.ai_risk_level`, `challenges.difficulty`, `challenges.hero_image_url`, `challenges.tags`, `user_ai_profile.interest_embedding`
+
+---
+
+## Empfohlene Bau-Reihenfolge
+
+1. **A. Bot-Profile + Naming + Migration mit 10 Bots** (Fundament)
+2. **B. Content-Motor** (täglich neue Challenges von den Bots — sofort sichtbarer Effekt)
+3. **C. Smart-Create + G3 Auto-Tags + G8 Hero-Bild** (Erstell-Erlebnis stark)
+4. **E. Embeddings + G4 Semantische Suche + G1 Crew-Buddy** (Personalisierung — braucht etwas Content erstmal)
+5. **G2 Beweis-Feedback + G9 Erklär's mir** (kleine Delights)
+6. **D. Hinweis-Moderation** (sanfter Layer im Hintergrund)
+7. **F. Wochen-Coach + G7 Personal. Badges** (Retention)
+8. **G5 Mehrsprachigkeit + G6 Schwierigkeit + G10 Dynamisches Quiz** (Polish)
+
+---
+
+## Bestätigung
+
+Wenn der Plan so passt, baue ich Schritt 1 (**A. Bot-Profile + Naming**) zuerst — also: DB-Felder, Migration mit ~10 Bot-Profilen, sichtbares „🤖 Community-Bot"-Badge auf deren Profilseite. Danach direkt weiter mit B.
