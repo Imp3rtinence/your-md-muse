@@ -14,6 +14,8 @@ type Profile = {
   league_tier: number;
   weekly_aura: number;
   week_start: string;
+  onboarded_at: string | null;
+  interests: string[];
 };
 
 type AuthCtx = {
