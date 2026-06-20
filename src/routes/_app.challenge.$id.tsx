@@ -42,9 +42,46 @@ function AvatarBubble({ path, username, ring }: { path?: string | null; username
 }
 
 export const Route = createFileRoute("/_app/challenge/$id")({
-  head: () => ({ meta: [{ title: "Challenge – Komma" }] }),
+  loader: async ({ params }) => {
+    const { data } = await (supabase as any)
+      .from("challenges")
+      .select("title,description")
+      .eq("id", params.id)
+      .maybeSingle();
+    return { title: (data?.title as string | undefined) ?? null, description: (data?.description as string | undefined) ?? null };
+  },
+  head: ({ params, loaderData }) => {
+    const title = loaderData?.title ?? "Challenge";
+    const desc = (loaderData?.description ?? "Nimm an dieser Komma-Challenge teil, lade deinen Beweis hoch und reich die Kette weiter.").slice(0, 160);
+    const url = `https://komma.fun/challenge/${params.id}`;
+    return {
+      meta: [
+        { title: `${title} – Komma` },
+        { name: "description", content: desc },
+        { property: "og:title", content: `${title} – Komma` },
+        { property: "og:description", content: desc },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "article" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: title,
+            description: desc,
+            mainEntityOfPage: url,
+            publisher: { "@type": "Organization", name: "Komma" },
+          }),
+        },
+      ],
+    };
+  },
   component: ChallengeDetail,
 });
+
 
 function ChallengeDetail() {
   const { id } = Route.useParams();
