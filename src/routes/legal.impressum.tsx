@@ -41,14 +41,23 @@ function ImpressumPage() {
           </section>
         ))}
 
-        <p className="text-xs text-muted-foreground">
-          {t("legal.impressum.seeAlso", { terms: t("legal.agb.title") })
-            .split("{{terms}}")[0]}
-          <Link to="/legal/agb" className="text-primary underline-offset-2 hover:underline">
-            {t("legal.agb.title")}
-          </Link>
-          {t("legal.impressum.seeAlso", { terms: "" }).split("{{terms}}").pop()?.replace("{{terms}}", "")}
-        </p>
+        <SeeAlso />
+      </div>
+    </div>
+  );
+}
+
+function SeeAlso() {
+  const { t } = useTranslation();
+  const template = t("legal.impressum.seeAlso", { defaultValue: "See also our {{terms}}." });
+  const [before, after = ""] = template.split("{{terms}}");
+  return (
+    <p className="text-xs text-muted-foreground">
+      {before}
+      <Link to="/legal/agb" className="text-primary underline-offset-2 hover:underline">
+        {t("legal.agb.title")}
+      </Link>
+      {after}
       </div>
     </div>
   );
