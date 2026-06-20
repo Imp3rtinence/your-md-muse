@@ -117,6 +117,7 @@ function CreateGroupModal({ onClose, onCreated }: { onClose: () => void; onCreat
   const [emoji, setEmoji] = useState("👥");
   const [kind, setKind] = useState("friends");
   const [busy, setBusy] = useState(false);
+  const doEmbed = useServerFn(embedCrew);
 
   const submit = async () => {
     if (!user) return;
@@ -124,10 +125,11 @@ function CreateGroupModal({ onClose, onCreated }: { onClose: () => void; onCreat
     if (n.length < 2) return toast.error("Name min. 2 Zeichen");
     setBusy(true);
     try {
-      const { error } = await (supabase as any).from("groups").insert({
+      const { data, error } = await (supabase as any).from("groups").insert({
         name: n, description: desc.trim() || null, emoji, kind, creator_id: user.id,
-      });
+      }).select("id").single();
       if (error) throw error;
+      if (data?.id) doEmbed({ data: { crew_id: data.id } }).catch(() => {});
       toast.success("Crew erstellt");
       onCreated();
     } catch (e: any) {
