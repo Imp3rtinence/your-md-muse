@@ -114,15 +114,15 @@ Regeln:
         const { error: insertError, data: inserted } = await supabase
           .from("challenges")
           .insert(rows)
-          .select("id");
+          .select("id, title, description, category");
 
         if (insertError) return new Response(insertError.message, { status: 500 });
 
-        // Embeddings für jede frische Challenge nachziehen (best-effort)
-        const insertedIds = (inserted ?? []).map((r: any) => r.id);
-        await Promise.allSettled(insertedIds.map(async (cid, i) => {
-          const src = rows[i];
-          const text = `${src.title} — ${src.description} — ${src.category}`;
+        // Embeddings für jede frische Challenge nachziehen (best-effort).
+        // WICHTIG: über die zurückgegebenen Zeilen iterieren (DB-Reihenfolge
+        // ≠ Input-Reihenfolge), sonst landen Embeddings an der falschen Challenge.
+        await Promise.allSettled((inserted ?? []).map(async (row: any) => {
+          const text = `${row.title} — ${row.description} — ${row.category}`;
           const er = await fetch("https://ai.gateway.lovable.dev/v1/embeddings", {
             method: "POST",
             headers: { "Content-Type": "application/json", "Lovable-API-Key": lovableKey },
@@ -132,7 +132,7 @@ Regeln:
           const ejson = await er.json();
           const vec = ejson?.data?.[0]?.embedding;
           if (!Array.isArray(vec)) return;
-          await supabase.from("challenges").update({ embedding: `[${vec.join(",")}]` as any }).eq("id", cid);
+          await supabase.from("challenges").update({ embedding: `[${vec.join(",")}]` as any }).eq("id", row.id);
         }));
 
         return Response.json({ created: inserted?.length ?? 0, weekday });
