@@ -200,3 +200,61 @@ function LeagueCard({ tier, weeklyAura }: { tier: number; weeklyAura: number }) 
     </Link>
   );
 }
+
+function LanguageSection() {
+  const { t, i18n } = useTranslation();
+  const current = (i18n.language || "de").split("-")[0];
+  return (
+    <section className="mt-8">
+      <h2 className="mb-2 flex items-center gap-2 font-display text-lg font-bold">
+        <Languages className="size-4 text-primary" /> {t("profile.language")}
+      </h2>
+      <div className="rounded-2xl border border-border bg-surface p-2">
+        <div className="grid grid-cols-2 gap-1.5">
+          {SUPPORTED_LOCALES.map((l) => {
+            const on = current === l.code;
+            return (
+              <button
+                key={l.code}
+                onClick={() => i18n.changeLanguage(l.code)}
+                className={`tap flex items-center gap-2 rounded-xl px-3 py-2 text-left text-sm transition ${
+                  on ? "bg-primary/15 text-foreground" : "text-muted-foreground hover:bg-surface-2"
+                }`}
+              >
+                <span className="text-base">{l.flag}</span>
+                <span className="font-medium">{l.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LegalLinks() {
+  const { t } = useTranslation();
+  return (
+    <section className="mt-8">
+      <h2 className="mb-2 flex items-center gap-2 font-display text-lg font-bold">
+        <ScrollText className="size-4 text-primary" /> {t("profile.legal")}
+      </h2>
+      <div className="space-y-1.5">
+        <Link
+          to="/legal/agb"
+          className="tap flex items-center justify-between rounded-2xl border border-border bg-surface px-4 py-3 text-sm font-medium"
+        >
+          <span className="flex items-center gap-2"><FileText className="size-4 text-muted-foreground" /> {t("profile.terms")}</span>
+          <ChevronRight className="size-4 text-muted-foreground" />
+        </Link>
+        <Link
+          to="/legal/impressum"
+          className="tap flex items-center justify-between rounded-2xl border border-border bg-surface px-4 py-3 text-sm font-medium"
+        >
+          <span className="flex items-center gap-2"><FileText className="size-4 text-muted-foreground" /> {t("profile.imprint")}</span>
+          <ChevronRight className="size-4 text-muted-foreground" />
+        </Link>
+      </div>
+    </section>
+  );
+}
