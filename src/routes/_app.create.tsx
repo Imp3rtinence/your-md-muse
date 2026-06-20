@@ -32,7 +32,7 @@ function Create() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<CategoryValue>("creative");
-  const [visibility, setVisibility] = useState<"friends" | "public">("friends");
+  const [visibility, setVisibility] = useState<"friends" | "public" | "private">("friends");
   const [durationH, setDurationH] = useState<number>(24);
   const [tags, setTags] = useState<string[]>([]);
   const [difficulty, setDifficulty] = useState<"leicht" | "mittel" | "mutig" | null>(null);
