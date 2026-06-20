@@ -23,12 +23,13 @@ function AppShell() {
     return <div className="flex min-h-screen items-center justify-center bg-background text-muted-foreground">…</div>;
   }
 
+  const hideNav = path === "/onboarding";
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background">
-      <main className="flex-1 pb-24">
+      <main className={"flex-1 " + (hideNav ? "" : "pb-24")}>
         <Outlet />
       </main>
-      <BottomNav />
+      {!hideNav && <BottomNav />}
     </div>
   );
 }
