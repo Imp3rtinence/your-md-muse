@@ -21,16 +21,18 @@ export const Route = createFileRoute("/_app/home")({
 type Challenge = {
   id: string; title: string; description: string | null;
   category: string; visibility: string;
-  participant_count: number; created_at: string; is_daily: boolean;
+  participant_count: number; created_at: string; is_daily?: boolean;
   creator_id: string;
   hero_image_url: string | null;
-  difficulty: string | null;
+  difficulty?: string | null;
+  distance_km?: number | null;
   creator?: { username: string; display_name: string | null; avatar_url: string | null; is_ai_bot?: boolean };
 };
 
 function Home() {
   const { profile } = useAuth();
   const fetchAi = useServerFn(getMyAiProfile);
+  useTrackLocation();
 
   const { data: aiProfile } = useQuery({
     queryKey: ["my-ai-profile"],
@@ -39,25 +41,28 @@ function Home() {
     retry: false,
   });
 
-  const { data: challenges, isLoading } = useQuery({
-    queryKey: ["home-feed"],
+  const { data: feed, isLoading } = useQuery({
+    queryKey: ["home-feed-nearby"],
     queryFn: async () => {
-      const { data, error } = await (supabase as any)
-        .from("challenges")
-        .select("*, creator:profiles!challenges_creator_id_fkey(username,display_name,avatar_url,is_ai_bot)")
-        .order("created_at", { ascending: false })
-        .limit(40);
+      const { data, error } = await (supabase as any).rpc("nearby_challenges", { _target: 20 });
       if (error) throw error;
-      return (data ?? []) as Challenge[];
+      const list = (data ?? []) as Challenge[];
+      if (list.length === 0) return [] as Challenge[];
+      const ids = Array.from(new Set(list.map((c) => c.creator_id)));
+      const { data: creators } = await (supabase as any)
+        .from("profiles")
+        .select("id,username,display_name,avatar_url,is_ai_bot")
+        .in("id", ids);
+      const byId = new Map((creators ?? []).map((p: any) => [p.id, p]));
+      return list.map((c) => ({ ...c, creator: byId.get(c.creator_id) }));
     },
   });
 
-  const daily = challenges?.find((c) => c.is_daily) ?? challenges?.[0];
-  const trending = (challenges ?? [])
-    .filter((c) => c.id !== daily?.id)
-    .sort((a, b) => b.participant_count - a.participant_count)
-    .slice(0, 8);
-  const fresh = (challenges ?? []).filter((c) => c.id !== daily?.id).slice(0, 8);
+  const challenges = feed ?? [];
+  const maxDist = challenges.reduce((m, c) => Math.max(m, c.distance_km ?? 0), 0);
+  const daily = challenges[0];
+  const trending = [...challenges].sort((a, b) => b.participant_count - a.participant_count).slice(0, 8);
+  const fresh = challenges.slice(0, 8);
 
   return (
     <div className="px-5 pb-6 pt-6">
