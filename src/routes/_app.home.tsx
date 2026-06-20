@@ -1,11 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { categoryMeta } from "@/lib/categories";
 import { getMyAiProfile } from "@/lib/ai/onboarding.functions";
-import { Flame, Sparkles, Users as UsersIcon, Wand2 } from "lucide-react";
+import { searchChallenges } from "@/lib/ai/embeddings.functions";
+import { Flame, Loader2, Search, Sparkles, Users as UsersIcon, Wand2 } from "lucide-react";
 import { BotBadge } from "@/components/BotBadge";
 import { useProofUrl } from "@/lib/proof-url";
 
