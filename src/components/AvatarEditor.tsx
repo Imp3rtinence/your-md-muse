@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { X, RotateCw, Type, Smile, Trash2, Check, ImagePlus, Loader2 } from "lucide-react";
+import { X, RotateCw, Type, Smile, Trash2, Check, ImagePlus, Loader2, Camera } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -38,6 +38,7 @@ export function AvatarEditor({
   onSaved: (path: string) => void;
 }) {
   const fileInput = useRef<HTMLInputElement>(null);
+  const cameraInput = useRef<HTMLInputElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const [src, setSrc] = useState<string | null>(null);
   const [filter, setFilter] = useState<Filter>("none");
@@ -63,6 +64,12 @@ export function AvatarEditor({
     if (f.size > 12 * 1024 * 1024) return toast.error("Bild ist zu groß (max 12 MB)");
     const url = URL.createObjectURL(f);
     setSrc(url);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (f) onFile(f);
+    e.target.value = "";
   };
 
   // ---------- gesture handling ----------
@@ -292,7 +299,8 @@ export function AvatarEditor({
 
       {/* Toolbar */}
       <div className="flex items-center justify-around gap-2 px-4 pb-3 pt-3">
-        <ToolBtn onClick={() => fileInput.current?.click()} icon={<ImagePlus className="size-5" />} label="Foto" />
+        <ToolBtn onClick={() => fileInput.current?.click()} icon={<ImagePlus className="size-5" />} label="Galerie" />
+        <ToolBtn onClick={() => cameraInput.current?.click()} icon={<Camera className="size-5" />} label="Kamera" />
         <ToolBtn onClick={() => setRotate(r => (r + 90) % 360)} icon={<RotateCw className="size-5" />} label="Drehen" disabled={!src} />
         <ToolBtn onClick={addText} icon={<Type className="size-5" />} label="Text" disabled={!src} />
         <ToolBtn onClick={() => setShowEmoji(v => !v)} icon={<Smile className="size-5" />} label="Emoji" disabled={!src} active={showEmoji} />
@@ -319,7 +327,8 @@ export function AvatarEditor({
         </div>
       )}
 
-      <input ref={fileInput} type="file" accept="image/*" hidden onChange={e => { const f = e.target.files?.[0]; if (f) onFile(f); e.target.value = ""; }} />
+      <input ref={fileInput} type="file" accept="image/*" hidden onChange={handleFileChange} />
+      <input ref={cameraInput} type="file" accept="image/*" capture="user" hidden onChange={handleFileChange} />
     </div>
   );
 }
