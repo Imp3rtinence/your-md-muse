@@ -1,0 +1,1 @@
+ALTER TYPE public.challenge_visibility ADD VALUE IF NOT EXISTS 'private';

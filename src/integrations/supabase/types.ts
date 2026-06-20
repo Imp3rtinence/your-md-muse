@@ -849,7 +849,7 @@ export type Database = {
         | "friendly"
         | "skill"
         | "learning"
-      challenge_visibility: "friends" | "group" | "public"
+      challenge_visibility: "friends" | "group" | "public" | "private"
       friendship_status: "pending" | "accepted" | "blocked"
       report_status: "open" | "reviewed" | "dismissed"
     }
@@ -986,7 +986,7 @@ export const Constants = {
         "skill",
         "learning",
       ],
-      challenge_visibility: ["friends", "group", "public"],
+      challenge_visibility: ["friends", "group", "public", "private"],
       friendship_status: ["pending", "accepted", "blocked"],
       report_status: ["open", "reviewed", "dismissed"],
     },
