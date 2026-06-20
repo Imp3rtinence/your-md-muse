@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { ArrowLeft } from "lucide-react";
 
 export const Route = createFileRoute("/legal/agb")({
@@ -52,21 +52,27 @@ function AgbPage() {
           </Section>
         ))}
 
-        <p className="text-xs text-muted-foreground">
-          <Trans
-            i18nKey="legal.agb.contact"
-            components={{
-              imprint: <Link to="/legal/impressum" className="text-primary underline-offset-2 hover:underline" />,
-            }}
-            values={{ imprint: t("legal.impressum.title") }}
-          >
-            {t("legal.agb.contact", { imprint: t("legal.impressum.title") })}
-          </Trans>
-        </p>
+        <ContactLine />
       </div>
     </div>
   );
 }
+
+function ContactLine() {
+  const { t } = useTranslation();
+  const template = t("legal.agb.contact", { defaultValue: "Imprint: {{imprint}}" });
+  const [before, after = ""] = template.split("{{imprint}}");
+  return (
+    <p className="text-xs text-muted-foreground">
+      {before}
+      <Link to="/legal/impressum" className="text-primary underline-offset-2 hover:underline">
+        {t("legal.impressum.title")}
+      </Link>
+      {after}
+    </p>
+  );
+}
+
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
