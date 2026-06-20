@@ -36,7 +36,7 @@ function AuthPage() {
       if (mode === "signup") {
         const cleaned = username.trim().toLowerCase().replace(/[^a-z0-9_]/g, "");
         if (cleaned.length < 3) { toast.error("Username: min. 3 Zeichen, nur a–z, 0–9, _"); setBusy(false); return; }
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email, password,
           options: {
             emailRedirectTo: `${window.location.origin}/home`,
@@ -44,7 +44,15 @@ function AuthPage() {
           },
         });
         if (error) throw error;
-        toast.success("Profil erstellt. Los geht's!");
+        if (data.session) {
+          toast.success("Profil erstellt. Los geht's!");
+          // session listener navigiert nach /home
+        } else {
+          toast.success("Profil erstellt. Bitte bestätige deine E-Mail, dann einloggen.");
+          setMode("signin");
+          setPassword("");
+        }
+
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
