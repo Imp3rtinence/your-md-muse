@@ -327,7 +327,8 @@ export function AvatarEditor({
         </div>
       )}
 
-      <input ref={fileInput} type="file" accept="image/*" hidden onChange={e => { const f = e.target.files?.[0]; if (f) onFile(f); e.target.value = ""; }} />
+      <input ref={fileInput} type="file" accept="image/*" hidden onChange={handleFileChange} />
+      <input ref={cameraInput} type="file" accept="image/*" capture="user" hidden onChange={handleFileChange} />
     </div>
   );
 }
