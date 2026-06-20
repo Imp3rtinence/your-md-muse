@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/auth";
 import { categoryMeta } from "@/lib/categories";
 import { getMyAiProfile } from "@/lib/ai/onboarding.functions";
 import { Flame, Sparkles, Users as UsersIcon, Wand2 } from "lucide-react";
+import { BotBadge } from "@/components/BotBadge";
 
 export const Route = createFileRoute("/_app/home")({
   head: () => ({ meta: [{ title: "Home – Komma" }] }),
