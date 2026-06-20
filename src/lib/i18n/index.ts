@@ -12,6 +12,7 @@ import es from "./locales/es.json";
 import it from "./locales/it.json";
 import pl from "./locales/pl.json";
 import ru from "./locales/ru.json";
+import no from "./locales/no.json";
 
 export const SUPPORTED_LOCALES = [
   { code: "de", label: "Deutsch", flag: "🇩🇪" },
@@ -24,6 +25,7 @@ export const SUPPORTED_LOCALES = [
   { code: "it", label: "Italiano", flag: "🇮🇹" },
   { code: "pl", label: "Polski", flag: "🇵🇱" },
   { code: "ru", label: "Русский", flag: "🇷🇺" },
+  { code: "no", label: "Norsk", flag: "🇳🇴" },
 ] as const;
 
 export type LocaleCode = (typeof SUPPORTED_LOCALES)[number]["code"];
@@ -40,6 +42,7 @@ const resources = {
   it: { translation: it },
   pl: { translation: pl },
   ru: { translation: ru },
+  no: { translation: no },
 };
 
 let initialized = false;

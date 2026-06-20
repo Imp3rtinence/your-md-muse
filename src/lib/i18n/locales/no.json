@@ -1,0 +1,267 @@
+{
+  "common": {
+    "back": "Tilbake",
+    "next": "Neste",
+    "done": "Ferdig",
+    "skip": "Hopp over",
+    "cancel": "Avbryt",
+    "save": "Lagre",
+    "delete": "Slett",
+    "loading": "Laster …",
+    "retry": "Prøv igjen",
+    "ok": "OK"
+  },
+  "nav": {
+    "home": "Hjem",
+    "groups": "Crews",
+    "create": "Lag",
+    "chats": "Chatter",
+    "profile": "Profil"
+  },
+  "auth": {
+    "title": "Velkommen til Komma",
+    "subtitle": "Vær med i stedet for bare å se på.",
+    "email": "E-post",
+    "password": "Passord",
+    "signin": "Logg inn",
+    "signup": "Registrer deg",
+    "google": "Fortsett med Google",
+    "or": "eller",
+    "legalHint": "Ved å fortsette godtar du våre {{terms}} og bekrefter vårt {{imprint}}.",
+    "terms": "Vilkår",
+    "imprint": "Impressum"
+  },
+  "onboarding": {
+    "languageTitle": "Hvilket språk snakker du?",
+    "languageSubtitle": "Du kan endre dette senere i profilen din.",
+    "welcomeTitle": "Velkommen til <1>Komma</1>,",
+    "welcomeTitleLine2": "godt du er her.",
+    "welcomeText": "Komma er en liten pause fra scrollingen — og en dytt til faktisk å gjøre noe. Tre raske spørsmål, så er du i gang.",
+    "howItWorks": "Slik fungerer det",
+    "howItWorksDetail": "Start en challenge · legg ut beviset ditt · samle Aura",
+    "go": "Kom igjen",
+    "interestsTitle": "Hva har du lyst på?",
+    "interestsSubtitle": "Velg inntil fire. Vi foreslår passende challenges.",
+    "interests": {
+      "bewegung": "Bevegelse",
+      "kreativ": "Kreativitet",
+      "lernen": "Læring",
+      "sozial": "Sosialt",
+      "natur": "Natur",
+      "mut": "Mot",
+      "musik": "Musikk",
+      "essen": "Matlaging"
+    },
+    "dynamicWaitTitle": "Ett raskt spørsmål …",
+    "dynamicHint": "Tilpasset valgene dine",
+    "dynamicThinking": "AI tenker …",
+    "contextTitle": "Hvem vil du starte med?",
+    "contextSubtitle": "Du kan starte eller bli med i flere crews når som helst senere.",
+    "contexts": {
+      "friends": "Venner",
+      "school": "Skole",
+      "sport": "Klubb / sport",
+      "neighborhood": "Nabolag",
+      "solo": "Solo foreløpig"
+    }
+  },
+  "profile": {
+    "language": "Språk",
+    "legal": "Juridisk",
+    "terms": "Vilkår",
+    "imprint": "Impressum",
+    "logout": "Logg ut"
+  },
+  "legal": {
+    "back": "Tilbake",
+    "agb": {
+      "title": "Brukervilkår",
+      "updated": "Sist oppdatert: juni 2026 · gjelder Komma-appen",
+      "intro": "Velkommen til Komma. Disse vilkårene regulerer din bruk av Komma-appen og tilhørende tjenester levert av Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Tyskland («vi», «oss» eller «leverandør»). Ved å opprette en konto eller bruke Komma godtar du disse vilkårene. Tysk rett gjelder; den tyske versjonen av vilkårene er juridisk bindende.",
+      "sections": [
+        {
+          "title": "1. Tjenestene vi leverer",
+          "body": [
+            "Vårt oppdrag er å gi folk muligheten til å være aktive i det virkelige liv, inspirere hverandre og fullføre challenges sammen. For å støtte dette tilbyr vi følgende tjenester («Tjenestene»):"
+          ],
+          "list": [
+            "En personlig opplevelse: vi foreslår challenges, crews og innhold som passer dine interesser og aktivitet.",
+            "Forbindelser med personer og crews som betyr noe for deg, inkludert direktemeldinger, crew-chatter og felles aktiviteter.",
+            "Verktøy for selvuttrykk og kommunikasjon: bevis, innlegg, reaksjoner, profiler, badges og AI-baserte funksjoner.",
+            "Trygge, pålitelige tjenester: vi bekjemper misbruk, beskytter kontoer og fjerner innhold som bryter disse vilkårene eller våre fellesskapsregler.",
+            "Forskning og innovasjon: vi bruker aggregerte og anonymiserte data for kontinuerlig å forbedre tjenestene."
+          ]
+        },
+        {
+          "title": "2. Hvordan tjenestene finansieres",
+          "body": [
+            "Bruk av Komma er gratis. Vi forbeholder oss retten til å innføre betalte funksjoner, abonnementer eller annonser i framtiden. Slike tilbud vil bli tydelig merket og opplyst om før kjøp. Vi selger ikke personopplysningene dine."
+          ]
+        },
+        {
+          "title": "3. Dine forpliktelser overfor Komma og fellesskapet",
+          "body": [
+            "For å holde fellesskapet vårt trygt aksepterer du følgende forpliktelser når du oppretter en konto og bruker tjenestene."
+          ]
+        },
+        {
+          "title": "3.1 Hvem kan bruke Komma",
+          "body": [
+            "Du må være minst 14 år. Dersom lovlig minstealder i ditt land er høyere, gjelder den. Personer under 18 trenger samtykke fra foresatte.",
+            "Du må bruke samme navn som du bruker i hverdagen. Hver person kan kun ha én personlig konto. Du kan ikke dele kontoen med tredjeparter uten vårt samtykke.",
+            "Vi kan nekte tilgang dersom kontoen din tidligere er blitt fjernet for brudd, dersom du er dømt for seksualforbrytelser, eller dersom utestengelse er nødvendig for å beskytte fellesskapet."
+          ]
+        },
+        {
+          "title": "3.2 Hva du kan dele og gjøre",
+          "body": [
+            "Vi ønsker at folk skal uttrykke seg fritt på Komma — innenfor loven og med respekt for andres rettigheter. Du kan ikke bruke tjenestene til å:"
+          ],
+          "list": [
+            "Dele eller gjøre noe som er ulovlig, villedende, diskriminerende eller bedragersk.",
+            "Krenke andres rettigheter, inkludert opphavsrett, varemerker eller personlighetsrettigheter.",
+            "Drive med hatprat, oppfordring til vold, trusler, trakassering eller mobbing.",
+            "Dele seksuelt innhold som involverer mindreårige eller innhold som er pornografisk eller skadelig for mindreårige.",
+            "Spre spam, svindel, skadevare eller forsøke å manipulere, skrape eller omgå systemene våre.",
+            "Svekke sikkerheten, integriteten eller tilgjengeligheten til tjenestene."
+          ]
+        },
+        {
+          "title": "3.3 Tillatelsene du gir oss",
+          "body": [
+            "For å levere tjenestene trenger vi visse tillatelser fra deg:"
+          ],
+          "list": [
+            "Tillatelse til å bruke innhold du oppretter: du beholder eierskapet til innholdet ditt og gir oss en ikke-eksklusiv, overførbar, underlisensierbar, vederlagsfri, verdensomspennende lisens til å hoste, bruke, distribuere, endre, kjøre, kopiere, fremføre offentlig, vise, oversette og lage avledede verk av innholdet ditt i forbindelse med drift og markedsføring av tjenestene. Denne lisensen opphører når du sletter innholdet eller kontoen din, med unntak av innhold som er delt med andre som ikke har slettet det.",
+            "Tillatelse til å bruke navnet ditt, profilbildet og informasjon om handlingene dine i forbindelse med kommersielt, sponset eller relatert innhold — uten kompensasjon til deg.",
+            "Tillatelse til å oppdatere programvare du har lastet ned for å levere nye versjoner, sikkerhetsoppdateringer og funksjonsforbedringer."
+          ]
+        },
+        {
+          "title": "4. Tilleggsbestemmelser",
+          "body": [
+            "Følgende bestemmelser gjelder i tillegg til dine forpliktelser og våre tjenester."
+          ]
+        },
+        {
+          "title": "4.1 Oppdatering av vilkårene",
+          "body": [
+            "Vi utvikler tjenestene våre kontinuerlig og kan endre disse vilkårene — for eksempel for å gjenspeile nye funksjoner eller oppfylle lovkrav. Vi varsler om endringer i appen minst 30 dager i forveien. Hvis du ikke protesterer innen fire uker etter varsel, anses de endrede vilkårene som godtatt. Hvis du protesterer, kan du fortsette å bruke tjenestene fram til neste oppsigelsestidspunkt."
+          ]
+        },
+        {
+          "title": "4.2 Sperring eller oppsigelse av konto",
+          "body": [
+            "Du kan slette kontoen din eller si opp tjenestene når som helst. Vi kan sperre eller avslutte kontoen din eller enkelte funksjoner dersom du gjentatte ganger eller alvorlig bryter disse vilkårene eller fellesskapsreglene, dersom vi er rettslig pålagt det, eller dersom oppførselen din skaper risiko eller rettslig eksponering for oss, andre brukere eller tredjeparter. Vi informerer deg der det er mulig og tillatt, og opplyser om årsaken."
+          ]
+        },
+        {
+          "title": "4.3 Vårt ansvarsbegrensning",
+          "body": [
+            "Vi er ubegrenset ansvarlige for skader som følge av personskade på liv, kropp eller helse, ved forsett og grov uaktsomhet, etter den tyske produktansvarsloven, og innenfor rammen av eventuelle garantier som er gitt. Ved lett uaktsomhet er vi kun ansvarlige for brudd på vesentlige avtaleforpliktelser (kardinalplikter) og begrenset til den forutsigbare, kontraktstypiske skaden. Ethvert videre ansvar er utelukket.",
+            "Vi garanterer ikke at tjenestene alltid vil være feilfrie, sikre eller tilgjengelige. Du bruker dem på eget ansvar og innenfor rammen av gjeldende lov."
+          ]
+        },
+        {
+          "title": "4.4 Tvister, lovvalg og verneting",
+          "body": [
+            "Disse vilkårene og eventuelle krav mellom deg og oss er underlagt tysk rett, med unntak av FN-konvensjonen om internasjonale løsørekjøp. Ufravikelige forbrukervernregler i ditt bostedsland berøres ikke.",
+            "For næringsdrivende, offentligrettslige juridiske personer og offentligrettslige særfond er vernetinget leverandørens sete. Forbrukere kan reise sak ved sitt lovbestemte verneting.",
+            "EU-kommisjonen tilbyr en plattform for tvisteløsning på nett: https://ec.europa.eu/consumers/odr/. Vi er verken forpliktet eller villige til å delta i tvisteløsningsprosesser for en forbrukerklagenemnd."
+          ]
+        },
+        {
+          "title": "4.5 Direktemeldinger og kryptering",
+          "body": [
+            "Direktemeldinger og crew-chatter lagres kryptert på serverne våre (kryptering i hvile). Det er ingen ende-til-ende-kryptering. Vi kan dekryptere og få tilgang til meldinger i begrunnede enkelttilfeller for å oppfylle juridiske forpliktelser eller håndheve disse vilkårene."
+          ]
+        },
+        {
+          "title": "4.6 AI-generert innhold",
+          "body": [
+            "Deler av tjenestene våre — som challenge-forslag, oversettelser, omslagsbilder, badges eller coaching-tips — er helt eller delvis skapt av kunstig intelligens. Slikt innhold kan være unøyaktig, ufullstendig eller upassende og erstatter ikke profesjonell, medisinsk eller juridisk rådgivning."
+          ]
+        },
+        {
+          "title": "4.7 Diverse",
+          "body": [
+            "Hvis en bestemmelse i disse vilkårene er ugyldig eller ikke kan håndheves, forblir de øvrige bestemmelsene i kraft. Vi kan overføre våre rettigheter og forpliktelser etter disse vilkårene til en tredjepart i forbindelse med en fusjon, oppkjøp eller salg av virksomheten vår; du kan kun overføre dine rettigheter og forpliktelser med vårt skriftlige samtykke.",
+            "Vår unnlatelse av å håndheve en bestemmelse innebærer ikke avkall på retten til å håndheve den senere."
+          ]
+        },
+        {
+          "title": "5. Kontakt",
+          "body": [
+            "Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich, Tyskland. E-post: hallo@komma.app"
+          ]
+        }
+      ],
+      "authoritative": "Den tyske versjonen av disse vilkårene er den juridisk bindende. Denne oversettelsen er kun ment som hjelp.",
+      "contact": "For spørsmål om disse vilkårene, kontakt oss via opplysningene i {{imprint}}."
+    },
+    "impressum": {
+      "title": "Impressum",
+      "subtitle": "Opplysninger iht. § 5 DDG (tysk lov om digitale tjenester) og § 18 MStV",
+      "sections": [
+        {
+          "title": "Leverandør",
+          "body": [
+            "Gotham Consulting GmbH",
+            "Rosenweg 4",
+            "99820 Hörselberg-Hainich",
+            "Tyskland"
+          ]
+        },
+        {
+          "title": "Representanter",
+          "body": [
+            "Representert av ledelsen i Gotham Consulting GmbH."
+          ]
+        },
+        {
+          "title": "Kontakt",
+          "body": [
+            "E-post: hallo@komma.app"
+          ]
+        },
+        {
+          "title": "Foretaksregister",
+          "body": [
+            "Oppføring i foretaksregisteret ved kompetent lokal domstol. Nøyaktig registreringsnummer er tilgjengelig på forespørsel."
+          ]
+        },
+        {
+          "title": "Ansvarlig for innhold iht. § 18 (2) MStV",
+          "body": [
+            "Gotham Consulting GmbH, Rosenweg 4, 99820 Hörselberg-Hainich"
+          ]
+        },
+        {
+          "title": "EU-tvisteløsning",
+          "body": [
+            "EU-kommisjonen tilbyr en plattform for tvisteløsning på nett: https://ec.europa.eu/consumers/odr/. Vi er ikke forpliktet til å delta i tvisteløsningsprosesser."
+          ]
+        },
+        {
+          "title": "Ansvar for innhold",
+          "body": [
+            "Som tjenesteleverandør er vi ansvarlige for eget innhold etter § 7 (1) DDG. Etter §§ 8–10 DDG er vi ikke forpliktet til å overvåke informasjon fra tredjeparter."
+          ]
+        },
+        {
+          "title": "Ansvar for lenker",
+          "body": [
+            "Tilbudet vårt inneholder lenker til eksterne nettsteder som vi ikke har innflytelse over innholdet på. Den respektive leverandøren er alltid ansvarlig."
+          ]
+        },
+        {
+          "title": "Opphavsrett",
+          "body": [
+            "Innhold skapt av nettstedoperatørene er underlagt tysk opphavsrett. Brukergenerert innhold tilhører den respektive opphavspersonen."
+          ]
+        }
+      ],
+      "seeAlso": "Se også våre {{terms}}."
+    }
+  }
+}
