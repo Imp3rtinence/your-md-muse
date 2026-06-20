@@ -72,10 +72,7 @@ function ContactLine() {
     </p>
   );
 }
-      </div>
-    </div>
-  );
-}
+
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
