@@ -6,7 +6,7 @@ import { categoryMeta } from "@/lib/categories";
 import { Flame, Sparkles, Users as UsersIcon } from "lucide-react";
 
 export const Route = createFileRoute("/_app/home")({
-  head: () => ({ meta: [{ title: "Home – JoinUs" }] }),
+  head: () => ({ meta: [{ title: "Home – Komma" }] }),
   component: Home,
 });
 

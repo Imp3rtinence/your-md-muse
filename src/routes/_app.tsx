@@ -9,20 +9,27 @@ export const Route = createFileRoute("/_app")({
 });
 
 function AppShell() {
-  const { session, loading } = useAuth();
+  const { session, profile, loading } = useAuth();
   const nav = useNavigate();
+  const path = useRouterState({ select: (s) => s.location.pathname });
   useEffect(() => { if (!loading && !session) nav({ to: "/auth" }); }, [loading, session, nav]);
+  useEffect(() => {
+    if (!loading && session && profile && !profile.onboarded_at && path !== "/onboarding") {
+      nav({ to: "/onboarding" });
+    }
+  }, [loading, session, profile, path, nav]);
 
   if (loading || !session) {
     return <div className="flex min-h-screen items-center justify-center bg-background text-muted-foreground">…</div>;
   }
 
+  const hideNav = path === "/onboarding";
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background">
-      <main className="flex-1 pb-24">
+      <main className={"flex-1 " + (hideNav ? "" : "pb-24")}>
         <Outlet />
       </main>
-      <BottomNav />
+      {!hideNav && <BottomNav />}
     </div>
   );
 }
@@ -31,7 +38,7 @@ function BottomNav() {
   const path = useRouterState({ select: (s) => s.location.pathname });
   const items: Array<{ to: "/home" | "/groups/" | "/create" | "/chats" | "/profile"; icon: typeof Home; label: string; primary?: boolean }> = [
     { to: "/home", icon: Home, label: "Home" },
-    { to: "/groups/", icon: Users, label: "Gruppen" },
+    { to: "/groups/", icon: Users, label: "Crews" },
     { to: "/create", icon: Plus, label: "Neu", primary: true },
     { to: "/chats", icon: MessageCircle, label: "Chats" },
     { to: "/profile", icon: User, label: "Profil" },

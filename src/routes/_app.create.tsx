@@ -11,7 +11,7 @@ const searchSchema = z.object({ parent: z.string().optional() });
 
 export const Route = createFileRoute("/_app/create")({
   validateSearch: searchSchema,
-  head: () => ({ meta: [{ title: "Challenge erstellen – JoinUs" }] }),
+  head: () => ({ meta: [{ title: "Challenge erstellen – Komma" }] }),
   component: Create,
 });
 

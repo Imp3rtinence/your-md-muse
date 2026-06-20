@@ -340,6 +340,7 @@ export type Database = {
           description: string | null
           emoji: string
           id: string
+          kind: string
           members_can_invite: boolean
           name: string
           updated_at: string
@@ -350,6 +351,7 @@ export type Database = {
           description?: string | null
           emoji?: string
           id?: string
+          kind?: string
           members_can_invite?: boolean
           name: string
           updated_at?: string
@@ -360,6 +362,7 @@ export type Database = {
           description?: string | null
           emoji?: string
           id?: string
+          kind?: string
           members_can_invite?: boolean
           name?: string
           updated_at?: string
@@ -375,9 +378,11 @@ export type Database = {
           created_at: string
           display_name: string | null
           id: string
+          interests: string[]
           is_private: boolean
           last_active_date: string | null
           league_tier: number
+          onboarded_at: string | null
           streak_days: number
           updated_at: string
           username: string
@@ -392,9 +397,11 @@ export type Database = {
           created_at?: string
           display_name?: string | null
           id: string
+          interests?: string[]
           is_private?: boolean
           last_active_date?: string | null
           league_tier?: number
+          onboarded_at?: string | null
           streak_days?: number
           updated_at?: string
           username: string
@@ -409,9 +416,11 @@ export type Database = {
           created_at?: string
           display_name?: string | null
           id?: string
+          interests?: string[]
           is_private?: boolean
           last_active_date?: string | null
           league_tier?: number
+          onboarded_at?: string | null
           streak_days?: number
           updated_at?: string
           username?: string

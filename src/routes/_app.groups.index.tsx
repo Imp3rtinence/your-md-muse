@@ -7,11 +7,22 @@ import { toast } from "sonner";
 import { Plus, Users, ChevronRight, X, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/_app/groups/")({
-  head: () => ({ meta: [{ title: "Gruppen – JoinUs" }] }),
+  head: () => ({ meta: [{ title: "Crews – Komma" }] }),
   component: Groups,
 });
 
 const EMOJIS = ["👥","🔥","⚡","🎯","🏆","🎨","🎮","⚽","🏀","🎸","📚","🧗","🍕","✈️","🌊","🌈"];
+
+const KINDS: Array<{ id: string; label: string; emoji: string }> = [
+  { id: "friends", label: "Freunde", emoji: "👥" },
+  { id: "school", label: "Schule", emoji: "🏫" },
+  { id: "sport", label: "Sport", emoji: "⚽" },
+  { id: "neighborhood", label: "Nachbarschaft", emoji: "🏘️" },
+  { id: "other", label: "Sonstiges", emoji: "✨" },
+];
+
+const KIND_LABEL: Record<string, string> = Object.fromEntries(KINDS.map(k => [k.id, k.label]));
+const KIND_EMOJI: Record<string, string> = Object.fromEntries(KINDS.map(k => [k.id, k.emoji]));
 
 function Groups() {
   const { user } = useAuth();
@@ -24,7 +35,7 @@ function Groups() {
     queryFn: async () => {
       const { data, error } = await (supabase as any)
         .from("group_members")
-        .select("role, group:groups(id,name,emoji,description,created_at)")
+        .select("role, group:groups(id,name,emoji,description,kind,created_at)")
         .eq("user_id", user!.id)
         .order("joined_at", { ascending: false });
       if (error) throw error;
@@ -35,7 +46,7 @@ function Groups() {
   return (
     <div className="px-5 pb-6 pt-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-bold">Gruppen</h1>
+        <h1 className="font-display text-2xl font-bold">Crews</h1>
         <button
           onClick={() => setCreateOpen(true)}
           className="tap flex items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 font-display text-sm font-bold text-primary-foreground glow-primary"
@@ -49,13 +60,13 @@ function Groups() {
       ) : !groups?.length ? (
         <div className="mt-8 rounded-3xl border border-dashed border-border bg-surface p-8 text-center">
           <div className="text-4xl">👥</div>
-          <h2 className="mt-3 font-display text-lg font-semibold">Noch keine Gruppe</h2>
-          <p className="mt-1 text-sm text-muted-foreground">Klasse, Crew, Familie, Verein – starte eine eigene und lade deine Leute ein.</p>
+          <h2 className="mt-3 font-display text-lg font-semibold">Noch keine Crew</h2>
+          <p className="mt-1 text-sm text-muted-foreground">Klasse, Team, Familie, Nachbarn – starte eine eigene und lade deine Leute ein.</p>
           <button
             onClick={() => setCreateOpen(true)}
             className="tap mt-4 inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2.5 font-display text-sm font-bold text-primary-foreground glow-primary"
           >
-            <Plus className="size-4" /> Erste Gruppe anlegen
+            <Plus className="size-4" /> Erste Crew anlegen
           </button>
         </div>
       ) : (
@@ -69,8 +80,12 @@ function Groups() {
                 <div className="grid size-12 place-items-center rounded-2xl bg-primary/15 text-2xl">{m.group.emoji}</div>
                 <div className="min-w-0 flex-1">
                   <div className="truncate font-display font-semibold">{m.group.name}</div>
-                  <div className="truncate text-xs text-muted-foreground">
-                    {m.role === "owner" ? "Owner" : "Mitglied"}{m.group.description ? " · " + m.group.description : ""}
+                  <div className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-surface-2 px-2 py-0.5 text-[10px] font-medium">
+                      <span>{KIND_EMOJI[m.group.kind] ?? "👥"}</span>
+                      <span>{KIND_LABEL[m.group.kind] ?? "Freunde"}</span>
+                    </span>
+                    <span className="truncate">{m.role === "owner" ? "Owner" : "Mitglied"}</span>
                   </div>
                 </div>
                 <ChevronRight className="size-4 text-muted-foreground" />
@@ -95,6 +110,7 @@ function CreateGroupModal({ onClose, onCreated }: { onClose: () => void; onCreat
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [emoji, setEmoji] = useState("👥");
+  const [kind, setKind] = useState("friends");
   const [busy, setBusy] = useState(false);
 
   const submit = async () => {
@@ -104,10 +120,10 @@ function CreateGroupModal({ onClose, onCreated }: { onClose: () => void; onCreat
     setBusy(true);
     try {
       const { error } = await (supabase as any).from("groups").insert({
-        name: n, description: desc.trim() || null, emoji, creator_id: user.id,
+        name: n, description: desc.trim() || null, emoji, kind, creator_id: user.id,
       });
       if (error) throw error;
-      toast.success("Gruppe erstellt");
+      toast.success("Crew erstellt");
       onCreated();
     } catch (e: any) {
       toast.error(e.message ?? "Fehlgeschlagen");
@@ -118,8 +134,18 @@ function CreateGroupModal({ onClose, onCreated }: { onClose: () => void; onCreat
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 sm:items-center" onClick={onClose}>
       <div onClick={e => e.stopPropagation()} className="w-full max-w-md rounded-t-3xl bg-background p-5 sm:rounded-3xl" style={{ paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))" }}>
         <div className="flex items-center justify-between">
-          <h2 className="font-display text-lg font-bold">Neue Gruppe</h2>
+          <h2 className="font-display text-lg font-bold">Neue Crew</h2>
           <button onClick={onClose} className="tap rounded-full bg-surface p-1.5"><X className="size-4" /></button>
+        </div>
+
+        <label className="mt-4 block text-xs font-medium uppercase tracking-wider text-muted-foreground">Art</label>
+        <div className="mt-1 flex gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {KINDS.map(k => (
+            <button key={k.id} onClick={() => setKind(k.id)}
+              className={`shrink-0 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium ${kind === k.id ? "bg-primary text-primary-foreground" : "bg-surface text-foreground/80"}`}>
+              <span>{k.emoji}</span>{k.label}
+            </button>
+          ))}
         </div>
 
         <label className="mt-4 block text-xs font-medium uppercase tracking-wider text-muted-foreground">Symbol</label>

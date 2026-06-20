@@ -6,7 +6,7 @@ import { BadgeArt } from "@/components/BadgeArt";
 import { ArrowLeft } from "lucide-react";
 
 export const Route = createFileRoute("/_app/badges")({
-  head: () => ({ meta: [{ title: "Abzeichen-Regal – JoinUs" }] }),
+  head: () => ({ meta: [{ title: "Abzeichen-Regal – Komma" }] }),
   component: BadgesPage,
 });
 

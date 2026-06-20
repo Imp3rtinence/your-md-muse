@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { ChevronLeft, Send, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/_app/chat/$userId")({
-  head: () => ({ meta: [{ title: "Chat – JoinUs" }] }),
+  head: () => ({ meta: [{ title: "Chat – Komma" }] }),
   component: ChatThread,
 });
 
