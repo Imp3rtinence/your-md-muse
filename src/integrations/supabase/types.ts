@@ -375,10 +375,12 @@ export type Database = {
           avatar_url: string | null
           bio: string | null
           birth_year: number | null
+          bot_persona: Json | null
           created_at: string
           display_name: string | null
           id: string
           interests: string[]
+          is_ai_bot: boolean
           is_private: boolean
           last_active_date: string | null
           league_tier: number
@@ -394,10 +396,12 @@ export type Database = {
           avatar_url?: string | null
           bio?: string | null
           birth_year?: number | null
+          bot_persona?: Json | null
           created_at?: string
           display_name?: string | null
           id: string
           interests?: string[]
+          is_ai_bot?: boolean
           is_private?: boolean
           last_active_date?: string | null
           league_tier?: number
@@ -413,10 +417,12 @@ export type Database = {
           avatar_url?: string | null
           bio?: string | null
           birth_year?: number | null
+          bot_persona?: Json | null
           created_at?: string
           display_name?: string | null
           id?: string
           interests?: string[]
+          is_ai_bot?: boolean
           is_private?: boolean
           last_active_date?: string | null
           league_tier?: number
