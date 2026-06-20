@@ -282,6 +282,7 @@ export type Database = {
           body_cipher: string | null
           created_at: string
           id: string
+          image_url: string | null
           read_at: string | null
           recipient_id: string
           sender_id: string
@@ -291,6 +292,7 @@ export type Database = {
           body_cipher?: string | null
           created_at?: string
           id?: string
+          image_url?: string | null
           read_at?: string | null
           recipient_id: string
           sender_id: string
@@ -300,6 +302,7 @@ export type Database = {
           body_cipher?: string | null
           created_at?: string
           id?: string
+          image_url?: string | null
           read_at?: string | null
           recipient_id?: string
           sender_id?: string
@@ -805,6 +808,7 @@ export type Database = {
           body: string
           created_at: string
           id: string
+          image_url: string
           read_at: string
           recipient_id: string
           sender_id: string
@@ -920,7 +924,10 @@ export type Database = {
           username: string
         }[]
       }
-      send_dm: { Args: { _body: string; _recipient: string }; Returns: string }
+      send_dm: {
+        Args: { _body: string; _image_url?: string; _recipient: string }
+        Returns: string
+      }
       send_friend_request: { Args: { _other: string }; Returns: undefined }
       update_my_location: {
         Args: { _lat: number; _lng: number }
