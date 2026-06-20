@@ -36,7 +36,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const loadProfile = async (uid: string) => {
     const { data } = await (supabase as any)
-      .from("profiles").select("*").eq("id", uid).maybeSingle();
+      .from("profiles")
+      .select("id, username, display_name, avatar_url, bio, birth_year, aura, streak_days, last_active_date, is_private, created_at, updated_at, league_tier, weekly_aura, week_start, onboarded_at, interests, is_ai_bot, bot_persona")
+      .eq("id", uid).maybeSingle();
     setProfile((data as Profile) ?? null);
   };
 
