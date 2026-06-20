@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const ADSENSE_CLIENT = "ca-pub-2713661045074217";
 
@@ -27,18 +27,23 @@ declare global {
 export function AdSlot({ slot, variant = "inline", format, className = "" }: AdSlotProps) {
   const ref = useRef<HTMLModElement | null>(null);
   const pushed = useRef(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (!slot || pushed.current) return;
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!slot || !mounted || pushed.current) return;
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
       pushed.current = true;
     } catch {
       /* swallow — adsense may be blocked */
     }
-  }, [slot]);
+  }, [slot, mounted]);
 
-  if (!slot) return null;
+  if (!slot || !mounted) return null;
 
   const minH =
     variant === "feed" ? 180 : variant === "banner" ? 100 : 140;
