@@ -277,6 +277,12 @@ function ChallengeDetail() {
           </div>
         )}
         <HeroImage path={c.hero_image_url} />
+        {c.visibility === "private" && isOwner && <PrivateInvitesPanel challengeId={c.id} />}
+        {c.visibility === "private" && !isOwner && (
+          <div className="mt-3 rounded-2xl border border-border bg-surface px-3 py-2 text-xs text-muted-foreground">
+            🔒 Private Challenge – nur eingeladene Personen
+          </div>
+        )}
 
         {/* KI-Tools: Erklär's mir + Übersetzen */}
         <div className="mt-3 flex flex-wrap items-center gap-2">
