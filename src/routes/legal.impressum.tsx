@@ -58,7 +58,6 @@ function SeeAlso() {
         {t("legal.agb.title")}
       </Link>
       {after}
-      </div>
-    </div>
+    </p>
   );
 }
