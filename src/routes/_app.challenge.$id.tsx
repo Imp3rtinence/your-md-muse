@@ -16,6 +16,9 @@ import { BotBadge } from "@/components/BotBadge";
 import { useServerFn } from "@tanstack/react-start";
 import { botCheerSubmission } from "@/lib/ai/bot-cheer.functions";
 import { explainChallenge } from "@/lib/ai/explain.functions";
+import { translateChallenge, SUPPORTED_LANGS, type Lang } from "@/lib/ai/translate.functions";
+import { Languages } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sparkles } from "lucide-react";
 import { similarChallenges } from "@/lib/ai/embeddings.functions";
 
