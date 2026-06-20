@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { X, RotateCw, Type, Smile, Trash2, Check, ImagePlus, Loader2 } from "lucide-react";
+import { X, RotateCw, Type, Smile, Trash2, Check, ImagePlus, Loader2, Camera } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
