@@ -2,20 +2,26 @@ import { createFileRoute } from "@tanstack/react-router";
 import { createClient } from "@supabase/supabase-js";
 import { generateText, Output } from "ai";
 import { z } from "zod";
+import { timingSafeEqual } from "crypto";
 import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
 import type { Database } from "@/integrations/supabase/types";
 
 /**
  * Wöchentlicher KI-Coach: erstellt für jede aktive Person einen kurzen Rückblick + Vorschlag.
- * Cron: Sonntag 18:00.
+ * Cron: Sonntag 18:00. Idempotent — überspringt User, die schon einen Recap für die Woche haben.
  */
 export const Route = createFileRoute("/api/public/cron/weekly-coach")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const provided = request.headers.get("x-cron-secret");
-        const expected = process.env.CRON_SECRET;
-        if (!expected || !provided || provided !== expected) return new Response("Unauthorized", { status: 401 });
+        const provided = request.headers.get("x-cron-secret") ?? "";
+        const expected = process.env.CRON_SECRET ?? "";
+        if (!expected) return new Response("Unauthorized", { status: 401 });
+        const a = Buffer.from(provided);
+        const b = Buffer.from(expected);
+        if (a.length !== b.length || !timingSafeEqual(a, b)) {
+          return new Response("Unauthorized", { status: 401 });
+        }
 
         const lovableKey = process.env.LOVABLE_API_KEY;
         if (!lovableKey) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
