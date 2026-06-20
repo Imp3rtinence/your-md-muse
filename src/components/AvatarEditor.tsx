@@ -293,7 +293,8 @@ export function AvatarEditor({
 
       {/* Toolbar */}
       <div className="flex items-center justify-around gap-2 px-4 pb-3 pt-3">
-        <ToolBtn onClick={() => fileInput.current?.click()} icon={<ImagePlus className="size-5" />} label="Foto" />
+        <ToolBtn onClick={() => fileInput.current?.click()} icon={<ImagePlus className="size-5" />} label="Galerie" />
+        <ToolBtn onClick={() => cameraInput.current?.click()} icon={<Camera className="size-5" />} label="Kamera" />
         <ToolBtn onClick={() => setRotate(r => (r + 90) % 360)} icon={<RotateCw className="size-5" />} label="Drehen" disabled={!src} />
         <ToolBtn onClick={addText} icon={<Type className="size-5" />} label="Text" disabled={!src} />
         <ToolBtn onClick={() => setShowEmoji(v => !v)} icon={<Smile className="size-5" />} label="Emoji" disabled={!src} active={showEmoji} />
