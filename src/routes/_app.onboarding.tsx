@@ -4,6 +4,8 @@ import { useAuth } from "@/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ArrowRight, Check, Loader2, Sparkles } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { analyzeOnboarding } from "@/lib/ai/onboarding.functions";
 
 export const Route = createFileRoute("/_app/onboarding")({
   head: () => ({ meta: [{ title: "Willkommen – Komma" }] }),
@@ -34,6 +36,7 @@ const CONTEXTS: Interest[] = [
 function Onboarding() {
   const nav = useNavigate();
   const { user, refreshProfile } = useAuth();
+  const analyze = useServerFn(analyzeOnboarding);
   const [step, setStep] = useState(0);
   const [interests, setInterests] = useState<string[]>([]);
   const [ctx, setCtx] = useState<string | null>(null);
@@ -51,6 +54,8 @@ function Onboarding() {
         .update({ interests, onboarded_at: new Date().toISOString() })
         .eq("id", user.id);
       if (error) throw error;
+      // KI-Analyse im Hintergrund anstossen – Fehler nicht blockieren
+      analyze({ data: { interests, context: ctx } }).catch((e) => console.warn("AI analyze failed", e));
       await refreshProfile();
       toast.success("Los geht's!");
       nav({ to: "/home" });
