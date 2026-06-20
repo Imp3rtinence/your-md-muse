@@ -65,17 +65,56 @@ function Chats() {
     },
   });
 
+  // Pending requests via SECURITY DEFINER RPC so private requester profiles stay visible
+  const pendingQ = useQuery({
+    queryKey: ["friend-requests", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await (supabase as any).rpc("list_friend_requests");
+      if (error) throw error;
+      return (data ?? []) as Array<{
+        friendship_id: string;
+        direction: "incoming" | "outgoing";
+        other_id: string;
+        username: string;
+        display_name: string | null;
+        avatar_url: string | null;
+        created_at: string;
+      }>;
+    },
+  });
+
   // Poll DM threads (realtime publication disabled for privacy)
   useEffect(() => {
     if (!user) return;
     const t = setInterval(() => {
       qc.invalidateQueries({ queryKey: ["dm-threads"] });
+      qc.invalidateQueries({ queryKey: ["friend-requests", user?.id] });
     }, 10000);
     return () => clearInterval(t);
   }, [user, qc]);
 
-  const incoming = (friendsQ.data ?? []).filter(f => f.status === "pending" && f.addressee_id === user?.id);
-  const outgoing = (friendsQ.data ?? []).filter(f => f.status === "pending" && f.requester_id === user?.id);
+  const pending = pendingQ.data ?? [];
+  const incoming = pending
+    .filter(p => p.direction === "incoming")
+    .map(p => ({
+      id: p.friendship_id,
+      requester_id: p.other_id,
+      addressee_id: user?.id ?? "",
+      status: "pending" as const,
+      requester: { id: p.other_id, username: p.username, display_name: p.display_name, avatar_url: p.avatar_url },
+      addressee: null,
+    })) as FriendRow[];
+  const outgoing = pending
+    .filter(p => p.direction === "outgoing")
+    .map(p => ({
+      id: p.friendship_id,
+      requester_id: user?.id ?? "",
+      addressee_id: p.other_id,
+      status: "pending" as const,
+      requester: null,
+      addressee: { id: p.other_id, username: p.username, display_name: p.display_name, avatar_url: p.avatar_url },
+    })) as FriendRow[];
   const accepted = (friendsQ.data ?? []).filter(f => f.status === "accepted");
 
   const totalUnread = (threadsQ.data ?? []).reduce((s, t) => s + t.unread_count, 0);
@@ -111,6 +150,7 @@ function Chats() {
           meId={user?.id}
           onChange={() => {
             qc.invalidateQueries({ queryKey: ["friendships", user?.id] });
+            qc.invalidateQueries({ queryKey: ["friend-requests", user?.id] });
             qc.invalidateQueries({ queryKey: ["dm-threads"] });
           }}
         />
