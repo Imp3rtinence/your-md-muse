@@ -55,7 +55,7 @@ function AuthPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background px-6 pb-10 pt-10">
+    <div className="relative min-h-dvh overflow-hidden bg-background px-6 pb-10 pt-10">
       <div className="pointer-events-none absolute -left-20 top-10 size-72 rounded-full blur-3xl opacity-50" style={{ background: "var(--primary)" }} />
       <div className="relative mx-auto max-w-md">
         <Link to="/" className="font-display text-xl font-bold">

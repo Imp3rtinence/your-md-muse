@@ -20,12 +20,12 @@ function AppShell() {
   }, [loading, session, profile, path, nav]);
 
   if (loading || !session) {
-    return <div className="flex min-h-screen items-center justify-center bg-background text-muted-foreground">…</div>;
+    return <div className="flex min-h-dvh items-center justify-center bg-background text-muted-foreground">…</div>;
   }
 
   const hideNav = path === "/onboarding";
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background">
+    <div className="mx-auto flex min-h-dvh max-w-md flex-col bg-background">
       <main className={"flex-1 " + (hideNav ? "" : "pb-24")}>
         <Outlet />
       </main>
