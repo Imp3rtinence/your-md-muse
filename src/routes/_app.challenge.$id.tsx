@@ -259,6 +259,34 @@ function ChallengeDetail() {
           </div>
         )}
         <HeroImage path={c.hero_image_url} />
+
+        {/* Erklär's mir */}
+        <div className="mt-3">
+          {explanation ? (
+            <div className="rounded-2xl border border-accent/30 bg-accent/5 px-3 py-2 text-sm text-foreground">
+              <div className="mb-1 flex items-center gap-1 text-[10px] uppercase tracking-wider text-accent"><Sparkles className="size-3" /> Erklärung</div>
+              {explanation}
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={async () => {
+                setExplainBusy(true);
+                try {
+                  const r = await askExplain({ data: { title: c.title, description: c.description } });
+                  setExplanation(r.explanation);
+                } catch { toast.error("Geht gerade nicht."); }
+                finally { setExplainBusy(false); }
+              }}
+              disabled={explainBusy}
+              className="tap inline-flex items-center gap-1 rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground disabled:opacity-50"
+            >
+              {explainBusy ? <Loader2 className="size-3 animate-spin" /> : <Sparkles className="size-3 text-accent" />}
+              Erklär's mir
+            </button>
+          )}
+        </div>
+
         {c.creator?.is_ai_bot && (
           <div className="mt-3 flex items-start gap-2 rounded-2xl border border-accent/30 bg-accent/5 px-3 py-2 text-xs text-muted-foreground">
             <BotBadge size="sm" />
