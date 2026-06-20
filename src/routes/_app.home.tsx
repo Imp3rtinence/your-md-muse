@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/auth";
 import { categoryMeta } from "@/lib/categories";
 import { getMyAiProfile } from "@/lib/ai/onboarding.functions";
 import { Flame, Sparkles, Users as UsersIcon, Wand2 } from "lucide-react";
+import { BotBadge } from "@/components/BotBadge";
 
 export const Route = createFileRoute("/_app/home")({
   head: () => ({ meta: [{ title: "Home – Komma" }] }),
@@ -17,7 +18,7 @@ type Challenge = {
   category: string; visibility: string;
   participant_count: number; created_at: string; is_daily: boolean;
   creator_id: string;
-  creator?: { username: string; display_name: string | null; avatar_url: string | null };
+  creator?: { username: string; display_name: string | null; avatar_url: string | null; is_ai_bot?: boolean };
 };
 
 function Home() {
@@ -36,7 +37,7 @@ function Home() {
     queryFn: async () => {
       const { data, error } = await (supabase as any)
         .from("challenges")
-        .select("*, creator:profiles!challenges_creator_id_fkey(username,display_name,avatar_url)")
+        .select("*, creator:profiles!challenges_creator_id_fkey(username,display_name,avatar_url,is_ai_bot)")
         .order("created_at", { ascending: false })
         .limit(40);
       if (error) throw error;
@@ -160,7 +161,10 @@ function ChallengeCard({ c }: { c: Challenge }) {
       <div className="text-2xl">{cat.icon}</div>
       <div className="mt-2 line-clamp-2 font-display text-base font-semibold">{c.title}</div>
       <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-        <span>@{c.creator?.username ?? "…"}</span>
+        <span className="flex items-center gap-1">
+          @{c.creator?.username ?? "…"}
+          {c.creator?.is_ai_bot && <BotBadge size="xs" />}
+        </span>
         <span className="flex items-center gap-1"><UsersIcon className="size-3" />{c.participant_count}</span>
       </div>
     </Link>
