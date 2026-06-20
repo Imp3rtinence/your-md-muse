@@ -197,7 +197,7 @@ function ChallengeDetail() {
     setDeleting(false);
     if (error) { toast.error(error.message); return; }
     toast.success("Challenge gelöscht");
-    qc.invalidateQueries({ queryKey: ["feed"] });
+    qc.invalidateQueries({ queryKey: ["home-feed"] });
     nav({ to: "/home" });
   };
 
