@@ -9,9 +9,15 @@ import { ChevronLeft, ArrowUp, ArrowDown, Minus, Trophy, Sparkles } from "lucide
 import { LeagueBadge } from "@/components/LeagueBadge";
 
 export const Route = createFileRoute("/_app/league")({
-  head: () => ({ meta: [{ title: "Liga – Komma" }] }),
+  head: () => ({
+    meta: [
+      { title: "Deine Liga – Komma" },
+      { name: "description", content: "Wöchentliche Liga-Tabelle, dein Aura-Stand und der Countdown bis zum nächsten Auf- oder Abstieg." },
+    ],
+  }),
   component: LeaguePage,
 });
+
 
 function LeaguePage() {
   const { profile, user } = useAuth();
@@ -63,8 +69,9 @@ function LeaguePage() {
         />
         <div className="relative flex flex-col items-center text-center">
           <LeagueBadge tier={tier} size={120} />
-          <div className={`mt-3 font-display text-3xl font-bold ${league.color}`}>{league.name}</div>
+          <h1 className={`mt-3 font-display text-3xl font-bold ${league.color}`}>Deine Liga: {league.name}</h1>
           <div className="mt-1 text-sm text-muted-foreground">Liga {tier} von 8</div>
+
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
             <div className="flex items-center gap-2 rounded-full border border-border bg-background/60 px-3 py-1.5 text-sm">
               <Trophy className="size-4 text-accent" />

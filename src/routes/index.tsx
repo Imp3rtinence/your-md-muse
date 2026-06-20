@@ -5,11 +5,39 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Komma – Machen statt scrollen" },
-      { name: "description", content: "Herausforderungen annehmen, Beweise liefern und die Kette am Leben halten." },
+      { name: "description", content: "Herausforderungen annehmen, Beweise liefern und die Kette am Leben halten. Die Mitmach-App für deine Crew." },
+      { property: "og:title", content: "Komma – Machen statt scrollen" },
+      { property: "og:description", content: "Herausforderungen annehmen, Beweise liefern und die Kette am Leben halten." },
+      { property: "og:url", content: "https://komma.fun/" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: "https://komma.fun/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Komma",
+          url: "https://komma.fun/",
+          description: "Die Mitmach-App für deine Crew: Challenges starten, Beweise liefern, Kette weiterreichen.",
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Komma",
+          url: "https://komma.fun/",
+          legalName: "Gotham Consulting GmbH",
+        }),
+      },
     ],
   }),
   component: Landing,
 });
+
 
 function Landing() {
   return (
@@ -86,9 +114,10 @@ function Landing() {
                 <div className="text-[11px] font-semibold uppercase tracking-wider text-accent">
                   Daily Challenge
                 </div>
-                <h3 className="font-display text-xl font-bold leading-snug text-foreground">
+                <h2 className="font-display text-xl font-bold leading-snug text-foreground">
                   Mach das beste 3-Sekunden-Tutorial.
-                </h3>
+                </h2>
+
               </div>
 
               <div className="flex items-center justify-between">

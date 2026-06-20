@@ -6,11 +6,28 @@ export const Route = createFileRoute("/legal/agb")({
   head: () => ({
     meta: [
       { title: "AGB – Komma" },
-      { name: "description", content: "Allgemeine Geschäftsbedingungen der Komma-App, betrieben von der Gotham Consulting GmbH." },
+      { name: "description", content: "Allgemeine Geschäftsbedingungen der Komma-App, betrieben von der Gotham Consulting GmbH. Rechte, Pflichten und Nutzungsregeln." },
+      { property: "og:title", content: "AGB – Komma" },
+      { property: "og:description", content: "Allgemeine Geschäftsbedingungen der Komma-App, Gotham Consulting GmbH." },
+      { property: "og:url", content: "https://komma.fun/legal/agb" },
+    ],
+    links: [{ rel: "canonical", href: "https://komma.fun/legal/agb" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Gotham Consulting GmbH",
+          url: "https://komma.fun/",
+          brand: "Komma",
+        }),
+      },
     ],
   }),
   component: AgbPage,
 });
+
 
 type Section = { title: string; body: string[]; list?: string[] };
 

@@ -9,12 +9,17 @@ import { Loader2 } from "lucide-react";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Anmelden – Komma" },
-      { name: "description", content: "Melde dich an oder erstelle dein Komma Profil." },
+      { title: "Anmelden oder Profil erstellen – Komma" },
+      { name: "description", content: "Melde dich an oder erstelle dein Komma-Profil per E-Mail, Google oder Apple und starte mit deiner Crew durch." },
+      { property: "og:title", content: "Anmelden oder Profil erstellen – Komma" },
+      { property: "og:description", content: "Melde dich an oder erstelle dein Komma-Profil per E-Mail, Google oder Apple." },
+      { property: "og:url", content: "https://komma.fun/auth" },
     ],
+    links: [{ rel: "canonical", href: "https://komma.fun/auth" }],
   }),
   component: AuthPage,
 });
+
 
 function AuthPage() {
   const nav = useNavigate();

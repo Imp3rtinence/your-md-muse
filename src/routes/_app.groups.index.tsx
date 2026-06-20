@@ -142,7 +142,7 @@ function CreateGroupModal({ onClose, onCreated }: { onClose: () => void; onCreat
       <div onClick={e => e.stopPropagation()} className="w-full max-w-md rounded-t-3xl bg-background p-5 sm:rounded-3xl" style={{ paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))" }}>
         <div className="flex items-center justify-between">
           <h2 className="font-display text-lg font-bold">Neue Crew</h2>
-          <button onClick={onClose} className="tap rounded-full bg-surface p-1.5"><X className="size-4" /></button>
+          <button onClick={onClose} aria-label="Dialog schließen" className="tap rounded-full bg-surface p-1.5"><X className="size-4" /></button>
         </div>
 
         <label className="mt-4 block text-xs font-medium uppercase tracking-wider text-muted-foreground">Art</label>
