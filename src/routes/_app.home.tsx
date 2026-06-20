@@ -36,7 +36,7 @@ function Home() {
     queryFn: async () => {
       const { data, error } = await (supabase as any)
         .from("challenges")
-        .select("*, creator:profiles!challenges_creator_id_fkey(username,display_name,avatar_url)")
+        .select("*, creator:profiles!challenges_creator_id_fkey(username,display_name,avatar_url,is_ai_bot)")
         .order("created_at", { ascending: false })
         .limit(40);
       if (error) throw error;
