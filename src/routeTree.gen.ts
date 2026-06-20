@@ -25,6 +25,7 @@ import { Route as AppJoinTokenRouteImport } from './routes/_app.join.$token'
 import { Route as AppGroupsIdRouteImport } from './routes/_app.groups.$id'
 import { Route as AppChatUserIdRouteImport } from './routes/_app.chat.$userId'
 import { Route as AppChallengeIdRouteImport } from './routes/_app.challenge.$id'
+import { Route as ApiPublicCronGenerateChallengesRouteImport } from './routes/api/public/cron/generate-challenges'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -105,6 +106,12 @@ const AppChallengeIdRoute = AppChallengeIdRouteImport.update({
   path: '/challenge/$id',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPublicCronGenerateChallengesRoute =
+  ApiPublicCronGenerateChallengesRouteImport.update({
+    id: '/api/public/cron/generate-challenges',
+    path: '/api/public/cron/generate-challenges',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/groups/$id': typeof AppGroupsIdRoute
   '/join/$token': typeof AppJoinTokenRoute
   '/groups/': typeof AppGroupsIndexRoute
+  '/api/public/cron/generate-challenges': typeof ApiPublicCronGenerateChallengesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -138,6 +146,7 @@ export interface FileRoutesByTo {
   '/groups/$id': typeof AppGroupsIdRoute
   '/join/$token': typeof AppJoinTokenRoute
   '/groups': typeof AppGroupsIndexRoute
+  '/api/public/cron/generate-challenges': typeof ApiPublicCronGenerateChallengesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -157,6 +166,7 @@ export interface FileRoutesById {
   '/_app/groups/$id': typeof AppGroupsIdRoute
   '/_app/join/$token': typeof AppJoinTokenRoute
   '/_app/groups/': typeof AppGroupsIndexRoute
+  '/api/public/cron/generate-challenges': typeof ApiPublicCronGenerateChallengesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -176,6 +186,7 @@ export interface FileRouteTypes {
     | '/groups/$id'
     | '/join/$token'
     | '/groups/'
+    | '/api/public/cron/generate-challenges'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -192,6 +203,7 @@ export interface FileRouteTypes {
     | '/groups/$id'
     | '/join/$token'
     | '/groups'
+    | '/api/public/cron/generate-challenges'
   id:
     | '__root__'
     | '/'
@@ -210,12 +222,14 @@ export interface FileRouteTypes {
     | '/_app/groups/$id'
     | '/_app/join/$token'
     | '/_app/groups/'
+    | '/api/public/cron/generate-challenges'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ApiPublicCronGenerateChallengesRoute: typeof ApiPublicCronGenerateChallengesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -332,6 +346,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppChallengeIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/public/cron/generate-challenges': {
+      id: '/api/public/cron/generate-challenges'
+      path: '/api/public/cron/generate-challenges'
+      fullPath: '/api/public/cron/generate-challenges'
+      preLoaderRoute: typeof ApiPublicCronGenerateChallengesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -383,6 +404,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
+  ApiPublicCronGenerateChallengesRoute: ApiPublicCronGenerateChallengesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
