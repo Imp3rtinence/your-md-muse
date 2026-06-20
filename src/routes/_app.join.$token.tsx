@@ -29,7 +29,7 @@ function JoinPage() {
     const { data: gid, error } = await (supabase as any).rpc("join_group_with_token", { _token: token });
     setBusy(false);
     if (error) return toast.error(error.message);
-    toast.success("Willkommen in der Gruppe!");
+    toast.success("Willkommen in der Crew!");
     nav({ to: "/groups/$id", params: { id: gid } });
   };
 
@@ -40,7 +40,7 @@ function JoinPage() {
       <div className="text-5xl">🤔</div>
       <h1 className="mt-3 font-display text-xl font-bold">Einladung nicht gefunden</h1>
       <p className="mt-1 text-sm text-muted-foreground">Vielleicht abgelaufen oder schon gelöscht.</p>
-      <Link to="/groups" className="tap mt-5 inline-block rounded-full bg-primary px-5 py-3 font-display text-sm font-bold text-primary-foreground">Zu meinen Gruppen</Link>
+      <Link to="/groups" className="tap mt-5 inline-block rounded-full bg-primary px-5 py-3 font-display text-sm font-bold text-primary-foreground">zu meinen Crews</Link>
     </div>
   );
 

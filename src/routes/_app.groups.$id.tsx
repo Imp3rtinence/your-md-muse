@@ -22,7 +22,7 @@ export const Route = createFileRoute("/_app/groups/$id")({
   notFoundComponent: () => (
     <div className="px-5 py-10 text-center text-sm text-muted-foreground">
       Diese Crew existiert nicht (mehr).
-      <div className="mt-4"><Link to="/groups" className="text-primary">Zurück zu Gruppen</Link></div>
+      <div className="mt-4"><Link to="/groups" className="text-primary">Zurück zu Crews</Link></div>
     </div>
   ),
 });
