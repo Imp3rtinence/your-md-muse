@@ -13,6 +13,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { BotBadge } from "@/components/BotBadge";
+import { useServerFn } from "@tanstack/react-start";
+import { botCheerSubmission } from "@/lib/ai/bot-cheer.functions";
+import { explainChallenge } from "@/lib/ai/explain.functions";
+import { Sparkles } from "lucide-react";
 
 function ProofMedia({ path, type, username }: { path: string; type: string; username?: string }) {
   const url = useProofUrl(path);
