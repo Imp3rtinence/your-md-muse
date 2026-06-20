@@ -187,7 +187,7 @@ function ChallengeDetail() {
     setEditOpen(false);
     toast.success("Challenge aktualisiert");
     qc.invalidateQueries({ queryKey: ["challenge", id] });
-    qc.invalidateQueries({ queryKey: ["feed"] });
+    qc.invalidateQueries({ queryKey: ["home-feed"] });
   };
 
   const removeChallenge = async () => {
@@ -197,7 +197,7 @@ function ChallengeDetail() {
     setDeleting(false);
     if (error) { toast.error(error.message); return; }
     toast.success("Challenge gelöscht");
-    qc.invalidateQueries({ queryKey: ["feed"] });
+    qc.invalidateQueries({ queryKey: ["home-feed"] });
     nav({ to: "/home" });
   };
 
