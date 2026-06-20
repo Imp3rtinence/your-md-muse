@@ -654,6 +654,41 @@ export type Database = {
           },
         ]
       }
+      weekly_recaps: {
+        Row: {
+          created_at: string
+          stats: Json
+          suggestion: string
+          summary: string
+          user_id: string
+          week_start: string
+        }
+        Insert: {
+          created_at?: string
+          stats?: Json
+          suggestion: string
+          summary: string
+          user_id: string
+          week_start: string
+        }
+        Update: {
+          created_at?: string
+          stats?: Json
+          suggestion?: string
+          summary?: string
+          user_id?: string
+          week_start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "weekly_recaps_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
