@@ -56,7 +56,7 @@ function ChallengeDetail() {
     queryFn: async () => {
       const { data, error } = await (supabase as any)
         .from("challenges")
-        .select("*, creator:profiles!challenges_creator_id_fkey(username,display_name,avatar_url)")
+        .select("*, creator:profiles!challenges_creator_id_fkey(username,display_name,avatar_url,is_ai_bot,bot_persona,bio)")
         .eq("id", id).single();
       if (error) throw error;
       return data;
