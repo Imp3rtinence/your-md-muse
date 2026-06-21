@@ -43,7 +43,7 @@ export const registerWithEmailLink = createServerFn({ method: "POST" })
     actionLink.searchParams.set("type", verification_type);
     actionLink.searchParams.set("next", redirectTo);
 
-    const html = registrationEmailHtml({ displayName: data.username, ctaUrl: actionLink });
+    const html = registrationEmailHtml({ displayName: data.username, ctaUrl: actionLink.toString() });
 
     const res = await fetch(`${process.env.SUPABASE_URL}/functions/v1/send-email`, {
       method: "POST",
