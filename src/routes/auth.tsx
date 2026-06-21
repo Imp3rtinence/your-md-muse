@@ -1,8 +1,10 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/lib/auth";
+import { registerWithEmailLink } from "@/lib/auth-registration.functions";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
@@ -24,6 +26,7 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const nav = useNavigate();
   const { session } = useAuth();
+  const register = useServerFn(registerWithEmailLink);
   const [mode, setMode] = useState<"signin" | "signup">("signup");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,22 +44,10 @@ function AuthPage() {
       if (mode === "signup") {
         const cleaned = username.trim().toLowerCase().replace(/[^a-z0-9_]/g, "");
         if (cleaned.length < 3) { toast.error("Username: min. 3 Zeichen, nur a–z, 0–9, _"); setBusy(false); return; }
-        const { data, error } = await supabase.auth.signUp({
-          email, password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/home`,
-            data: { username: cleaned, display_name: cleaned },
-          },
-        });
-        if (error) throw error;
-        if (data.session) {
-          toast.success("Profil erstellt. Los geht's!");
-          // session listener navigiert nach /home
-        } else {
-          toast.success("Profil erstellt. Bitte bestätige deine E-Mail, dann einloggen.");
-          setMode("signin");
-          setPassword("");
-        }
+        await register({ data: { email, password, username: cleaned } });
+        toast.success("Registrierungslink verschickt. Check deine Mail.");
+        setMode("signin");
+        setPassword("");
 
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
