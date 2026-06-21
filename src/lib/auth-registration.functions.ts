@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getRequestHeader } from "@tanstack/react-start/server";
 import { z } from "zod";
 import { registrationEmailHtml } from "@/lib/email/welcome-template";
 
@@ -17,7 +18,10 @@ export const registerWithEmailLink = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    const redirectTo = "https://komma.fun/home";
+    const host = getRequestHeader("x-forwarded-host") ?? getRequestHeader("host") ?? "komma.fun";
+    const proto = getRequestHeader("x-forwarded-proto") ?? "https";
+    const appOrigin = `${proto}://${host}`;
+    const redirectTo = `${appOrigin}/home`;
     const metadata = { username: data.username, display_name: data.username };
 
     let linkResult = await supabaseAdmin.auth.admin.generateLink({
@@ -37,8 +41,13 @@ export const registerWithEmailLink = createServerFn({ method: "POST" })
 
     if (linkResult.error) throw new Error(linkResult.error.message);
 
-    const actionLink = linkResult.data.properties.action_link;
-    const html = registrationEmailHtml({ displayName: data.username, ctaUrl: actionLink });
+    const { hashed_token, verification_type } = linkResult.data.properties;
+    const actionLink = new URL(`${appOrigin}/confirm`);
+    actionLink.searchParams.set("token_hash", hashed_token);
+    actionLink.searchParams.set("type", verification_type);
+    actionLink.searchParams.set("next", redirectTo);
+
+    const html = registrationEmailHtml({ displayName: data.username, ctaUrl: actionLink.toString() });
 
     const res = await fetch(`${process.env.SUPABASE_URL}/functions/v1/send-email`, {
       method: "POST",
