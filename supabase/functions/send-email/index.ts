@@ -28,26 +28,34 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // Require authenticated user
+    // Require either a signed-in user or an internal app call.
     const authHeader = req.headers.get("Authorization");
-    if (!authHeader) {
+    const internalKey = req.headers.get("x-komma-internal-key");
+    const expectedInternalKey = Deno.env.get("LOVABLE_API_KEY");
+    const isInternalCall = Boolean(expectedInternalKey && internalKey === expectedInternalKey);
+
+    if (!authHeader && !isInternalCall) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY")!,
-      { global: { headers: { Authorization: authHeader } } }
-    );
-    const { data: userData, error: userErr } = await supabase.auth.getUser();
-    if (userErr || !userData.user) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    let senderId = "internal-registration";
+    if (!isInternalCall) {
+      const supabase = createClient(
+        Deno.env.get("SUPABASE_URL")!,
+        Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY")!,
+        { global: { headers: { Authorization: authHeader! } } }
+      );
+      const { data: userData, error: userErr } = await supabase.auth.getUser();
+      if (userErr || !userData.user) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      senderId = userData.user.id;
     }
 
     const body = (await req.json()) as SendEmailRequest;
@@ -94,7 +102,7 @@ Deno.serve(async (req) => {
       );
     });
 
-    console.log(`Email sent to ${recipients} (user ${userData.user.id})`);
+    console.log(`Email sent to ${recipients} (sender ${senderId})`);
     return new Response(JSON.stringify({ ok: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
