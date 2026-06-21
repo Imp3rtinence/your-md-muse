@@ -11,7 +11,7 @@ export const sendMyWelcomeEmail = createServerFn({ method: "POST" })
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
 
-    const { data: profile, error: profErr } = await supabase
+    const { data: profile, error: profErr } = await (supabase as any)
       .from("profiles")
       .select("display_name, username, welcome_sent_at")
       .eq("id", userId)
@@ -57,7 +57,7 @@ export const sendMyWelcomeEmail = createServerFn({ method: "POST" })
       throw new Error(`Welcome email failed (${res.status})`);
     }
 
-    await supabase
+    await (supabase as any)
       .from("profiles")
       .update({ welcome_sent_at: new Date().toISOString() })
       .eq("id", userId);
