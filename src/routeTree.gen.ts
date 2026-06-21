@@ -30,8 +30,6 @@ import { Route as AppGroupsIdRouteImport } from './routes/_app.groups.$id'
 import { Route as AppChatUserIdRouteImport } from './routes/_app.chat.$userId'
 import { Route as AppChallengeIdRouteImport } from './routes/_app.challenge.$id'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
-import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
-import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as ApiPublicCronWeeklyCoachRouteImport } from './routes/api/public/cron/weekly-coach'
 import { Route as ApiPublicCronGenerateChallengesRouteImport } from './routes/api/public/cron/generate-challenges'
 
@@ -140,16 +138,6 @@ const LovableEmailQueueProcessRoute =
     path: '/lovable/email/queue/process',
     getParentRoute: () => rootRouteImport,
   } as any)
-const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
-  id: '/lovable/email/auth/webhook',
-  path: '/lovable/email/auth/webhook',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
-  id: '/lovable/email/auth/preview',
-  path: '/lovable/email/auth/preview',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicCronWeeklyCoachRoute =
   ApiPublicCronWeeklyCoachRouteImport.update({
     id: '/api/public/cron/weekly-coach',
@@ -185,8 +173,6 @@ export interface FileRoutesByFullPath {
   '/groups/': typeof AppGroupsIndexRoute
   '/api/public/cron/generate-challenges': typeof ApiPublicCronGenerateChallengesRoute
   '/api/public/cron/weekly-coach': typeof ApiPublicCronWeeklyCoachRoute
-  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
-  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesByTo {
@@ -210,8 +196,6 @@ export interface FileRoutesByTo {
   '/groups': typeof AppGroupsIndexRoute
   '/api/public/cron/generate-challenges': typeof ApiPublicCronGenerateChallengesRoute
   '/api/public/cron/weekly-coach': typeof ApiPublicCronWeeklyCoachRoute
-  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
-  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRoutesById {
@@ -238,8 +222,6 @@ export interface FileRoutesById {
   '/_app/groups/': typeof AppGroupsIndexRoute
   '/api/public/cron/generate-challenges': typeof ApiPublicCronGenerateChallengesRoute
   '/api/public/cron/weekly-coach': typeof ApiPublicCronWeeklyCoachRoute
-  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
-  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
 }
 export interface FileRouteTypes {
@@ -266,8 +248,6 @@ export interface FileRouteTypes {
     | '/groups/'
     | '/api/public/cron/generate-challenges'
     | '/api/public/cron/weekly-coach'
-    | '/lovable/email/auth/preview'
-    | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -291,8 +271,6 @@ export interface FileRouteTypes {
     | '/groups'
     | '/api/public/cron/generate-challenges'
     | '/api/public/cron/weekly-coach'
-    | '/lovable/email/auth/preview'
-    | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
   id:
     | '__root__'
@@ -318,8 +296,6 @@ export interface FileRouteTypes {
     | '/_app/groups/'
     | '/api/public/cron/generate-challenges'
     | '/api/public/cron/weekly-coach'
-    | '/lovable/email/auth/preview'
-    | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
   fileRoutesById: FileRoutesById
 }
@@ -333,8 +309,6 @@ export interface RootRouteChildren {
   LegalImpressumRoute: typeof LegalImpressumRoute
   ApiPublicCronGenerateChallengesRoute: typeof ApiPublicCronGenerateChallengesRoute
   ApiPublicCronWeeklyCoachRoute: typeof ApiPublicCronWeeklyCoachRoute
-  LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
-  LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
 }
 
@@ -487,20 +461,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lovable/email/auth/webhook': {
-      id: '/lovable/email/auth/webhook'
-      path: '/lovable/email/auth/webhook'
-      fullPath: '/lovable/email/auth/webhook'
-      preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/lovable/email/auth/preview': {
-      id: '/lovable/email/auth/preview'
-      path: '/lovable/email/auth/preview'
-      fullPath: '/lovable/email/auth/preview'
-      preLoaderRoute: typeof LovableEmailAuthPreviewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/cron/weekly-coach': {
       id: '/api/public/cron/weekly-coach'
       path: '/api/public/cron/weekly-coach'
@@ -572,8 +532,6 @@ const rootRouteChildren: RootRouteChildren = {
   LegalImpressumRoute: LegalImpressumRoute,
   ApiPublicCronGenerateChallengesRoute: ApiPublicCronGenerateChallengesRoute,
   ApiPublicCronWeeklyCoachRoute: ApiPublicCronWeeklyCoachRoute,
-  LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
-  LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
 }
 export const routeTree = rootRouteImport
