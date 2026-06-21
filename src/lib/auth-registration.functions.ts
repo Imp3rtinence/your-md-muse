@@ -37,7 +37,12 @@ export const registerWithEmailLink = createServerFn({ method: "POST" })
 
     if (linkResult.error) throw new Error(linkResult.error.message);
 
-    const actionLink = linkResult.data.properties.action_link;
+    const { hashed_token, verification_type } = linkResult.data.properties;
+    const actionLink = new URL("https://komma.fun/confirm");
+    actionLink.searchParams.set("token_hash", hashed_token);
+    actionLink.searchParams.set("type", verification_type);
+    actionLink.searchParams.set("next", redirectTo);
+
     const html = registrationEmailHtml({ displayName: data.username, ctaUrl: actionLink });
 
     const res = await fetch(`${process.env.SUPABASE_URL}/functions/v1/send-email`, {
