@@ -35,14 +35,13 @@ export const sendMyWelcomeEmail = createServerFn({ method: "POST" })
       ctaUrl: "https://komma.fun/home",
     });
 
-    const { data: sessionData } = await supabase.auth.getSession();
-    const token = sessionData.session?.access_token;
+    const authHeader = getRequest()?.headers.get("authorization") ?? "";
 
     const res = await fetch(`${process.env.SUPABASE_URL}/functions/v1/send-email`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token ?? ""}`,
+        Authorization: authHeader,
         apikey: process.env.SUPABASE_PUBLISHABLE_KEY!,
       },
       body: JSON.stringify({
