@@ -11,6 +11,7 @@ const searchSchema = z.object({
 });
 
 export const Route = createFileRoute("/confirm")({
+  ssr: false,
   validateSearch: searchSchema,
   head: () => ({
     meta: [
