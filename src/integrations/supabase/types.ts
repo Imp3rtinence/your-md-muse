@@ -586,6 +586,7 @@ export type Database = {
           username: string
           week_start: string
           weekly_aura: number
+          welcome_sent_at: string | null
         }
         Insert: {
           aura?: number
@@ -610,6 +611,7 @@ export type Database = {
           username: string
           week_start?: string
           weekly_aura?: number
+          welcome_sent_at?: string | null
         }
         Update: {
           aura?: number
@@ -634,6 +636,7 @@ export type Database = {
           username?: string
           week_start?: string
           weekly_aura?: number
+          welcome_sent_at?: string | null
         }
         Relationships: []
       }
