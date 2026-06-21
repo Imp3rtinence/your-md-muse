@@ -43,10 +43,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
       setSession(s);
       if (s?.user) {
         setTimeout(() => { loadProfile(s.user.id); }, 0);
+        // Fire welcome email on sign-in (idempotent server-side via welcome_sent_at).
+        if (event === "SIGNED_IN") {
+          setTimeout(() => {
+            import("@/lib/email/welcome.functions")
+              .then((m) => m.sendMyWelcomeEmail())
+              .catch((err) => console.warn("welcome email skipped", err));
+          }, 500);
+        }
       } else {
         setProfile(null);
       }
