@@ -26,6 +26,7 @@ import { Route as AppCreateRouteImport } from './routes/_app.create'
 import { Route as AppChatsRouteImport } from './routes/_app.chats'
 import { Route as AppBadgesRouteImport } from './routes/_app.badges'
 import { Route as AppGroupsIndexRouteImport } from './routes/_app.groups.index'
+import { Route as ApiPublicResendHildaRouteImport } from './routes/api/public/resend-hilda'
 import { Route as AppJoinTokenRouteImport } from './routes/_app.join.$token'
 import { Route as AppGroupsIdRouteImport } from './routes/_app.groups.$id'
 import { Route as AppChatUserIdRouteImport } from './routes/_app.chat.$userId'
@@ -117,6 +118,11 @@ const AppGroupsIndexRoute = AppGroupsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppGroupsRoute,
 } as any)
+const ApiPublicResendHildaRoute = ApiPublicResendHildaRouteImport.update({
+  id: '/api/public/resend-hilda',
+  path: '/api/public/resend-hilda',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppJoinTokenRoute = AppJoinTokenRouteImport.update({
   id: '/join/$token',
   path: '/join/$token',
@@ -170,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/chat/$userId': typeof AppChatUserIdRoute
   '/groups/$id': typeof AppGroupsIdRoute
   '/join/$token': typeof AppJoinTokenRoute
+  '/api/public/resend-hilda': typeof ApiPublicResendHildaRoute
   '/groups/': typeof AppGroupsIndexRoute
   '/api/public/cron/generate-challenges': typeof ApiPublicCronGenerateChallengesRoute
   '/api/public/cron/weekly-coach': typeof ApiPublicCronWeeklyCoachRoute
@@ -193,6 +200,7 @@ export interface FileRoutesByTo {
   '/chat/$userId': typeof AppChatUserIdRoute
   '/groups/$id': typeof AppGroupsIdRoute
   '/join/$token': typeof AppJoinTokenRoute
+  '/api/public/resend-hilda': typeof ApiPublicResendHildaRoute
   '/groups': typeof AppGroupsIndexRoute
   '/api/public/cron/generate-challenges': typeof ApiPublicCronGenerateChallengesRoute
   '/api/public/cron/weekly-coach': typeof ApiPublicCronWeeklyCoachRoute
@@ -219,6 +227,7 @@ export interface FileRoutesById {
   '/_app/chat/$userId': typeof AppChatUserIdRoute
   '/_app/groups/$id': typeof AppGroupsIdRoute
   '/_app/join/$token': typeof AppJoinTokenRoute
+  '/api/public/resend-hilda': typeof ApiPublicResendHildaRoute
   '/_app/groups/': typeof AppGroupsIndexRoute
   '/api/public/cron/generate-challenges': typeof ApiPublicCronGenerateChallengesRoute
   '/api/public/cron/weekly-coach': typeof ApiPublicCronWeeklyCoachRoute
@@ -245,6 +254,7 @@ export interface FileRouteTypes {
     | '/chat/$userId'
     | '/groups/$id'
     | '/join/$token'
+    | '/api/public/resend-hilda'
     | '/groups/'
     | '/api/public/cron/generate-challenges'
     | '/api/public/cron/weekly-coach'
@@ -268,6 +278,7 @@ export interface FileRouteTypes {
     | '/chat/$userId'
     | '/groups/$id'
     | '/join/$token'
+    | '/api/public/resend-hilda'
     | '/groups'
     | '/api/public/cron/generate-challenges'
     | '/api/public/cron/weekly-coach'
@@ -293,6 +304,7 @@ export interface FileRouteTypes {
     | '/_app/chat/$userId'
     | '/_app/groups/$id'
     | '/_app/join/$token'
+    | '/api/public/resend-hilda'
     | '/_app/groups/'
     | '/api/public/cron/generate-challenges'
     | '/api/public/cron/weekly-coach'
@@ -307,6 +319,7 @@ export interface RootRouteChildren {
   IdeasFriendsChallengesRoute: typeof IdeasFriendsChallengesRoute
   LegalAgbRoute: typeof LegalAgbRoute
   LegalImpressumRoute: typeof LegalImpressumRoute
+  ApiPublicResendHildaRoute: typeof ApiPublicResendHildaRoute
   ApiPublicCronGenerateChallengesRoute: typeof ApiPublicCronGenerateChallengesRoute
   ApiPublicCronWeeklyCoachRoute: typeof ApiPublicCronWeeklyCoachRoute
 }
@@ -432,6 +445,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppGroupsIndexRouteImport
       parentRoute: typeof AppGroupsRoute
     }
+    '/api/public/resend-hilda': {
+      id: '/api/public/resend-hilda'
+      path: '/api/public/resend-hilda'
+      fullPath: '/api/public/resend-hilda'
+      preLoaderRoute: typeof ApiPublicResendHildaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app/join/$token': {
       id: '/_app/join/$token'
       path: '/join/$token'
@@ -530,6 +550,7 @@ const rootRouteChildren: RootRouteChildren = {
   IdeasFriendsChallengesRoute: IdeasFriendsChallengesRoute,
   LegalAgbRoute: LegalAgbRoute,
   LegalImpressumRoute: LegalImpressumRoute,
+  ApiPublicResendHildaRoute: ApiPublicResendHildaRoute,
   ApiPublicCronGenerateChallengesRoute: ApiPublicCronGenerateChallengesRoute,
   ApiPublicCronWeeklyCoachRoute: ApiPublicCronWeeklyCoachRoute,
 }
